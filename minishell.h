@@ -6,12 +6,13 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/06 15:55:09 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/10 12:40:43 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
@@ -54,9 +55,12 @@ typedef struct s_minishell
 
 extern t_minishell	minishell;
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
+t_token *ft_tokenize(t_minishell g_minishell);
+int		ft_strncmp(char *s1, const char *s2, size_t n);
+int		 is_space(char *line);
 void	ft_lstadd_back(t_token **lst, t_token *new);
-char	*ft_str_until(const char *s, int c);
-// t_token *ft_tokenize(char *line);
+char	*get_word(char *str, int i);
+void	ft_put_token(char **line, enum e_token_type token_t, t_token **tokens_list);
+int		ft_put_word_token(char **line, enum e_token_type token_t, t_token **tokens_list);
 
 # endif

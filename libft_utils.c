@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:02:08 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/01 20:12:14 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/10 12:25:27 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,46 @@ char	*ft_strncpy(char *dst, const char *src, size_t len)
     return (dst);
 }
 
-char	*ft_str_until(const char *str, int c)
+int	is_space(char *line)
 {
-	char	*word;
-	size_t	len;
-	
-	len = 0;
-    while (str[len] != (char)c && str[len] != '\0')
-    {
-        len++;
-    }
-    word = (char *)malloc(len + 1);
+	if (*line == ' ' || *line == '\t' || *line == '\n')
+        return (1);
+    return (0);
+}
+
+char *get_word(char *str, int i)
+{
+	int j = 0;
+	char *word;
+	word = (char *)malloc(i + 1);
     if (!word)
         return (NULL);
-    ft_strncpy(word, str, len);
-    word[len] = '\0';
-
-    return (word);
+	while (j < i)
+	{
+		word[j] = str[j];
+		j++;
+	}
+	word[j] = '\0';
+	return (word);
 }
+
+// char	*ft_str_until(const char *str, int c)
+// {
+// 	char	*word;
+// 	size_t	len;
+	
+// 	len = 0;
+//     while (str[len] != (char)c && str[len] != '\0')
+//     {
+//         len++;
+//     }
+//     word = (char *)malloc(len + 1);
+//     if (!word)
+//         return (NULL);
+//     ft_strncpy(word, str, len);
+//     word[len] = '\0';
+//     return (word);
+// }
 
 void	ft_lstadd_back(t_token **lst, t_token *new)
 {
@@ -69,7 +91,7 @@ void	ft_lstadd_back(t_token **lst, t_token *new)
 	new->prev_token = arrs;
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(char *s1, const char *s2, size_t n)
 {
 	size_t	i;
 
