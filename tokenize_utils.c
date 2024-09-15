@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 13:50:04 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/10 12:27:34 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/11 13:53:27 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	ft_put_word_token(char **line, enum e_token_type token_t,
 		t_token **tokens_list)
 {
 	char	*word;
-    char    red;
 	char	quote;
 	int		i;
 
@@ -99,6 +98,11 @@ int	ft_put_word_token(char **line, enum e_token_type token_t,
 	i = 0;
 	while (**line != '\0' && ft_strncmp(*line, ">", 1) != 0 && ft_strncmp(*line, "<", 1) != 0 && ft_strncmp(*line, "|", 1) != 0 && is_space(*line) == 0)
 	{
+		if (**line == '&')
+		{
+			printf("syntax error\n");
+			return (0);
+		}
 		if (**line == '"' || **line == '\'')
 		{
 			quote = **line;
@@ -115,5 +119,5 @@ int	ft_put_word_token(char **line, enum e_token_type token_t,
 	while (is_space(*line) == 1)
 		(*line)++;
 	token_new_word(word, WORD, tokens_list);
-	return (1);
+	return (i);
 }

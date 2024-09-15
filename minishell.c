@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:12 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/10 13:38:10 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/15 20:33:10 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,92 +14,137 @@
 
 t_minishell	g_minishell;
 
-// t_token	*token_tokens(t_token **tokens_list)
-// {
-// 	t_token	*tokens = *tokens_list;
-
-// 	while (tokens)
-// 	{
-// 		if(tokens->data_type != 1)
-// 		{
-// 			while (
-				
-// 			)
-// 		}
-// 		tokens = tokens->next_token;
-// 	}
-// 	return(*tokens_list);
-// }
-
-int	check_last_tok(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	if (str[i-1] == '\\')
-	{
-		g_minishell.tokens = NULL;
-		printf("syntax error\n");
-		return (0);
-	}
-	return (1);
-}
-
 // search_errors(void)
 // in here first check if the first token is a pipe
 // check if the last token is a pipe | all_redires
 // check if there are two followed tokens and both are pipes
 
-int	check_pipe(t_token *tokens)
+char	*remp_with_null(char *str)
 {
-	if (tokens->data_type == 1)
+	int i = 0;
+	int j = 0;
+	char *word;
+
+	while (str[i] != '\0')
 	{
-		printf("syntax error\n");
-		g_minishell.tokens = NULL;
-		return (1);
+		while (str[i] && str[i] != '$')
+			i++;
+		if (str[i] == '$')
+		{
+			printf("hello world i is: %d\n", i);
+			// exit(0);
+			i++;
+			j++;
+		}
+		while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
+		{
+			printf("hello world i is: %d\n", i);
+			i++;
+			j++;
+		}
+		if (str[i] == '\0')
+		{
+			printf("the result of str is: %d i is: %d and j is: %d\n", (i - j + 1), i, j);
+			/////!!!!! make a function that returns from the beginning of the str intil i and other ft that returns from i intil the end 
+			/////!!!!! and last ft that has the env var;
+			////!!!!! last step is to join
+			// return (new_str(first_ft, second_ft, env_var));
+		}
 	}
-	return (0);
+	word = malloc(sizeof(char) * i - j + 1);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		while (str[i] && str[i] != '$')
+			word[j++] = str[i++];
+		while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
+		{
+			i++;
+		}
+	}
+	printf("the new word is: %s\n", word);
+	return(word);
 }
 
-void	search_errors(void)
+char	*remplace_doll_str(char	*data, int i, char *env_var)
 {
-	t_token	*tokens;
-
-	tokens = g_minishell.tokens;
-	if (check_pipe(tokens) == 1)
-		return ;
-	while (tokens)
+	if (env_var == NULL)
 	{
-		if (tokens->next_token == NULL && tokens->data_type == 0)
+		return (remp_with_null(data));
+	}
+	// char *word = (char *)malloc(i + ft_strlen(env_var) + );
+	printf("::::::::%s\n", data);
+	printf("::::::::%s\n", env_var);
+	return (data);
+}
+
+char	*get_env_var(char *str, int i)
+{
+	char *env_var;
+	i++;
+	int j = i;
+	int temp = 0;
+	while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
+		i++;
+	env_var = (char *)malloc(i - j + 1);
+	while (j < i)
+		env_var[temp++] = str[j++];
+	env_var[temp] = '\0';
+	// printf("your word is: %s\n", env_var);
+	
+	if (getenv(env_var) == NULL)
+	{
+		free(env_var);
+		return (NULL);
+	}
+	else
+		return (getenv(env_var));
+	
+}
+
+t_token	*rmp_dollar(t_token *tokens)
+{
+	int i;
+	int count_quotes;
+	char *env_var;
+	t_token	*temp_tokens;
+
+	temp_tokens = tokens;
+
+	while (temp_tokens)
+	{
+		i = 0;
+		env_var = NULL;
+		if (temp_tokens->data_type == 0)
 		{
-			if (check_last_tok(tokens->data) == 0)
-				return ;
-		}
-		if (tokens->next_token == NULL && tokens->data_type != 0)
-		{
-			printf("syntax error\n");
-			g_minishell.tokens = NULL;
-			return ;
-		}
-		if ((tokens->data_type == 2 || tokens->data_type == 3 || tokens->data_type == 4 || tokens->data_type == 5) && tokens->next_token->data_type != 0)
-		{
-			printf("syntax error\n");
-			g_minishell.tokens = NULL;
-			return ;
-		}
-		if (tokens->data_type == 1)
-		{
-			if (tokens->next_token != NULL && tokens->next_token->data_type == 1)
+			while (temp_tokens->data[i])
 			{
-				printf("syntax error\n");
-				g_minishell.tokens = NULL;
-				return ;
+				if (temp_tokens->data[i] == '\'')
+				{
+					i++;
+					while(temp_tokens->data[i] && temp_tokens->data[i] != '\'')
+						i++;
+					if (temp_tokens->data[i] == '\'')
+						i++;
+				}
+				else if (temp_tokens->data[i] == '$')
+				{
+					env_var = get_env_var(temp_tokens->data, i);
+					if (env_var)
+						printf("------>%s\n", env_var);
+					else
+						printf("------>null\n");
+					temp_tokens->data = remplace_doll_str(temp_tokens->data, i, env_var);
+					i++;   //!!!! IMPORTANT THIS LINE SHOULD BECOME 'i = 0;' AFTER MODIFYING THE TOKEN EACH TIME ONE TIME IT WILL NO MORE HAS THAT DOLLAR IN IT !!!!//
+				}
+				else if (temp_tokens->data[i])
+					i++;
 			}
 		}
-		tokens = tokens->next_token;
+		temp_tokens = temp_tokens->next_token;
 	}
+	return (tokens);
 }
 
 int	main(int ac, char *av[], char **env)
@@ -116,7 +161,11 @@ int	main(int ac, char *av[], char **env)
 		}
 		add_history(g_minishell.command);
 		g_minishell.tokens = ft_tokenize(g_minishell);
-		search_errors();
+		if (!g_minishell.tokens)
+			continue ;
+		// g_minishell.tokens = rmp_dollar(g_minishell.tokens); // in progress
+		g_minishell.tokens = rm_qotes(g_minishell.tokens);
+		g_minishell.tokens = parsing(g_minishell);
 		while (g_minishell.tokens)
 		{
 			printf("the token is: %s\n",
@@ -127,4 +176,3 @@ int	main(int ac, char *av[], char **env)
 		}
 	}
 }
-

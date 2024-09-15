@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/10 12:40:43 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/13 13:34:41 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,8 @@ void	ft_lstadd_back(t_token **lst, t_token *new);
 char	*get_word(char *str, int i);
 void	ft_put_token(char **line, enum e_token_type token_t, t_token **tokens_list);
 int		ft_put_word_token(char **line, enum e_token_type token_t, t_token **tokens_list);
+size_t	ft_strlen(const char *str); 	
+t_token	*rm_qotes(t_token *tokens);
+t_token	*parsing(t_minishell g_minishell);
 
 # endif

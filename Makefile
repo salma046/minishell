@@ -6,11 +6,11 @@
 #    By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/30 10:47:56 by salaoui           #+#    #+#              #
-#    Updated: 2024/09/08 13:50:11 by salaoui          ###   ########.fr        #
+#    Updated: 2024/09/13 13:25:18 by salaoui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = minishell.c libft_utils.c tokenize.c tokenize_utils.c
+SRC = minishell.c libft_utils.c tokenize.c tokenize_utils.c handle_quotes.c parsing.c
 
 CC = cc
 C_FLAGS = -Wall -Wextra -Werror -lreadline

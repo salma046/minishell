@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:02:08 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/10 12:25:27 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/13 10:32:17 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ char *get_word(char *str, int i)
 	}
 	word[j] = '\0';
 	return (word);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
 }
 
 // char	*ft_str_until(const char *str, int c)

@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:06:19 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/10 11:13:06 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/11 12:48:07 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_token	*ft_tokenize(t_minishell g_minishell)
 
 	tokens_list = NULL;
 	line = g_minishell.command;
-
 	while (*line)
 	{
 		if (ft_skipp_spaces(&line) == 1)
