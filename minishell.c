@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:12 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/15 20:33:10 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/15 21:37:40 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,14 +163,14 @@ int	main(int ac, char *av[], char **env)
 		g_minishell.tokens = ft_tokenize(g_minishell);
 		if (!g_minishell.tokens)
 			continue ;
-		// g_minishell.tokens = rmp_dollar(g_minishell.tokens); // in progress
+		g_minishell.tokens = rmp_dollar(g_minishell.tokens); // in progress
 		g_minishell.tokens = rm_qotes(g_minishell.tokens);
 		g_minishell.tokens = parsing(g_minishell);
 		while (g_minishell.tokens)
 		{
-			printf("the token is: %s\n",
+			printf("the token is:\033[32m %s\033[0m\n",
 				g_minishell.tokens->data);
-			printf("the token type is: %d\n",
+			printf("the token type is:\033[0;34m %d\033[0m\n",
 				g_minishell.tokens->data_type);
 			g_minishell.tokens = g_minishell.tokens->next_token;
 		}
