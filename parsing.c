@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:24:40 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/13 13:35:41 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/17 11:21:45 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	check_last_tok(char *str, t_minishell g_minishell)
 		i++;
 	if (str[i-1] == '\\')
 	{
-		g_minishell.tokens = NULL;
 		printf("syntax error\n");
 		return (0);
 	}
@@ -44,7 +43,10 @@ t_token	*parsing(t_minishell g_minishell)
 		if (tokens->next_token == NULL && tokens->data_type == 0)
 		{
 			if (check_last_tok(tokens->data, g_minishell) == 0)
+			{
+				g_minishell.tokens = NULL;
 				return (g_minishell.tokens);
+			}
 		}
 		if (tokens->next_token == NULL && tokens->data_type != 0)
 		{

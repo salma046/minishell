@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/13 13:34:41 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/18 16:40:29 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ int		ft_put_word_token(char **line, enum e_token_type token_t, t_token **tokens_
 size_t	ft_strlen(const char *str); 	
 t_token	*rm_qotes(t_token *tokens);
 t_token	*parsing(t_minishell g_minishell);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 # endif
