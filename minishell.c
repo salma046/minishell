@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/30 09:49:12 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/18 17:09:35 by salaoui          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 t_minishell	g_minishell;
@@ -216,6 +204,8 @@ t_token	*rmp_dollar(t_token *tokens)
 
 int	main(int ac, char *av[], char **env)
 {
+	if (ac > 1)
+		return (0);
 	g_minishell.envirement = env;
 	while (1)
 	{
@@ -239,6 +229,7 @@ int	main(int ac, char *av[], char **env)
 				g_minishell.tokens->data);
 			printf("the token type is:\033[0;34m %d\033[0m\n",
 				g_minishell.tokens->data_type);
+			ft_cd(g_minishell);
 			g_minishell.tokens = g_minishell.tokens->next_token;
 		}
 	}

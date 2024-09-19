@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/18 16:40:29 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/19 05:14:40 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,6 @@ t_token	*rm_qotes(t_token *tokens);
 t_token	*parsing(t_minishell g_minishell);
 char	*ft_strjoin(char const *s1, char const *s2);
 
+//Sajida
+int ft_cd(t_minishell data);
 # endif

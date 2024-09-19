@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+         #
+#    By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/30 10:47:56 by salaoui           #+#    #+#              #
-#    Updated: 2024/09/18 22:28:15 by saait-si         ###   ########.fr        #
+#    Updated: 2024/09/19 05:11:22 by saait-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = minishell.c libft_utils.c tokenize.c tokenize_utils.c handle_quotes.c parsing.c
+SRC = minishell.c libft_utils.c tokenize.c tokenize_utils.c handle_quotes.c parsing.c ft_cd.c
 CC = cc
 C_FLAGS = -Wall -Wextra -Werror -lreadline
 NAME = minishell
