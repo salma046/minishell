@@ -7,6 +7,7 @@ int ft_cd(t_minishell data)
         // printf("1️⃣ token-> %s\n", data.tokens->data);
         if (!strcmp(data.tokens->data, "cd") && data.tokens->data)
         {
+            // hta l men be3d w nsayeb fi kaymchi 
             printf("This is the path of cd:%s\n",getenv("HOME"));
             if (data.tokens->next_token && chdir(data.tokens->next_token->data) == -1)
                 perror("\033[32m ERROR\033[0m");

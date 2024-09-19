@@ -204,6 +204,7 @@ t_token	*rmp_dollar(t_token *tokens)
 
 int	main(int ac, char *av[], char **env)
 {
+	//Argumenet
 	if (ac > 1)
 		return (0);
 	g_minishell.envirement = env;

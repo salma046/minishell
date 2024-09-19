@@ -6,7 +6,7 @@
 #    By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/30 10:47:56 by salaoui           #+#    #+#              #
-#    Updated: 2024/09/19 05:11:22 by saait-si         ###   ########.fr        #
+#    Updated: 2024/09/19 05:18:16 by saait-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC_o := $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(SRC_o)
+	@echo "Making $(NAME)"
 	$(CC) $(C_FLAGS) -o $(NAME) $(SRC_o)
 
 clean:

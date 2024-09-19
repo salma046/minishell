@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/19 05:14:40 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/09/19 05:17:24 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,5 @@ char	*ft_strjoin(char const *s1, char const *s2);
 
 //Sajida
 int ft_cd(t_minishell data);
+
 # endif
