@@ -4,6 +4,7 @@ t_minishell	g_minishell;
 
 
 
+
 // search_errors(void)
 // in here first check if the first token is a pipe
 // check if the last token is a pipe | all_redires
@@ -206,6 +207,7 @@ t_token	*rmp_dollar(t_token *tokens)
 
 int	main(int ac, char *av[], char **env)
 {
+	g_minishell.lenght_command = 0;
 	//Argumenet
 	if (ac > 1)
 		return (0);
@@ -229,12 +231,16 @@ int	main(int ac, char *av[], char **env)
 		g_minishell.tokens = parsing(g_minishell);
 		while (g_minishell.tokens)
 		{
-			printf("the token is:\033[32m %s\033[0m\n",
-				g_minishell.tokens->data);
-			printf("the token type is:\033[0;34m %d\033[0m\n",
-				g_minishell.tokens->data_type);
+			// printf("the token is:\033[32m %s\033[0m\n",
+			// 	g_minishell.tokens->data);
+			// printf("the token type is:\033[0;34m %d\033[0m\n",
+			// 	g_minishell.tokens->data_type);
 			// ft_cd(g_minishell);
+			ft_echo(ac, g_minishell);
 			g_minishell.tokens = g_minishell.tokens->next_token;
+			g_minishell.lenght_command++;
+			// printf("this  is inside the while%d\n", g_minishell.lenght_command);
 		}
+		g_minishell.lenght_command = 0;
 	}
 }

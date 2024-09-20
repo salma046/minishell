@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/20 03:42:57 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/09/20 06:47:04 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ typedef struct s_minishell
 	char			**envirement;
 	char			*command;
 	t_token			*tokens;
+	int				lenght_command;
 }					t_minishell;
 
 extern t_minishell	minishell;
 
 t_token *ft_tokenize(t_minishell g_minishell);
-int		ft_strncmp(char *s1, const char *s2, size_t n);
+int		ft_strncmp( const char *s1, const char *s2, size_t n);
 int		 is_space(char *line);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 char	*get_word(char *str, int i);
@@ -77,5 +78,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 int ft_cd(t_minishell data);
 int ft_strcmp(char *s1, char *s2);
 void ft_sigint(int num);
+int ft_echo(int ac, t_minishell cmd);
 
 # endif

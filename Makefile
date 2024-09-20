@@ -6,11 +6,12 @@
 #    By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/30 10:47:56 by salaoui           #+#    #+#              #
-#    Updated: 2024/09/20 02:04:02 by saait-si         ###   ########.fr        #
+#    Updated: 2024/09/20 04:21:49 by saait-si         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = minishell.c libft_utils.c tokenize.c tokenize_utils.c handle_quotes.c parsing.c ft_cd.c 
+SRC = minishell.c libft_utils.c tokenize.c tokenize_utils.c \
+	handle_quotes.c parsing.c ft_cd.c ft_echo.c
 CC = cc 
 C_FLAGS = -Wall -Wextra -Werror -lreadline -g
 

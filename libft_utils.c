@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:02:08 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/18 16:50:15 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/20 05:31:27 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,16 +133,44 @@ void	ft_lstadd_back(t_token **lst, t_token *new)
 	new->prev_token = arrs;
 }
 
-int	ft_strncmp(char *s1, const char *s2, size_t n)
-{
-	size_t	i;
+// int	ft_strncmp(const char *s1, const char *s2, size_t n)
+// {
+// 	size_t	i;
 
-	i = 0;
-	if (!n)
-		return (0);
-	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n)
-		i++;
-	if (i == n)
-		return (0);
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+// 	i = 0;
+// 	if (!n && s1 == NULL && s2 == NULL)
+// 		return (0);
+// 	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n)
+// 		i++;
+// 	if (i == n)
+// 		return (0);
+// 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+// }
+
+int ft_strncmp(const char *s1, const char *s2, size_t n) {
+    size_t i = 0;
+
+    if (n == 0) {
+        return 0;
+    }
+
+    if (s1 == NULL && s2 == NULL) {
+        return 0;
+    }
+    if (s1 == NULL) {
+        return -1;
+    }
+    if (s2 == NULL) {
+        return 1;
+    }
+
+    while (i < n && s1[i] && s2[i] && s1[i] == s2[i]) {
+        i++;
+    }
+
+    if (i == n) {
+        return 0;
+    }
+
+    return (unsigned char)s1[i] - (unsigned char)s2[i];
 }
