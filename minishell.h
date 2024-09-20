@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/19 05:17:24 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/09/20 03:42:57 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+//--->Sajida: new header Declarations
+# include <string.h>
+#include <signal.h>
+
+//--->Sajida: 
 
 typedef enum e_token_type
 {
@@ -69,5 +75,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 
 //Sajida
 int ft_cd(t_minishell data);
+int ft_strcmp(char *s1, char *s2);
+void ft_sigint(int num);
 
 # endif

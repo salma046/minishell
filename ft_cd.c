@@ -1,13 +1,21 @@
 #include "minishell.h"
 
+int ft_strcmp(char *s1, char *s2)
+{
+    int i;
+
+    i = 0;
+    while(s1[i] && s2[i] && s1[i] == s2[i])
+        i++;
+    return (s1[i] - s2[i]);
+} 
+
 int ft_cd(t_minishell data)
 {
     while (data.tokens)
     {
-        // printf("1️⃣ token-> %s\n", data.tokens->data);
-        if (!strcmp(data.tokens->data, "cd") && data.tokens->data)
+        if (!ft_strcmp(data.tokens->data, "cd") && data.tokens->data)
         {
-            // hta l men be3d w nsayeb fi kaymchi 
             printf("This is the path of cd:%s\n",getenv("HOME"));
             if (data.tokens->next_token && chdir(data.tokens->next_token->data) == -1)
                 perror("\033[32m ERROR\033[0m");
@@ -16,5 +24,5 @@ int ft_cd(t_minishell data)
         }
         data.tokens = data.tokens->next_token;
     }
-    return 1;
+    return 0;
 }
