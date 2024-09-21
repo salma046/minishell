@@ -215,7 +215,8 @@ int	main(int ac, char *av[], char **env)
 	if (ac > 1)
 		return (0);
 	g_minishell.envirement = env;
-	
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, ft_sigint);
 	while (1)
 	{
 		// doing signals -sigint & -sigquit
@@ -239,7 +240,9 @@ int	main(int ac, char *av[], char **env)
 			// printf("the token type is:\033[0;34m %d\033[0m\n",
 			// 	g_minishell.tokens->data_type);
 			// ft_cd(g_minishell);
-			ft_echo(ac, g_minishell);
+			int len = ft_strlen(g_minishell.tokens->data);
+			printf("THOS IS THE LEN: %d", len);
+			// ft_echo(len, g_minishell);
 			g_minishell.tokens = g_minishell.tokens->next_token;
 			g_minishell.lenght_command++;
 			// printf("this  is inside the while%d\n", g_minishell.lenght_command);

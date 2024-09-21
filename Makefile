@@ -11,8 +11,7 @@ GREEN1 = "\033[38;5;121m"
 #Files:
 SRC = 	minishell.c libft_utils.c tokenize.c \
 		tokenize_utils.c handle_quotes.c parsing.c \
-		#Sajida
-		ft_cd.c ft_echo.c
+		ft_cd.c ft_echo.c sjd_fun_utils.c
 
 OBJ = $(SRC:.c=.o)
 
