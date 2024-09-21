@@ -68,8 +68,9 @@ char *after_dol_word(char *str)
 	int j;
 	int	word_lenth;
 	char *word;
-	char *command_rest;
-
+	// Salma u do not use this variable :
+	// char *command_rest;
+	j = 0;
 	word_lenth = count_dollar_lenth(str);
 	i = ft_strlen(str);
 	while (str[j] && str[j] != '$')
@@ -168,7 +169,8 @@ char	*get_env_var(char *str, int i)
 t_token	*rmp_dollar(t_token *tokens)
 {
 	int i;
-	int count_quotes;
+	//You do not use this variable:
+	// int count_quotes;
 	char *env_var;
 	t_token	*temp_tokens;
 
@@ -207,6 +209,7 @@ t_token	*rmp_dollar(t_token *tokens)
 
 int	main(int ac, char *av[], char **env)
 {
+	(void)av;
 	g_minishell.lenght_command = 0;
 	//Argumenet
 	if (ac > 1)

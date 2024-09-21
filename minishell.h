@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/20 06:47:04 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/09/21 01:02:46 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-
 //--->Sajida: new header Declarations
 # include <string.h>
 #include <signal.h>
+# include "libft/libft.h"
 
 //--->Sajida: 
 
@@ -65,6 +65,7 @@ extern t_minishell	minishell;
 t_token *ft_tokenize(t_minishell g_minishell);
 int		ft_strncmp( const char *s1, const char *s2, size_t n);
 int		 is_space(char *line);
+//deleting this because it is in libft
 void	ft_lstadd_back(t_token **lst, t_token *new);
 char	*get_word(char *str, int i);
 void	ft_put_token(char **line, enum e_token_type token_t, t_token **tokens_list);

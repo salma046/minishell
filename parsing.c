@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:24:40 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/17 11:21:45 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/21 00:57:04 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	check_last_tok(char *str, t_minishell g_minishell)
 {
+	(void)g_minishell;
 	int	i;
 
 	i = 0;

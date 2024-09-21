@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:02:08 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/20 05:31:27 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/09/20 23:47:32 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ char *get_word(char *str, int i)
 	char *word;
 	word = (char *)malloc(i + 1);
     if (!word)
+	{
         return (NULL);
+	}
 	while (j < i)
 	{
 		word[j] = str[j];
