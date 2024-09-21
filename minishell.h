@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/21 02:46:07 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/09/21 02:56:13 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 int ft_cd(t_minishell data);
 int ft_strcmp(char *s1, char *s2);
 void ft_sigint(int x);
-int ft_echo(int ac, t_minishell cmd);
+int ft_echo(int len, int ac, t_minishell cmd);
 
 # endif

@@ -210,6 +210,8 @@ t_token	*rmp_dollar(t_token *tokens)
 int	main(int ac, char *av[], char **env)
 {
 	(void)av;
+	static int x;
+	int len;
 	g_minishell.lenght_command = 0;
 	//Argumenet
 	if (ac > 1)
@@ -240,13 +242,15 @@ int	main(int ac, char *av[], char **env)
 			// printf("the token type is:\033[0;34m %d\033[0m\n",
 			// 	g_minishell.tokens->data_type);
 			// ft_cd(g_minishell);
-			int len = ft_strlen(g_minishell.tokens->data);
-			printf("THOS IS THE LEN: %d", len);
-			// ft_echo(len, g_minishell);
+			len = ft_strlen(g_minishell.tokens->data);
+			ft_echo(len, x, g_minishell);
+			printf("THOS IS THE ac: %d\n\n", x);
 			g_minishell.tokens = g_minishell.tokens->next_token;
 			g_minishell.lenght_command++;
+			x++;
 			// printf("this  is inside the while%d\n", g_minishell.lenght_command);
 		}
-		g_minishell.lenght_command = 0;
+		// g_minishell.lenght_command = 0;
+		// printf("This is how mush command you have: %d\n", x);
 	}
 }

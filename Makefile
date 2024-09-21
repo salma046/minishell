@@ -30,7 +30,7 @@ $(NAME)	: $(OBJ) $(LIBFT)
 
 
 $(LIBFT):
-	@echo $(CYAN)Making libft .. 👾
+	@echo $(CYAN)Making libft .. 👾"\033[0m"
 	@make -C libft
 	@mv libft/libft.a .
 
