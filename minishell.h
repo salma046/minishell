@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/18 16:40:29 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/21 11:53:38 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_tcomp
 {
 	char	*cmd;
 	char	**cmd_args;
-	char	*out_file;
-	char	*in_file;
+	char	*out_files;
+	char	*in_files;
 }	t_tcomp;
 
 typedef struct s_token
@@ -65,6 +65,9 @@ int		ft_put_word_token(char **line, enum e_token_type token_t, t_token **tokens_
 size_t	ft_strlen(const char *str); 	
 t_token	*rm_qotes(t_token *tokens);
 t_token	*parsing(t_minishell g_minishell);
+t_token	*rmp_dollar(t_token *tokens);
 char	*ft_strjoin(char const *s1, char const *s2);
 
+// minitest in the end of prog
+// cat lksdj < dalkf;> sdkfj<<sdf >>dslfj |ksdjj|osdfij|sdkfj+
 # endif
