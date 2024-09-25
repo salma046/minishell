@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:47:57 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/21 11:48:19 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/25 17:28:29 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ t_token	*rmp_dollar(t_token *tokens)
 					while (temp_tokens->data[i] && temp_tokens->data[i] != '$' && temp_tokens->data[i] != '"')
 						i++;
 				}
-				if (temp_tokens->data[i] == '$' && is_not_alpanum(temp_tokens->data[i + 1]) == 0)
+				if (temp_tokens->data[i] == '$' && is_not_alpanum(temp_tokens->data[i + 1]) == 0 && temp_tokens->data[i + 1] != '$')
 					i++;
 				if (temp_tokens->data[i] == '$')
 				{

@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 13:50:04 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/11 13:53:27 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/25 10:09:45 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,6 @@ void	token_new_sep(enum e_token_type token_t, t_token **tokens_list)
 	new_token->next_token = NULL;
 	ft_lstadd_back(tokens_list, new_token);
 }
-
-// int	check_spaces(char *str)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	i++;
-// 	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
-// 		i++;
-// 	if (!str[i])
-// 	{
-// 		printf("syntax error\n");
-// 		return (0);
-// 	}
-// 	return (1);
-// }
 
 void	ft_put_token(char **line, enum e_token_type token_t,
 		t_token **tokens_list)

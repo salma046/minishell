@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:02:08 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/18 17:14:45 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/25 16:09:01 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,4 +145,24 @@ int	ft_strncmp(char *s1, const char *s2, size_t n)
 	if (i == n)
 		return (0);
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+char	*ft_strdup(const char *src)
+{
+	int		l;
+	char	*p1;
+
+	l = 0;
+	p1 = malloc((ft_strlen(src) + 1) * sizeof(char));
+	if (p1 == NULL)
+	{
+		return (NULL);
+	}
+	while (src[l])
+	{
+		p1[l] = src[l];
+		l++;
+	}
+	p1[l] = '\0';
+	return (p1);
 }

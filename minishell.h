@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/21 11:53:38 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/25 11:29:09 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,35 @@ typedef enum e_token_type
 	INP_REDIR
 }					token_type;
 
-typedef struct s_tcomp
-{
-	char	*cmd;
-	char	**cmd_args;
-	char	*out_files;
-	char	*in_files;
-}	t_tcomp;
-
 typedef struct s_token
 {
 	char			*data;
 	token_type		data_type;
 	struct s_token	*next_token;
 	struct s_token	*prev_token;
-	struct s_tcomp	*tok_comp;
 }	t_token;
+
+typedef struct s_redir
+{
+	token_type		red_type;
+	char			*file;
+	struct s_redir	*next;
+}	t_redir;
+
+typedef struct s_node
+{
+	char				**cmd;
+	t_redir				*redir;
+	struct s_node	*next_node;
+	struct s_node	*prev_node;
+}	t_node;
 
 typedef struct s_minishell
 {
-	char			**envirement;
-	char			*command;
-	t_token			*tokens;
+	char	**envirement;
+	char	*command;
+	t_token	*tokens;
+	t_node	*nodes;
 }					t_minishell;
 
 extern t_minishell	minishell;
@@ -66,7 +73,9 @@ size_t	ft_strlen(const char *str);
 t_token	*rm_qotes(t_token *tokens);
 t_token	*parsing(t_minishell g_minishell);
 t_token	*rmp_dollar(t_token *tokens);
+int		count_pipe(t_token *tokens);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strdup(const char *src);
 
 // minitest in the end of prog
 // cat lksdj < dalkf;> sdkfj<<sdf >>dslfj |ksdjj|osdfij|sdkfj+
