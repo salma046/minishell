@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:12 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/25 16:25:12 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/27 20:41:34 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,6 @@ int	main(int ac, char *av[], char **env)
 	int i;
 	int j;
 
-	j = 0;
-	i = 0;
 	while (1)
 	{
 		// doing signals -sigint & -sigquit
@@ -174,9 +172,10 @@ int	main(int ac, char *av[], char **env)
 		g_minishell.tokens = rm_qotes(g_minishell.tokens);
 		g_minishell.tokens = parsing(g_minishell);
 		g_minishell.nodes = mk_nodes(g_minishell.tokens);
-		j = 0;
 		while (g_minishell.nodes)
 		{
+			j = 0;
+			i = 0;
 			printf("----------------------------------------------------------\n");
 			while(g_minishell.nodes->cmd[j])
 			{

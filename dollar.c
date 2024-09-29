@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:47:57 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/25 17:28:29 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/29 13:52:50 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,43 @@ int count_dollar_lenth(char *str)
 	j = 0;
 	while (str[i] != '\0')
 	{
-		while (str[i] && str[i] != '$')
+		while (str[i] && str[i] != '\'' && (!(str[i] == '$' && is_not_alpanum(str[i + 1]) == 1)))
 			i++;
-		if (str[i] == '$')
+		while (str[i] == '\'')
 		{
 			i++;
-			j++;
+			while (str[i] && str[i] != '\'')
+				i++;
+			if (str[i] == '\'')
+				i++;
 		}
-		while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
+		if (str[i] == '"')
+		{
+			while(str[i] != '$')
+				i++;
+		}
+		if (str[i] == '$' && str[i + 1] == '$')
+		{
+			while (str[i + 1] == '$')
+			{
+				i+=2;
+				j+=2;
+			}
+		}
+		if (str[i] == '$' && str[i + 1] != '$')
 		{
 			i++;
 			j++;
+			while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
+			{
+				i++;
+				j++;
+			}
+			while(str[i])
+			{
+				i++;
+				j++;
+			}
 		}
 	}
 	return (j);
@@ -52,7 +78,7 @@ char	*remp_with_null(char *str)
 	j = 0;
 	while (str[i])
 	{
-		while (str[i] && str[i] != '$')
+		while (str[i] && (!(str[i] == '$' && is_not_alpanum(str[i + 1]) == 1)))
 			word[j++] = str[i++];
 		if (str[i] == '$')
 			i++;
@@ -65,31 +91,16 @@ char	*remp_with_null(char *str)
 	return(word);
 }
 
-char *after_dol_word(char *str)
+char *after_dol_word(char *str, int l, int str_len)
 {
-	int i;
 	int j;
-	int	word_lenth;
 	char *word;
-	char *command_rest;
 
-	word_lenth = count_dollar_lenth(str);
-	i = ft_strlen(str);
-	while (str[j] && str[j] != '$')
-		j++;
-	word = malloc(sizeof(char) * i - word_lenth - j + 1);
-	i = 0;
+	word = malloc(sizeof(char) * str_len - l + 1);
 	j = 0;
-	while (str[i])
+	while (str[l])
 	{
-		while (str[i] && str[i] != '$')
-			i++;
-		if (str[i] == '$')
-			i++;
-		while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
-			i++;
-		while (str[i])
-			word[j++] = str[i++];
+		word[j++] = str[l++];
 	}
 	word[j] = '\0';
 	return (word);
@@ -101,7 +112,7 @@ char	*remp_with_value(char *str, char *env_var)
 	int i;
 	int j;
 	int l;
-	int k ;
+	int k;
 	int	word_lenth;
 	char *word;
 	char *hi;
@@ -116,19 +127,43 @@ char	*remp_with_value(char *str, char *env_var)
 	l = 0;
 	while (str[i])
 	{
-		while (str[i] && str[i] != '$')
+		while (str[i] == '\'')
+		{
 			word[j++] = str[i++];
+			while (str[i] && str[i] != '\'')
+				word[j++] = str[i++];
+			if (str[i] == '\'')
+				word[j++] = str[i++];
+		}
+		if (str[i] == '"')
+		{
+			word[j++] = str[i++];
+			while (str[i] && str[i] != '$' && str[i] != '"')
+				word[j++] = str[i++];
+			if (str[i] == '"')
+				word[j++] = str[i++];
+		}
+		while (str[i] && str[i] != '\'' && (!(str[i] == '$' && is_not_alpanum(str[i + 1]) == 1)))
+			word[j++] = str[i++];
+		if (str[i] == '$' && str[i + 1] == '$')
+		{
+			while (str[i] == '$' && str[i + 1] == '$')
+				i+=2;
+		}
 		if (str[i] == '$')
+		{
 			i++;
-		while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
-			i++;
-		while (l <= k)
-			word[j++] = env_var[l++];
-		word[j] = '\0';
-		if (str[i])
-			i++;
+			while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
+				i++;
+			while (l <= k)
+				word[j++] = env_var[l++];
+			l = i;
+			while (str[i])
+				i++;
+			word[j] = '\0';
+		}
 	}
-	command_rest = after_dol_word(str);
+	command_rest = after_dol_word(str, l, ft_strlen(str));
 	hi = ft_strjoin(word, command_rest);
 	free(word);
 	return (hi);
@@ -150,14 +185,18 @@ char	*get_env_var(char *str, int i)
 	char *env_var;
 	i++;
 	int j = i;
+
 	int temp = 0;
+	while (str[i] == '$')
+	{
+		i++;
+	}
 	while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
 		i++;
 	env_var = (char *)malloc(i - j + 1);
 	while (j < i)
 		env_var[temp++] = str[j++];
 	env_var[temp] = '\0';
-	
 	if (getenv(env_var) == NULL)
 	{
 		free(env_var);
@@ -189,7 +228,7 @@ t_token	*rmp_dollar(t_token *tokens)
 	{
 		i = 0;
 		env_var = NULL;
-		if (temp_tokens->data_type == 2 && temp_tokens->next_token->data_type == 0)
+		if (temp_tokens->data_type == 2 && temp_tokens->next_token && temp_tokens->next_token->data_type == 0)
 		{
 			temp_tokens = temp_tokens->next_token;
 			while (temp_tokens->data[i])
@@ -200,13 +239,12 @@ t_token	*rmp_dollar(t_token *tokens)
 		{
 			while (temp_tokens->data[i])
 			{
-				if (temp_tokens->data[i] == '\'')
+				while (temp_tokens->data[i] == '\'')
 				{
 					i++;
 					while(temp_tokens->data[i] && temp_tokens->data[i] != '\'')
 						i++;
-					int j = i + 1;
-					if (temp_tokens->data[i] == '\'' && temp_tokens->data[i + 1] != '\'')
+					if (temp_tokens->data[i] == '\'')
 						i++;
 				}
 				if (temp_tokens->data[i] == '"')
@@ -214,10 +252,22 @@ t_token	*rmp_dollar(t_token *tokens)
 					i++;
 					while (temp_tokens->data[i] && temp_tokens->data[i] != '$' && temp_tokens->data[i] != '"')
 						i++;
+					if (temp_tokens->data[i] == '"')
+						i++;
 				}
-				if (temp_tokens->data[i] == '$' && is_not_alpanum(temp_tokens->data[i + 1]) == 0 && temp_tokens->data[i + 1] != '$')
-					i++;
-				if (temp_tokens->data[i] == '$')
+				else if (temp_tokens->data[i] == '$' && temp_tokens->data[i + 1] == '$')
+				{
+					while (temp_tokens->data[i] == '$' && temp_tokens->data[i + 1] == '$')
+						i+=2;
+				}
+				else if (temp_tokens->data[i] == '$' && is_not_alpanum(temp_tokens->data[i + 1]) == 0)
+				{
+					if (temp_tokens->data[i] == '$')
+						i++;
+					while (temp_tokens->data[i] && temp_tokens->data[i] != '"' && temp_tokens->data[i] != '\''&& temp_tokens->data[i] != '$')
+						i++;
+				}
+				else if (temp_tokens->data[i] == '$')
 				{
 					env_var = get_env_var(temp_tokens->data, i);
 					temp_tokens->data = remplace_doll_str(temp_tokens->data, env_var);

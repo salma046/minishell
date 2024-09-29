@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:02:08 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/25 16:09:01 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/09/28 12:21:41 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,24 +94,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ptr[i] = '\0';
 	return (ptr);
 }
-
-// char	*ft_str_until(const char *str, int c)
-// {
-// 	char	*word;
-// 	size_t	len;
-	
-// 	len = 0;
-//     while (str[len] != (char)c && str[len] != '\0')
-//     {
-//         len++;
-//     }
-//     word = (char *)malloc(len + 1);
-//     if (!word)
-//         return (NULL);
-//     ft_strncpy(word, str, len);
-//     word[len] = '\0';
-//     return (word);
-// }
 
 void	ft_lstadd_back(t_token **lst, t_token *new)
 {

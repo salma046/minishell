@@ -6,7 +6,7 @@
 #    By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/30 10:47:56 by salaoui           #+#    #+#              #
-#    Updated: 2024/09/24 15:42:46 by salaoui          ###   ########.fr        #
+#    Updated: 2024/09/28 12:22:20 by salaoui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRC = minishell.c libft_utils.c tokenize.c tokenize_utils.c handle_quotes.c pars
 	  dollar.c nodes_utils.c
 
 CC = cc
-C_FLAGS = -Wall -Wextra -Werror -lreadline
+C_FLAGS = -Wall -Wextra -Werror -lreadline #-fsanitize=address
 NAME = minishell
 
 SRC_o := $(SRC:.c=.o)
