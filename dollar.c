@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:47:57 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/29 13:52:50 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/01 11:57:38 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ char	*remp_with_value(char *str, char *env_var)
 			if (str[i] == '"')
 				word[j++] = str[i++];
 		}
-		while (str[i] && str[i] != '\'' && (!(str[i] == '$' && is_not_alpanum(str[i + 1]) == 1)))
+		while (str[i] && str[i] != '\'' && str[i] != '"' && (!(str[i] == '$' && is_not_alpanum(str[i + 1]) == 1)))
 			word[j++] = str[i++];
 		if (str[i] == '$' && str[i + 1] == '$')
 		{

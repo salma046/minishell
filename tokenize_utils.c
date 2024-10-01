@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 13:50:04 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/28 12:21:32 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/01 12:31:42 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	token_new_word(char *word, enum e_token_type token_t,
 
 int	find_quote(char c, char **line, int *i)
 {
+	char quote;
+
 	(*line)++;
 	(*i)++;
 	while (**line != '\0' && ft_strncmp(*line, &c, 1) != 0)
@@ -66,7 +68,8 @@ int	find_quote(char c, char **line, int *i)
 		(*line)++;
 		(*i)++;
 	}
-	if (**line == c)
+	quote = **line;
+	if (quote == c)
 		return (1);
 	return (0);
 }

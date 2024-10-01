@@ -6,26 +6,11 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:24:40 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/27 20:53:50 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/01 13:32:28 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	check_last_tok(char *str, t_minishell g_minishell)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	if (str[i-1] == '\\')
-	{
-		printf("syntax error\n");
-		return (0);
-	}
-	return (1);
-}
 
 t_token	*parsing(t_minishell g_minishell)
 {
@@ -40,14 +25,6 @@ t_token	*parsing(t_minishell g_minishell)
 	}
 	while (tokens)
 	{
-		if (tokens->next_token == NULL && tokens->data_type == 0)
-		{
-			if (check_last_tok(tokens->data, g_minishell) == 0)
-			{
-				g_minishell.tokens = NULL;
-				return (g_minishell.tokens);
-			}
-		}
 		if (tokens->next_token == NULL && tokens->data_type != 0)
 		{
 			printf("syntax error\n");
