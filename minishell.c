@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:12 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/27 20:41:34 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/04 09:36:11 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int	main(int ac, char *av[], char **env)
 		g_minishell.command = readline("Minishell~$ ");
 		if (!g_minishell.command)
 		{
-			printf("Quiting minishell!\n");
+			printf("\n Quiting minishell!\n");
 			exit(1);
 		}
 		add_history(g_minishell.command);
@@ -176,7 +176,7 @@ int	main(int ac, char *av[], char **env)
 		{
 			j = 0;
 			i = 0;
-			printf("----------------------------------------------------------\n");
+			printf("-----------------1---------------\n");
 			while(g_minishell.nodes->cmd[j])
 			{
 				printf("the node \033[32m%d\033[0m cmds n* %d is :\033[32m %s\033[0m\n",
@@ -185,13 +185,13 @@ int	main(int ac, char *av[], char **env)
 			}
 			while(g_minishell.nodes->redir)
 			{
-				printf("the redir file name is: %s\n",
+				printf("the redir file name is sajoda: %s\n",
 					g_minishell.nodes->redir->file);
 				printf("the redir type is: %d\n",
 					g_minishell.nodes->redir->red_type);
 				g_minishell.nodes->redir = g_minishell.nodes->redir->next;
 			}
-			printf("----------------------------------------------------------\n");
+			printf("------------------2----------------\n");
 			g_minishell.nodes = g_minishell.nodes->next_node;
 			i++;
 		}
