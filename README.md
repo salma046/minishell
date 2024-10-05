@@ -1,4 +1,4 @@
-<span style="color:green;">This text will be green.</span>
+
 
 ---------> 04/10 <--------- 
 
@@ -18,4 +18,5 @@
 
 <span style="color: green"> Some green text </span>
 @@aloha@@  
+print("\033[32mThis is green text.\033[0m");
 -aloja
