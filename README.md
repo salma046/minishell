@@ -1,8 +1,8 @@
 ---------> 04/10 <---------
 
-🖤 .Linking Salma's Code with mine 
-🖤 .Knowing about cd 
-🖤 .Implement it (check the path is execeted)
+🖤 .Linking Salma's Code with mine  
+🖤 .Knowing about cd   
+🖤 .Implement it (check the path is execeted)  
 🖤 .case: cd --->getenv(HOME)
 
 ---------> 05/10 <---------
