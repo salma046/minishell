@@ -8,9 +8,9 @@
 ---------> 05/10 <---------  
 🤍 .Recode the echo command Because I hated my old code (to mush lines I hate to mush lines 😤)  
 🤍 .Cases:   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo          --> new line  
-&nbsp;&nbsp;echo -n        --> Nothing  
-&nbsp;&nbsp;echo -n blabla ---> blabla(without new line)  
-&nbsp;&nbsp;echo blabla    --->blabla(with new linw)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo          --> new line  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo -n        --> Nothing  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo -n blabla ---> blabla(without new line)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo blabla    --->blabla(with new linw)  
 🤍 .Organizing my code ----> In progress  
 
