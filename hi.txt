@@ -1,2 +1,12 @@
+'"'$USER'"''$gfhvk'"'$USER'" //first problem
 '"'$USER'"''$gfhvk'"'$USER'"
-'"''$gfhvk'"'$USER'"
+
+"'"$$USER'"''$HOME'""// like $kdsjf // ADD to this command an expend and it's result is null;
+
+'"'$$$USER'"''$HOME'"$USER"
+
+'"'$$$USER'"''$HOME'"$U"
+
+'"'$$$$USER'"''$HOME'"$sdajkf""''''cat"
+
+"$$USER"'$HOME'"$USER" || "$$$USER"'$HOME'"$USER"
