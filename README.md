@@ -12,3 +12,4 @@
       echo -n blabla ---> blabla(without new line)
       echo blabla    --->blabla(with new linw)
 🤍 .Organizing my code ----> In progress
+k
