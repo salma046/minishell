@@ -12,5 +12,6 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:blue;">echo.</span>-n        --> Nothing  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo -n blabla ---> blabla(without new line)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo blabla    --->blabla(with new linw)  
-🤍 .Organizing my code ----> In Done ✅ 
-🤍 .Implementation of pwd ---> In Progress
+🤍 .Organizing my code ---->  Done ✅   
+🤍 .Implementation of pwd --->  ✅  
+Info : PATH_MAX's a system defined the maximent path lenght (in linux 4096 in mac is 1024) which is represent the longest path in Allowed    
