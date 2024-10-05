@@ -1,5 +1,15 @@
 
 #include "minishell.h"
+void ft_print(t_minishell data)
+{
+    while (data.tokens)
+    {
+        write(1, data.tokens->data, ft_strlen(data.tokens->data));
+        if (data.tokens->next_token != NULL)
+            write(1, " ", 1);
+        data.tokens = data.tokens->next_token;
+    }
+}
 
 void ft_echo(t_minishell data)
 { 
@@ -15,31 +25,16 @@ void ft_echo(t_minishell data)
         {
             data.tokens = data.tokens->next_token->next_token;
             if (data.tokens == NULL )
-            {
-                write(1, "Error: No arguments after -n\n", 29);
                 return;
-            }
-            while (data.tokens)
-            {
-                write(1, data.tokens->data, ft_strlen(data.tokens->data));
-                if (data.tokens->next_token != NULL)
-                    write(1, " ", 1);
-                data.tokens = data.tokens->next_token;
-            }
+            ft_print(data);
         }
         else 
         {
             data.tokens = data.tokens->next_token;
-            while (data.tokens)
-            {
-                write(1, data.tokens->data, ft_strlen(data.tokens->data));
-                if (data.tokens->next_token != NULL)
-                    write(1, " ", 1);
-                data.tokens = data.tokens->next_token;
-            }
+            ft_print(data);
             write(1, "\n",1 );
-            // printf("printf --->\033[0;31m%s\033[0m\n", data.tokens->data);
         }
     }
 }
 
+                        

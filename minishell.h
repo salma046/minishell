@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/05 08:00:57 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/10/05 19:06:14 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,11 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *src);
 int		is_not_alpanum(char c);
  //Sajida
-int ft_cd(t_minishell data);
 int ft_strcmp(char *s1, char *s2);
 void ft_sigint(int x);
 void ft_echo(t_minishell cmd);
+int ft_cd(t_minishell data);
+void ft_pwd(t_minishell cmd);
 void check_command(t_minishell data);
 // minitest in the end of prog
 // cat lksdj < dalkf;> sdkfj<<sdf >>dslfj |ksdjj|osdfij|sdkfj+
