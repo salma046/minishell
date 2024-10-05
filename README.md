@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 ---------> 04/10 <--------- 
 
 🖤 .Linking Salma's Code with mine  
@@ -15,8 +13,3 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo -n blabla ---> blabla(without new line)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo blabla    --->blabla(with new linw)  
 🤍 .Organizing my code ----> In progress  
-
-<span style="color: green"> Some green text </span>
-@@aloha@@  
-print("\033[32mThis is green text.\033[0m");
--aloja
