@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/05 19:06:14 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/10/08 06:47:38 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void ft_echo(t_minishell cmd);
 int ft_cd(t_minishell data);
 void ft_pwd(t_minishell cmd);
 void check_command(t_minishell data);
+void ft_env(t_minishell data);
+
 // minitest in the end of prog
 // cat lksdj < dalkf;> sdkfj<<sdf >>dslfj |ksdjj|osdfij|sdkfj+
 # endif

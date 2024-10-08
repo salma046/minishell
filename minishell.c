@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:12 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/05 08:18:31 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/10/08 09:31:41 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,10 +151,11 @@ t_node	*mk_nodes(t_token *tokens)
 	return (nodes);
 }
 
-int	main(int ac, char *av[], char **env)
+int	main(int ac, char *av[], char *env[])
 {
 	(void)ac;
 	(void)av;
+	(void)env;
 	g_minishell.envirement = env;
 	int i;
 	int j;
