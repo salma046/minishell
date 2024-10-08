@@ -104,6 +104,8 @@ char	*remp_with_null(char *str)
 		}
 		while (str[i] && str[i] != '\'' && str[i] != '"' && str[i + 1] != '$' && is_not_valid_expend(str, i) == 1)
 			word[j++] = str[i++];
+		if (str[i] != '\'' && str[i] != '"' && str[i] != '$' && str[i + 1] == '$')
+			word[j++] = str[i++];
 		if (str[i] == '$' && str[i + 1] == '$')
 		{
 			while (str[i] == '$' && str[i + 1] == '$')
@@ -150,6 +152,7 @@ char	*remp_with_value(char *str, char *env_var)
 	int j;
 	int l;
 	int k;
+	int t = 0;
 	int	word_lenth;
 	char *word;
 	char *hi;
@@ -159,13 +162,11 @@ char	*remp_with_value(char *str, char *env_var)
 	i = ft_strlen(str);
 	k = ft_strlen(env_var);
 	word = malloc(sizeof(char) * i - word_lenth + k + 1);
-	printf("the size alllocated is: %d and i is: %d word is: %d\n", i - word_lenth + k + 1, i, word_lenth);
 	if (!word)
 		return (NULL);
 	i = 0;
 	j = 0;
 	l = 0;
-	printf("the sting is: %s\n", str);
 	while (str[i])
 	{
 		while (str[i] == '\'')
@@ -179,15 +180,25 @@ char	*remp_with_value(char *str, char *env_var)
 		if (str[i] == '"')
 		{
 			word[j++] = str[i++];
-			while (str[i] && str[i] != '$' && str[i] != '"' && str[i] != '\'')
-				word[j++] = str[i++];
+			while (str[i] && str[i] != '"' && t != 1)
+			{
+				if (str[i] == '$' && str[i + 1] == '$')
+				{
+					while (str[i] == '$' && str[i + 1] == '$')
+						i+=2;
+				}
+				if (str[i] != '$')
+					word[j++] = str[i++];
+				else
+				t = 1;
+			}
 			if (str[i] == '"')
 				word[j++] = str[i++];
 		}
 		while (str[i] && str[i] != '\'' && str[i] != '"' && str[i + 1] != '$' && is_not_valid_expend(str, i) == 1)
-		{
 			word[j++] = str[i++];
-		}
+		if (str[i] != '\'' && str[i] != '"' && str[i] != '$' && str[i + 1] == '$')
+			word[j++] = str[i++];
 		if (str[i] == '$' && str[i + 1] == '$')
 		{
 			while (str[i] == '$' && str[i + 1] == '$')
@@ -199,21 +210,17 @@ char	*remp_with_value(char *str, char *env_var)
 			while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
 				i++;
 			while (l <= k)
-			{
 				word[j++] = env_var[l++];
-			}
 			l = i;
 			while (str[i])
 				i++;
 			word[j] = '\0';
-			printf("the word should be 'salaoui' it is: %s\n", word);
 		}
-		else if (str[i] && str[i] != '$' && str[i] != '"' && str[i] != '\'')
+		else if (str[i] && str[i] != '$' && str[i - 1] != '$' && str[i] != '"' && str[i] != '\'')
 			i++;
 	}
 	command_rest = after_dol_word(str, l, ft_strlen(str));
 	hi = ft_strjoin(word, command_rest);
-	printf("after joining it is: %s\n", hi);
 	free(word);
 	return (hi);
 }
@@ -261,7 +268,7 @@ char	*get_env_var(char *str, int i)
 
 int is_not_alpanum(char c)
 {
-	if (c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c == '_')
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_')
 		return (1);
 	else
 		return (0);
@@ -270,6 +277,7 @@ int is_not_alpanum(char c)
 t_token	*rmp_dollar(t_token *tokens)
 {
 	int i;
+	int t = 0;
 	char *env_var;
 	t_token	*temp_tokens;
 
@@ -300,8 +308,21 @@ t_token	*rmp_dollar(t_token *tokens)
 				if (temp_tokens->data[i] == '"')
 				{
 					i++;
-					while (temp_tokens->data[i] && temp_tokens->data[i] != '$' && temp_tokens->data[i] != '\'' && temp_tokens->data[i] != '"')
-						i++;
+					while (temp_tokens->data[i] && temp_tokens->data[i] != '"' && t != 1)
+					{
+						if (temp_tokens->data[i] == '$' && temp_tokens->data[i + 1] == '$')
+						{
+							printf("the i is: %d\n", i);
+							while (temp_tokens->data[i] == '$' && temp_tokens->data[i + 1] == '$')
+								i+=2;
+							printf("the i is: %d\n", i);
+						}
+						// printf("hello world\n");
+						if (temp_tokens->data[i] != '$')
+							i++;
+						else
+							t = 1;
+					}
 					if (temp_tokens->data[i] == '"')
 						i++;
 				}
@@ -309,6 +330,7 @@ t_token	*rmp_dollar(t_token *tokens)
 				{
 					while (temp_tokens->data[i] == '$' && temp_tokens->data[i + 1] == '$')
 						i+=2;
+					// double $$ without a valid or null env var stays the same
 				}
 				else if (temp_tokens->data[i] == '$' && is_not_alpanum(temp_tokens->data[i + 1]) == 0)
 				{
@@ -319,8 +341,10 @@ t_token	*rmp_dollar(t_token *tokens)
 				}
 				else if (temp_tokens->data[i] == '$')
 				{
+					printf("the i is: %d\n", i);
+					// exit(0);
 					env_var = get_env_var(temp_tokens->data, i);
-					// printf("the word is: %s\n", env_var);
+					printf("the env is: %s\n", env_var);
 					temp_tokens->data = remplace_doll_str(temp_tokens->data, env_var);
 					i = 0;
 				}
