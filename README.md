@@ -15,3 +15,6 @@
 🤍 .Organizing my code ---->  Done ✅   
 🤍 .Implementation of pwd --->  ✅  
 Info : PATH_MAX's a system defined the maximent path lenght (in linux 4096 in mac is 1024) which is represent the longest path in Allowed    
+
+---------> 05/10 <---------  
+💙 .Working on env --> In progress ⏳  
