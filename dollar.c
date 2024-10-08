@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:47:57 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/05 10:09:53 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/07 19:16:57 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,22 @@ int count_dollar_lenth(char *str)
 		}
 		if (str[i] == '"')
 		{
-			while(str[i] != '$')
+			while(str[i] != '$' && str[i] != '"')
 				i++;
 		}
+		if (str[i] == '"')
+			i++;
 		while (str[i] && str[i] != '\'' && str[i] != '"' && str[i + 1] != '$' && is_not_valid_expend(str, i) == 1)
 		{
 			i++;
-			j++;
+			// j++;
 		}
 		if (str[i] == '$' && str[i + 1] == '$')
 		{
 			while (str[i + 1] == '$')
 			{
 				i+=2;
-				j+=2;
+				// j+=2;
 			}
 		}
 		if (str[i] == '$' && str[i + 1] != '$' && is_not_alpanum(str[i + 1]) == 1)
@@ -63,7 +65,7 @@ int count_dollar_lenth(char *str)
 			while(str[i])
 			{
 				i++;
-				j++;
+				// j++;
 			}
 		}
 	}
@@ -132,7 +134,6 @@ char *after_dol_word(char *str, int l, int str_len)
 		word[j++] = str[l++];
 	word[j] = '\0';
 	return (word);
-	
 }
 
 int is_not_valid_expend(char *str, int i)
@@ -158,11 +159,13 @@ char	*remp_with_value(char *str, char *env_var)
 	i = ft_strlen(str);
 	k = ft_strlen(env_var);
 	word = malloc(sizeof(char) * i - word_lenth + k + 1);
+	printf("the size alllocated is: %d and i is: %d word is: %d\n", i - word_lenth + k + 1, i, word_lenth);
 	if (!word)
 		return (NULL);
 	i = 0;
 	j = 0;
 	l = 0;
+	printf("the sting is: %s\n", str);
 	while (str[i])
 	{
 		while (str[i] == '\'')
@@ -176,34 +179,41 @@ char	*remp_with_value(char *str, char *env_var)
 		if (str[i] == '"')
 		{
 			word[j++] = str[i++];
-			while (str[i] && str[i] != '$' && str[i] != '"')
+			while (str[i] && str[i] != '$' && str[i] != '"' && str[i] != '\'')
 				word[j++] = str[i++];
 			if (str[i] == '"')
 				word[j++] = str[i++];
 		}
 		while (str[i] && str[i] != '\'' && str[i] != '"' && str[i + 1] != '$' && is_not_valid_expend(str, i) == 1)
+		{
 			word[j++] = str[i++];
+		}
 		if (str[i] == '$' && str[i + 1] == '$')
 		{
 			while (str[i] == '$' && str[i + 1] == '$')
 				i+=2;
 		}
-		if (str[i] == '$' && str[i + 1] != '$' && is_not_alpanum(str[i + 1]) == 1)
+		if (str[i] && str[i] == '$' && str[i + 1] != '$' && is_not_alpanum(str[i + 1]) == 1)
 		{
 			i++;
 			while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
 				i++;
 			while (l <= k)
+			{
 				word[j++] = env_var[l++];
+			}
 			l = i;
 			while (str[i])
 				i++;
 			word[j] = '\0';
-			// exit (0);
+			printf("the word should be 'salaoui' it is: %s\n", word);
 		}
+		else if (str[i] && str[i] != '$' && str[i] != '"' && str[i] != '\'')
+			i++;
 	}
 	command_rest = after_dol_word(str, l, ft_strlen(str));
 	hi = ft_strjoin(word, command_rest);
+	printf("after joining it is: %s\n", hi);
 	free(word);
 	return (hi);
 }
@@ -242,7 +252,10 @@ char	*get_env_var(char *str, int i)
 		return (NULL);
 	}
 	else
+	{
+		char *hello = getenv(env_var);
 		return (getenv(env_var));
+	}
 	
 }
 
@@ -287,7 +300,7 @@ t_token	*rmp_dollar(t_token *tokens)
 				if (temp_tokens->data[i] == '"')
 				{
 					i++;
-					while (temp_tokens->data[i] && temp_tokens->data[i] != '$' && temp_tokens->data[i] != '"')
+					while (temp_tokens->data[i] && temp_tokens->data[i] != '$' && temp_tokens->data[i] != '\'' && temp_tokens->data[i] != '"')
 						i++;
 					if (temp_tokens->data[i] == '"')
 						i++;
@@ -307,6 +320,7 @@ t_token	*rmp_dollar(t_token *tokens)
 				else if (temp_tokens->data[i] == '$')
 				{
 					env_var = get_env_var(temp_tokens->data, i);
+					// printf("the word is: %s\n", env_var);
 					temp_tokens->data = remplace_doll_str(temp_tokens->data, env_var);
 					i = 0;
 				}
