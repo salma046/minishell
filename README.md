@@ -23,3 +23,4 @@ Info : PATH_MAX's a system defined the maximent path lenght (in linux 4096 in ma
 
 ---------> 10/10 <---------  
 🤍 .Working on unset --> In progress ⏳  
+(I need to recode the env because i need to split the value and the variable together <3)
