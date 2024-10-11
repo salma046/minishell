@@ -124,8 +124,6 @@ char	*remp_with_null(char *str)
 		}
 		if (str[i] == '$' && str[i + 1] != '$' && is_not_alpanum(str[i + 1]) == 1)
 		{
-			printf("the string is: %s\n", str);
-			printf("the i is: %d\n", i);
 			i++;
 			while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
 				i++;
@@ -333,6 +331,7 @@ t_token	*rmp_dollar(t_token *tokens)
 						else
 							t = 1;
 					}
+					t = 0;
 					if (temp_tokens->data[i] == '"')
 						i++;
 				}
@@ -353,10 +352,7 @@ t_token	*rmp_dollar(t_token *tokens)
 				{
 					env_var = get_env_var(temp_tokens->data, i);
 					temp_tokens->data = remplace_doll_str(temp_tokens->data, env_var);
-					while (temp_tokens->data[i] && temp_tokens->data[i] != '$')
-						i++;
-					if (temp_tokens->data[i] == '$')
-						i = 0;
+					i = 0;
 				}
 				else if (temp_tokens->data[i])
 					i++;
@@ -366,4 +362,3 @@ t_token	*rmp_dollar(t_token *tokens)
 	}
 	return (tokens);
 }
-
