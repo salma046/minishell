@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:47:57 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/07 19:16:57 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/12 11:34:23 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,9 +293,9 @@ t_token	*rmp_dollar(t_token *tokens)
 	t_token	*temp_tokens;
 
 	temp_tokens = tokens;
-	i = 0;
 	while (temp_tokens)
 	{
+		i = 0;
 		env_var = NULL;
 		if (temp_tokens->data_type == 2 && temp_tokens->next_token && temp_tokens->next_token->data_type == 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 13:50:04 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/01 12:31:42 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/12 13:18:09 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	ft_put_word_token(char **line, enum e_token_type token_t,
 		t_token **tokens_list)
 {
 	char	*word;
+	char	*new_word;
 	char	quote;
 	int		i;
 
@@ -102,9 +103,10 @@ int	ft_put_word_token(char **line, enum e_token_type token_t,
 		i++;
 		(*line)++;
 	}
-	word = get_word(word, i);
+	new_word = get_word(word, i);
 	while (is_space(*line) == 1)
 		(*line)++;
-	token_new_word(word, WORD, tokens_list);
+	token_new_word(new_word, WORD, tokens_list);
+	// free(new_word);
 	return (i);
 }
