@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:47:57 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/12 11:34:23 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:08:06 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ char	*remp_with_value(char *str, char *env_var)
 			i++;
 			while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
 				i++;
-			while (l <= k)
+			while (l < k)
 				word[j++] = env_var[l++];
 			l = i;
 			while (str[i])
@@ -232,6 +232,7 @@ char	*remp_with_value(char *str, char *env_var)
 	}
 	command_rest = after_dol_word(str, l, ft_strlen(str));
 	hi = ft_strjoin(word, command_rest);
+	free(command_rest);
 	free(word);
 	return (hi);
 }
@@ -249,32 +250,27 @@ char	*remplace_doll_str(char	*data, char *env_var)
 
 char	*get_env_var(char *str, int i)
 {
-	char *env_var;
-	i++;
-	int j = i;
+	char	*env_var;
+	char	*env_value;
+	int		j;
+	int		temp;
 
-	int temp = 0;
+	i++;
+	temp = 0;
+	j = i;
 	while (str[i] == '$')
-	{
 		i++;
-	}
 	while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
 		i++;
 	env_var = (char *)malloc(i - j + 1);
+	if (!env_var)
+		return (NULL);
 	while (j < i)
 		env_var[temp++] = str[j++];
 	env_var[temp] = '\0';
-	if (getenv(env_var) == NULL)
-	{
-		free(env_var);
-		return (NULL);
-	}
-	else
-	{
-		char *hello = getenv(env_var);
-		return (getenv(env_var));
-	}
-	
+	env_value = getenv(env_var);
+	free(env_var);
+	return (env_value ? env_value : NULL);
 }
 
 int is_not_alpanum(char c)
