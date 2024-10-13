@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:47:57 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/13 11:08:06 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:57:17 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,11 @@ int count_dollar_lenth(char *str)
 		if (str[i] == '"')
 			i++;
 		while (str[i] && str[i] != '\'' && str[i] != '"' && str[i + 1] != '$' && is_not_valid_expend(str, i) == 1)
-		{
 			i++;
-			// j++;
-		}
 		if (str[i] == '$' && str[i + 1] == '$')
 		{
 			while (str[i + 1] == '$')
-			{
 				i+=2;
-				// j+=2;
-			}
 		}
 		if (str[i] == '$' && str[i + 1] != '$' && is_not_alpanum(str[i + 1]) == 1)
 		{
@@ -63,10 +57,7 @@ int count_dollar_lenth(char *str)
 				j++;
 			}
 			while(str[i])
-			{
 				i++;
-				// j++;
-			}
 		}
 	}
 	return (j);

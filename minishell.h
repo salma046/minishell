@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/12 11:44:27 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:58:43 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_token	*parsing(t_minishell g_minishell);
 t_token	*rmp_dollar(t_token *tokens);
 int		count_pipe(t_token *tokens);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strdup(const char *src);
+char	*ft_strdup(char *src);
 int		is_not_alpanum(char c);
 int		cmd_count(t_token *tokens);
 t_node	*mk_nodes(t_token *tokens);

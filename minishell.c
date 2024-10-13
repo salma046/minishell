@@ -6,18 +6,13 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:12 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/13 11:31:57 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:58:28 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_minishell	g_minishell;
-
-// search_errors(void)
-// in here first check if the first token is a pipe
-// check if the last token is a pipe | all_redires
-// check if there are two followed tokens and both are pipes
 
 void free_redir_list(t_redir *redir)
 {
@@ -27,10 +22,10 @@ void free_redir_list(t_redir *redir)
     current = redir;
     while (current != NULL)
     {
-        next = current->next;    // Save the next redir node
-        free(current->file);     // Free the file string
-        free(current);           // Free the current redir structure
-        current = next;          // Move to the next redir node
+        next = current->next;
+        free(current->file);
+        free(current);
+        current = next;
     }
 }
 
@@ -39,7 +34,6 @@ void free_node(t_node *node)
 {
     int i = 0;
 
-    // Free each command in the cmd array
     if (node->cmd)
     {
         while (node->cmd[i])
@@ -47,15 +41,12 @@ void free_node(t_node *node)
             free(node->cmd[i]);
             i++;
         }
-        free(node->cmd);  // Free the array itself
+        free(node->cmd);
     }
 
-    // Free the redirections list
     if (node->redir)
         free_redir_list(node->redir);
-
-    // Finally, free the node itself
-    free(node);
+	free(node);
 }
 
 
@@ -67,9 +58,9 @@ void free_node_list(t_node *node_list)
     current = node_list;
     while (current != NULL)
     {
-        next = current->next_node;  // Save the next node
-        free_node(current);         // Free the current node
-        current = next;             // Move to the next node
+        next = current->next_node;
+        free_node(current);
+        current = next;
     }
 }
 
@@ -92,7 +83,7 @@ int	main(int ac, char *av[], char **env)
 		g_minishell.tokens = ft_tokenize(g_minishell);
 		if (!g_minishell.tokens)
 			continue ;
-		g_minishell.tokens = rmp_dollar(g_minishell.tokens); // in progress // Done
+		g_minishell.tokens = rmp_dollar(g_minishell.tokens);
 		g_minishell.tokens = rm_qotes(g_minishell.tokens);
 		g_minishell.tokens = parsing(g_minishell);
 		g_minishell.nodes = mk_nodes(g_minishell.tokens);

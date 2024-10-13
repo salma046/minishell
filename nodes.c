@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 11:41:02 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/13 11:32:06 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:53:36 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_redi_add_back(t_redir **redirections, t_redir *new_redir)
 {
-	t_redir *arrs;
+	t_redir	*arrs;
 
 	arrs = *redirections;
 	if (!redirections || !new_redir)
@@ -29,12 +29,13 @@ void	ft_redi_add_back(t_redir **redirections, t_redir *new_redir)
 	arrs->next = new_redir;
 }
 
-void	fill_redi(enum e_token_type token_t, char *red_file, t_redir **redirections)
+void	fill_redi(enum e_token_type token_t, char *red_file,
+		t_redir **redirections)
 {
-	t_redir *new_redir;
+	t_redir	*new_redir;
 
 	new_redir = malloc(sizeof(t_redir));
-	if(!new_redir)
+	if (!new_redir)
 		return ;
 	new_redir->red_type = token_t;
 	new_redir->file = ft_strdup(red_file);
@@ -44,7 +45,7 @@ void	fill_redi(enum e_token_type token_t, char *red_file, t_redir **redirections
 
 void	ft_node_add_back(t_node **node_list, t_node *new_node)
 {
-	t_node *arrs;
+	t_node	*arrs;
 
 	arrs = *node_list;
 	if (!node_list || !new_node)
@@ -62,9 +63,9 @@ void	ft_node_add_back(t_node **node_list, t_node *new_node)
 
 void	fill_node(t_token *temp_tokens, t_node **node_list)
 {
-	t_node *node;
-	t_redir *redirections;
-	t_token *tokens;
+	t_node	*node;
+	t_redir	*redirections;
+	t_token	*tokens;
 	int		cmd_idx;
 	int		i;
 
@@ -72,16 +73,17 @@ void	fill_node(t_token *temp_tokens, t_node **node_list)
 	tokens = temp_tokens;
 	redirections = NULL;
 	node = malloc(sizeof(t_node));
-    if (!node)
+	if (!node)
 		return ;
 	cmd_idx = cmd_count(temp_tokens);
 	node->cmd = malloc(sizeof(char *) * (cmd_idx + 1));
 	while (tokens && tokens->data_type != PIPE)
 	{
-		if (tokens->data_type == OUT_REDIR || tokens->data_type == APPEND ||
-            tokens->data_type == INP_REDIR || tokens->data_type == HER_DOC)
+		if (tokens->data_type == OUT_REDIR || tokens->data_type == APPEND
+			|| tokens->data_type == INP_REDIR || tokens->data_type == HER_DOC)
 		{
-			fill_redi(tokens->data_type, tokens->next_token->data, &redirections);	
+			fill_redi(tokens->data_type, tokens->next_token->data,
+				&redirections);
 			tokens = tokens->next_token;
 		}
 		else
@@ -96,39 +98,40 @@ void	fill_node(t_token *temp_tokens, t_node **node_list)
 
 void	fill_commands(t_node **node_list, t_token *tokens, int num_cmds)
 {
-    int cmd_idx = 0;
-    int arg_idx = 0;
+	int	cmd_idx;
+	int	arg_idx;
 
-    while (tokens) {
+	cmd_idx = 0;
+	arg_idx = 0;
+	while (tokens)
+	{
 		fill_node(tokens, node_list);
 		while (tokens && tokens->data_type != PIPE)
 			tokens = tokens->next_token;
-        if (tokens && tokens->data_type == PIPE)
+		if (tokens && tokens->data_type == PIPE)
 			tokens = tokens->next_token;
-    }
+	}
 }
 
 t_node	*mk_nodes(t_token *tokens)
 {
 	t_node	*nodes;
-    t_token *current;
-    t_token *next;
+	t_token	*current;
+	t_token	*next;
 	int		cmd_count;
 	int		i;
 
 	nodes = NULL;
-    current = tokens;
+	current = tokens;
 	i = 0;
-	// count pipes in one command
 	cmd_count = count_pipe(tokens);
-	
 	fill_commands(&nodes, tokens, cmd_count);
-    while (current)
-    {
-        next = current->next_token;
-        free(current->data);
-        free(current);
-        current = next; 
-    }
+	while (current)
+	{
+		next = current->next_token;
+		free(current->data);
+		free(current);
+		current = next;
+	}
 	return (nodes);
 }
