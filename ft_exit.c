@@ -8,7 +8,7 @@ void ft_exit(t_minishell data)
 	if(data.tokens->next_token)
 	{
 		exit_status = ft_atoi(data.tokens->next_token->data);
-		// printf("%d", exit_status);
+		printf("%d", exit_status);
 	}
 	exit(exit_status);
 }

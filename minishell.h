@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/08 09:51:26 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:31:33 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@
 # include "libft/libft.h"
 
 //--->Sajida: 
+typedef struct s_env
+{
+	char			*value;
+	char			*key;
+	char			equal;
+}	t_env;
+/// Sajida
+
 typedef enum e_token_type
 {
 	WORD,
