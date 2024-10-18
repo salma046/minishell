@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/16 19:31:33 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/10/18 05:57:24 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_env
 	char			*value;
 	char			*key;
 	char			equal;
+	struct s_env 	*next;
 }	t_env;
 /// Sajida
 
@@ -98,6 +99,8 @@ void ft_pwd(t_minishell cmd);
 void check_command(t_minishell data);
 void ft_env(t_minishell data);
 void ft_exit(t_minishell data);
+void ft_unset(t_env *env_list,t_minishell data);
+void ft_backup(t_env *original);
 
 // minitest in the end of prog
 // cat lksdj < dalkf;> sdkfj<<sdf >>dslfj |ksdjj|osdfij|sdkfj+
