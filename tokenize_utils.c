@@ -6,7 +6,11 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 13:50:04 by salaoui           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/10/04 10:05:27 by saait-si         ###   ########.fr       */
+=======
+/*   Updated: 2024/10/13 11:56:04 by salaoui          ###   ########.fr       */
+>>>>>>> 607573b32e26a53e53cddb0823930d457f179a5a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +83,7 @@ int	ft_put_word_token(char **line, enum e_token_type token_t,
 {
 	(void)token_t;
 	char	*word;
+	char	*new_word;
 	char	quote;
 	int		i;
 
@@ -103,9 +108,10 @@ int	ft_put_word_token(char **line, enum e_token_type token_t,
 		i++;
 		(*line)++;
 	}
-	word = get_word(word, i);
+	new_word = get_word(word, i);
 	while (is_space(*line) == 1)
 		(*line)++;
-	token_new_word(word, WORD, tokens_list);
+	token_new_word(new_word, WORD, tokens_list);
+	// free(new_word);
 	return (i);
 }

@@ -6,12 +6,17 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:47:57 by salaoui           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/10/04 10:15:30 by saait-si         ###   ########.fr       */
+=======
+/*   Updated: 2024/10/13 11:57:17 by salaoui          ###   ########.fr       */
+>>>>>>> 607573b32e26a53e53cddb0823930d457f179a5a
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int is_not_valid_expend(char *str, int i);
 
 int count_dollar_lenth(char *str)
 {
@@ -22,7 +27,7 @@ int count_dollar_lenth(char *str)
 	j = 0;
 	while (str[i] != '\0')
 	{
-		while (str[i] && str[i] != '\'' && (!(str[i] == '$' && is_not_alpanum(str[i + 1]) == 1)))
+		while (str[i] && str[i] != '\'' && is_not_valid_expend(str, i) == 1)
 			i++;
 		while (str[i] == '\'')
 		{
@@ -34,18 +39,19 @@ int count_dollar_lenth(char *str)
 		}
 		if (str[i] == '"')
 		{
-			while(str[i] != '$')
+			while(str[i] != '$' && str[i] != '"')
 				i++;
 		}
+		if (str[i] == '"')
+			i++;
+		while (str[i] && str[i] != '\'' && str[i] != '"' && str[i + 1] != '$' && is_not_valid_expend(str, i) == 1)
+			i++;
 		if (str[i] == '$' && str[i + 1] == '$')
 		{
 			while (str[i + 1] == '$')
-			{
 				i+=2;
-				j+=2;
-			}
 		}
-		if (str[i] == '$' && str[i + 1] != '$')
+		if (str[i] == '$' && str[i + 1] != '$' && is_not_alpanum(str[i + 1]) == 1)
 		{
 			i++;
 			j++;
@@ -55,10 +61,7 @@ int count_dollar_lenth(char *str)
 				j++;
 			}
 			while(str[i])
-			{
 				i++;
-				j++;
-			}
 		}
 	}
 	return (j);
@@ -68,6 +71,7 @@ char	*remp_with_null(char *str)
 {
 	int i;
 	int j;
+	int t = 0;
 	int	word_lenth;
 	char *word;
 
@@ -78,14 +82,50 @@ char	*remp_with_null(char *str)
 	j = 0;
 	while (str[i])
 	{
-		while (str[i] && (!(str[i] == '$' && is_not_alpanum(str[i + 1]) == 1)))
+		while (str[i] == '\'')
+		{
 			word[j++] = str[i++];
-		if (str[i] == '$')
-			i++;
-		while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
-			i++;
-		while (str[i])
+			while (str[i] && str[i] != '\'')
+				word[j++] = str[i++];
+			if (str[i] == '\'')
+				word[j++] = str[i++];
+		}
+		if (str[i] == '"')
+		{
 			word[j++] = str[i++];
+			while (str[i] && str[i] != '"' && t != 1)
+			{
+				if (str[i] == '$' && str[i + 1] == '$')
+				{
+					while (str[i] == '$' && str[i + 1] == '$')
+						i+=2;
+				}
+				if (str[i] != '$')
+					word[j++] = str[i++];
+				else
+				t = 1;
+			}
+			if (str[i] == '"')
+				word[j++] = str[i++];
+		}
+		while (str[i] && str[i] != '\'' && str[i] != '"' && str[i + 1] != '$' && is_not_valid_expend(str, i) == 1)
+			word[j++] = str[i++];
+		if (str[i] != '\'' && str[i] != '"' && str[i] != '$' && str[i + 1] == '$')
+			word[j++] = str[i++];
+		if (str[i] == '$' && str[i + 1] == '$')
+		{
+			while (str[i] == '$' && str[i + 1] == '$')
+				i+=2;
+		}
+		if (str[i] == '$' && str[i + 1] != '$' && is_not_alpanum(str[i + 1]) == 1)
+		{
+			i++;
+			while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
+				i++;
+			while (str[i])
+				word[j++] = str[i++];
+			word[j] = '\0';
+		}
 	}
 	word[j] = '\0';
 	return(word);
@@ -99,12 +139,17 @@ char *after_dol_word(char *str, int l, int str_len)
 	word = malloc(sizeof(char) * str_len - l + 1);
 	j = 0;
 	while (str[l])
-	{
 		word[j++] = str[l++];
-	}
 	word[j] = '\0';
 	return (word);
-	
+}
+
+int is_not_valid_expend(char *str, int i)
+{
+	if (str[i] == '$' && is_not_alpanum(str[i + 1]) == 1)
+		return (0);
+	else
+		return (1);
 }
 
 char	*remp_with_value(char *str, char *env_var)
@@ -113,6 +158,7 @@ char	*remp_with_value(char *str, char *env_var)
 	int j;
 	int l;
 	int k;
+	int t = 0;
 	int	word_lenth;
 	char *word;
 	char *hi;
@@ -122,6 +168,8 @@ char	*remp_with_value(char *str, char *env_var)
 	i = ft_strlen(str);
 	k = ft_strlen(env_var);
 	word = malloc(sizeof(char) * i - word_lenth + k + 1);
+	if (!word)
+		return (NULL);
 	i = 0;
 	j = 0;
 	l = 0;
@@ -138,33 +186,48 @@ char	*remp_with_value(char *str, char *env_var)
 		if (str[i] == '"')
 		{
 			word[j++] = str[i++];
-			while (str[i] && str[i] != '$' && str[i] != '"')
-				word[j++] = str[i++];
+			while (str[i] && str[i] != '"' && t != 1)
+			{
+				if (str[i] == '$' && str[i + 1] == '$')
+				{
+					while (str[i] == '$' && str[i + 1] == '$')
+						i+=2;
+				}
+				if (str[i] != '$')
+					word[j++] = str[i++];
+				else
+				t = 1;
+			}
 			if (str[i] == '"')
 				word[j++] = str[i++];
 		}
-		while (str[i] && str[i] != '\'' && str[i] != '"' && (!(str[i] == '$' && is_not_alpanum(str[i + 1]) == 1)))
+		while (str[i] && str[i] != '\'' && str[i] != '"' && str[i + 1] != '$' && is_not_valid_expend(str, i) == 1)
+			word[j++] = str[i++];
+		if (str[i] != '\'' && str[i] != '"' && str[i] != '$' && str[i + 1] == '$')
 			word[j++] = str[i++];
 		if (str[i] == '$' && str[i + 1] == '$')
 		{
 			while (str[i] == '$' && str[i + 1] == '$')
 				i+=2;
 		}
-		if (str[i] == '$')
+		if (str[i] && str[i] == '$' && str[i + 1] != '$' && is_not_alpanum(str[i + 1]) == 1)
 		{
 			i++;
 			while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
 				i++;
-			while (l <= k)
+			while (l < k)
 				word[j++] = env_var[l++];
 			l = i;
 			while (str[i])
 				i++;
 			word[j] = '\0';
 		}
+		else if (str[i] && str[i] != '$' && str[i - 1] != '$' && str[i] != '"' && str[i] != '\'')
+			i++;
 	}
 	command_rest = after_dol_word(str, l, ft_strlen(str));
 	hi = ft_strjoin(word, command_rest);
+	free(command_rest);
 	free(word);
 	return (hi);
 }
@@ -182,29 +245,27 @@ char	*remplace_doll_str(char	*data, char *env_var)
 
 char	*get_env_var(char *str, int i)
 {
-	char *env_var;
-	i++;
-	int j = i;
+	char	*env_var;
+	char	*env_value;
+	int		j;
+	int		temp;
 
-	int temp = 0;
+	i++;
+	temp = 0;
+	j = i;
 	while (str[i] == '$')
-	{
 		i++;
-	}
 	while (str[i] && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9') || str[i] == 95))
 		i++;
 	env_var = (char *)malloc(i - j + 1);
+	if (!env_var)
+		return (NULL);
 	while (j < i)
 		env_var[temp++] = str[j++];
 	env_var[temp] = '\0';
-	if (getenv(env_var) == NULL)
-	{
-		free(env_var);
-		return (NULL);
-	}
-	else
-		return (getenv(env_var));
-	
+	env_value = getenv(env_var);
+	free(env_var);
+	return (env_value ? env_value : NULL);
 }
 
 int is_not_alpanum(char c)
@@ -218,14 +279,13 @@ int is_not_alpanum(char c)
 t_token	*rmp_dollar(t_token *tokens)
 {
 	int i;
-	int count_quotes;
+	int t = 0;
 	char *env_var;
 	
 	(void)count_quotes; //sjd
 	t_token	*temp_tokens;
 
 	temp_tokens = tokens;
-
 	while (temp_tokens)
 	{
 		i = 0;
@@ -252,8 +312,19 @@ t_token	*rmp_dollar(t_token *tokens)
 				if (temp_tokens->data[i] == '"')
 				{
 					i++;
-					while (temp_tokens->data[i] && temp_tokens->data[i] != '$' && temp_tokens->data[i] != '"')
-						i++;
+					while (temp_tokens->data[i] && temp_tokens->data[i] != '"' && t != 1)
+					{
+						if (temp_tokens->data[i] == '$' && temp_tokens->data[i + 1] == '$')
+						{
+							while (temp_tokens->data[i] == '$' && temp_tokens->data[i + 1] == '$')
+								i+=2;
+						}
+						if (temp_tokens->data[i] != '$')
+							i++;
+						else
+							t = 1;
+					}
+					t = 0;
 					if (temp_tokens->data[i] == '"')
 						i++;
 				}
@@ -261,6 +332,7 @@ t_token	*rmp_dollar(t_token *tokens)
 				{
 					while (temp_tokens->data[i] == '$' && temp_tokens->data[i + 1] == '$')
 						i+=2;
+					// double $$ without a valid or null env var stays the same
 				}
 				else if (temp_tokens->data[i] == '$' && is_not_alpanum(temp_tokens->data[i + 1]) == 0)
 				{

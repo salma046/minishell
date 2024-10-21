@@ -6,7 +6,11 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:02:08 by salaoui           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/10/04 10:03:45 by saait-si         ###   ########.fr       */
+=======
+/*   Updated: 2024/10/13 11:53:50 by salaoui          ###   ########.fr       */
+>>>>>>> 607573b32e26a53e53cddb0823930d457f179a5a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +118,25 @@ void	ft_lstadd_back(t_token **lst, t_token *new)
 	new->prev_token = arrs;
 }
 
+<<<<<<< HEAD
 char	*ft_strdup(const char *src)
+=======
+int	ft_strncmp(char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (!n)
+		return (0);
+	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n)
+		i++;
+	if (i == n)
+		return (0);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+char	*ft_strdup(char *src)
+>>>>>>> 607573b32e26a53e53cddb0823930d457f179a5a
 {
 	int		l;
 	char	*p1;

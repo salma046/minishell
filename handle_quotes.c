@@ -6,20 +6,19 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 13:22:56 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/14 10:02:52 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/13 11:46:02 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*remplace_str(char *data, int i, int count_quotes)
+char	*remplac_str(char *data, int i, int count_quotes)
 {
-	int j = 0;
-	char *word;
-	char quote;
+	int		j;
+	char	*word;
+	char	quote;
 
-	j = count_quotes * 2;
-	word = (char *)malloc(i - j + 1);
+	word = (char *)malloc(i - (count_quotes * 2) + 1);
 	if (!word)
 		return (NULL);
 	j = 0;
@@ -30,7 +29,7 @@ char	*remplace_str(char *data, int i, int count_quotes)
 		{
 			quote = data[i];
 			i++;
-			while(data[i] && data[i] != quote)
+			while (data[i] && data[i] != quote)
 				word[j++] = data[i++];
 			if (data[i] == quote)
 				i++;
@@ -44,37 +43,35 @@ char	*remplace_str(char *data, int i, int count_quotes)
 
 t_token	*rm_qotes(t_token *tokens)
 {
-	int i;
-	int count_quotes;
-	char quote;
+	int		i;
+	int		n_quotes;
+	char	quot;
 	t_token	*temp_tokens;
 
 	temp_tokens = tokens;
-
 	while (temp_tokens)
 	{
 		i = 0;
-		count_quotes = 0;
+		n_quotes = 0;
 		if (temp_tokens->data_type == 0)
 		{
 			while (temp_tokens->data[i])
 			{
 				if (temp_tokens->data[i] == '\'' || temp_tokens->data[i] == '"')
 				{
-					quote = temp_tokens->data[i];
-					count_quotes++;
+					quot = temp_tokens->data[i];
+					n_quotes++;
 					i++;
-					while(temp_tokens->data[i] && temp_tokens->data[i] != quote)
+					while (temp_tokens->data[i] && temp_tokens->data[i] != quot)
 						i++;
-					if (temp_tokens->data[i] == quote)
+					if (temp_tokens->data[i] == quot)
 						i++;
 				}
 				else if (temp_tokens->data[i] != '\0')
 					i++;
 			}
-			if (count_quotes)
-				temp_tokens->data = remplace_str(temp_tokens->data, i, count_quotes);
-			// printf("the number of qotes is: %d\n", count_quotes);
+			if (n_quotes)
+				temp_tokens->data = remplac_str(temp_tokens->data, i, n_quotes);
 		}
 		temp_tokens = temp_tokens->next_token;
 	}
