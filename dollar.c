@@ -1,19 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   dollar.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/21 11:47:57 by salaoui           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/10/04 10:15:30 by saait-si         ###   ########.fr       */
-=======
-/*   Updated: 2024/10/13 11:57:17 by salaoui          ###   ########.fr       */
->>>>>>> 607573b32e26a53e53cddb0823930d457f179a5a
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 int is_not_valid_expend(char *str, int i);
@@ -282,7 +266,6 @@ t_token	*rmp_dollar(t_token *tokens)
 	int t = 0;
 	char *env_var;
 	
-	(void)count_quotes; //sjd
 	t_token	*temp_tokens;
 
 	temp_tokens = tokens;

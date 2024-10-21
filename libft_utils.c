@@ -1,19 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   libft_utils.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/30 15:02:08 by salaoui           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/10/04 10:03:45 by saait-si         ###   ########.fr       */
-=======
-/*   Updated: 2024/10/13 11:53:50 by salaoui          ###   ########.fr       */
->>>>>>> 607573b32e26a53e53cddb0823930d457f179a5a
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 char	*ft_strncpy(char *dst, const char *src, size_t len)
 {
@@ -56,49 +40,8 @@ char *get_word(char *str, int i)
 	return (word);
 }
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	i;
 
-	i = 0;
-	while (str[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
-
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	int		size;
-	char	*ptr;
-	int		i;
-
-	i = 0;
-	if (!s1 || !s2)
-		return (NULL);
-	size = ft_strlen(s1) + ft_strlen(s2);
-	ptr = (char *)malloc((size + 1) * sizeof(char));
-	if (ptr == NULL)
-		return (NULL);
-	while (*s1 != '\0')
-	{
-		ptr[i] = *s1;
-		i++;
-		s1++;
-	}
-	while (*s2 != '\0')
-	{
-		ptr[i] = *s2;
-		i++;
-		s2++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-}
-
-void	ft_lstadd_back(t_token **lst, t_token *new)
+void	ft_lstadd_back_token(t_token **lst, t_token *new)
 {
 	t_token	*arrs;
 
@@ -118,40 +61,3 @@ void	ft_lstadd_back(t_token **lst, t_token *new)
 	new->prev_token = arrs;
 }
 
-<<<<<<< HEAD
-char	*ft_strdup(const char *src)
-=======
-int	ft_strncmp(char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	if (!n)
-		return (0);
-	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n)
-		i++;
-	if (i == n)
-		return (0);
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-char	*ft_strdup(char *src)
->>>>>>> 607573b32e26a53e53cddb0823930d457f179a5a
-{
-	int		l;
-	char	*p1;
-
-	l = 0;
-	p1 = malloc((ft_strlen(src) + 1) * sizeof(char));
-	if (p1 == NULL)
-	{
-		return (NULL);
-	}
-	while (src[l])
-	{
-		p1[l] = src[l];
-		l++;
-	}
-	p1[l] = '\0';
-	return (p1);
-}

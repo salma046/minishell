@@ -1,19 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenize_utils.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/08 13:50:04 by salaoui           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/10/04 10:05:27 by saait-si         ###   ########.fr       */
-=======
-/*   Updated: 2024/10/13 11:56:04 by salaoui          ###   ########.fr       */
->>>>>>> 607573b32e26a53e53cddb0823930d457f179a5a
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 void	token_new_sep(enum e_token_type token_t, t_token **tokens_list)
@@ -26,7 +10,7 @@ void	token_new_sep(enum e_token_type token_t, t_token **tokens_list)
 	new_token->data = NULL;
 	new_token->data_type = token_t;
 	new_token->next_token = NULL;
-	ft_lstadd_back(tokens_list, new_token);
+	ft_lstadd_back_token(tokens_list, new_token);
 }
 
 void	ft_put_token(char **line, enum e_token_type token_t,
@@ -58,7 +42,7 @@ void	token_new_word(char *word, enum e_token_type token_t,
 	new_token->data = word;
 	new_token->data_type = token_t;
 	new_token->next_token = NULL;
-	ft_lstadd_back(tokens_list, new_token);
+	ft_lstadd_back_token(tokens_list, new_token);
 }
 
 int	find_quote(char c, char **line, int *i)

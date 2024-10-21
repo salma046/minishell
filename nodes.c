@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 11:41:02 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/13 11:53:36 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/21 13:33:07 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,22 +116,11 @@ void	fill_commands(t_node **node_list, t_token *tokens, int num_cmds)
 t_node	*mk_nodes(t_token *tokens)
 {
 	t_node	*nodes;
-	t_token	*current;
-	t_token	*next;
 	int		cmd_count;
 	int		i;
 
-	nodes = NULL;
-	current = tokens;
 	i = 0;
 	cmd_count = count_pipe(tokens);
 	fill_commands(&nodes, tokens, cmd_count);
-	while (current)
-	{
-		next = current->next_token;
-		free(current->data);
-		free(current);
-		current = next;
-	}
 	return (nodes);
 }
