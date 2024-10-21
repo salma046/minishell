@@ -32,5 +32,6 @@ Info : PATH_MAX's a system defined the maximent path lenght (in linux 4096 in ma
 ---------> 21/10 <---------  
 🤍 .Working on unset --> In progress ⏳  
 🤍 .Working on export --> In progress ⏳  
+🤍 .Check the .o in Makefile ⏳  
 
 
