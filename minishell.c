@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:12 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/17 03:07:26 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/10/21 01:48:57 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,14 +155,11 @@ int	main(int ac, char *av[], char *env[])
 {
 	(void)ac;
 	(void)av;
-        t_env cmd_env;
-	printf("%s", cmd_env.key);
 	g_minishell.envirement = env;
 	int i;
 	int j;
 	while (1)
 	{
-		// doing signals -sigint & -sigquit
 		g_minishell.command = readline("~$ ");
 		if (!g_minishell.command)
 		{

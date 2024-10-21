@@ -1,21 +1,21 @@
 
 #include "minishell.h"
 
-// void ft_backup(t_env *original)
-// {
-//     t_env *tmp ;
-    
-//     while (original != NULL )
-//     {
-//         printf("o:::::%s\n", original->key);
-//         printf("o:::::%s\n", original->value);
-//         free(original->key);
-//         free(original->value);
-//         tmp = original;
-//         original = original->next ;
-//         free(tmp);
-//     }
-// }
+void ft_backup(t_env *original)
+{
+    t_env *tmp ;
+    printf("\033[0;31m aloha: \033[0m");
+    while (original != NULL )
+    {
+        printf("-->:::::%s\n", original->key);
+        printf("-->:::::%s\n", original->value);
+        free(original->key);
+        free(original->value);
+        tmp = original;
+        original = original->next ;
+        free(tmp);
+    }
+}
 
 void ft_env(t_minishell data)
 {
@@ -35,11 +35,9 @@ void ft_env(t_minishell data)
             cmd_env->value = strndup(equal_env + 1, ft_strlen(data.envirement[i] + 1 ));
 			cmd_env->equal = '=';
 			cmd_env->next = NULL;
-            // printf("%s", cmd_env->key);
-            // printf("%c", cmd_env->equal);
-            // printf("%s\n", cmd_env->value);
-            // free(cmd_env->key);
-            // free(cmd_env->value);
+            printf("%s", cmd_env->key);
+            printf("%c", cmd_env->equal);
+            printf("%s\n", cmd_env->value);
         }
         if( last_node == NULL)
             head = cmd_env;
@@ -48,5 +46,4 @@ void ft_env(t_minishell data)
         last_node = cmd_env;
         i++;
     }
-    ft_backup(head);
 }
