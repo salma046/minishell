@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:12 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/21 01:48:57 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/10/21 05:00:16 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ int	main(int ac, char *av[], char *env[])
 	g_minishell.envirement = env;
 	int i;
 	int j;
+	int p;
 	while (1)
 	{
 		g_minishell.command = readline("~$ ");
@@ -178,11 +179,12 @@ int	main(int ac, char *av[], char *env[])
 		{
 			j = 0;
 			i = 0;
+			p = 1;
 			printf("------------------1------------------\n");
 			while(g_minishell.nodes->cmd[j])
 			{
-				// printf("the node \033[32m%d\033[0m cmds n* %d is :\033[32m %s\033[0m\n",
-				// i, j, g_minishell.nodes->cmd[j]);
+				printf("the node \033[32m%d\033[0m cmds n* %d is :\033[32m %s\033[0m\n",
+				i, j, g_minishell.nodes->cmd[j]);
 				j++;
 			}
 			check_command(g_minishell);

@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/21 02:45:17 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/10/21 09:32:50 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void check_command(t_minishell data);
 void ft_env(t_minishell data);
 void ft_exit(t_minishell data);
 void ft_unset(t_env *env_list,t_minishell data);
-void ft_backup(t_env *original);
+void ft_backup(t_env *original, t_minishell data);
 void ft_env_unset(t_minishell data);
 // minitest in the end of prog
 // cat lksdj < dalkf;> sdkfj<<sdf >>dslfj |ksdjj|osdfij|sdkfj+

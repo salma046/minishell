@@ -3,6 +3,8 @@
 // You need to free it .
 void ft_env_unset(t_minishell data)
 {
+	printf(" \033[36m------------> %s  <---------\033[36m\n\n\n\n", data.tokens->data );
+
     int i = 0;
     t_env *head = NULL;
     t_env *last_node = NULL;
@@ -27,13 +29,13 @@ void ft_env_unset(t_minishell data)
         last_node = cmd_env;
         i++;
     }
-	ft_backup(head);
+	ft_backup(head, data);
 }
 
 void 	ft_unset(t_env *env_list, t_minishell data)
 {
 	(void)data;
-	(void)env_list ;
+	(void)env_list;
 	printf("\033[36m-------  I'm in the unset -------\033[0m \n");
 	ft_env_unset(data);
 	printf("\033[0;33m-----------------------------\033[0m\n");

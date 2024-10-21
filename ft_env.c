@@ -2,19 +2,22 @@
 #include "minishell.h"
 //hnaya dert wahed l copy l env bax n9der n9arenha m3a l key w nchof xno radi i5sni n delete
 
-void ft_backup(t_env *original)
+void ft_backup(t_env *original, t_minishell data)
 {
     t_env *tmp ;
-    t_env *cmd_env = (t_env *)malloc(sizeof(t_env));
-    cmd_env->test = "COLORFGBG";
-    printf("\033[0;31m aloha: \033[0m");
     while (original != NULL )
     {
+        original->test = data.tokens->next_token->data;
+        printf("\033[0;31m %s \033[0m", original->test);
+
+		printf("\033[0;33m|---------------|||||||||||||--------------|\033[0m\n");
         printf("-->:::::%s\n", original->key);
         printf("-->:::::%s\n", original->value);
-        printf("%s\n", cmd_env->test);
-        if (original->key != NULL && !ft_strcmp(original->key, cmd_env->test))
+        // I need to add first the riginal->test than remove it 
+        if (original->test != NULL && !ft_strcmp(original->key, original->test))
         {
+            free(original->key);
+            
             printf("\033[36m   /\\  \033[0m \n");  // First line with forward slash and backslash
             printf("\033[36m  /  \\ \033[0m \n");  // Second line
             printf("\033[36m /    \\\033[0m \n");  // Third line
