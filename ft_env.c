@@ -1,14 +1,29 @@
 
 #include "minishell.h"
+//hnaya dert wahed l copy l env bax n9der n9arenha m3a l key w nchof xno radi i5sni n delete
 
 void ft_backup(t_env *original)
 {
     t_env *tmp ;
+    t_env *cmd_env = (t_env *)malloc(sizeof(t_env));
+    cmd_env->test = "COLORFGBG";
     printf("\033[0;31m aloha: \033[0m");
     while (original != NULL )
     {
         printf("-->:::::%s\n", original->key);
         printf("-->:::::%s\n", original->value);
+        printf("%s\n", cmd_env->test);
+        if (original->key != NULL && !ft_strcmp(original->key, cmd_env->test))
+        {
+            printf("\033[36m   /\\  \033[0m \n");  // First line with forward slash and backslash
+            printf("\033[36m  /  \\ \033[0m \n");  // Second line
+            printf("\033[36m /    \\\033[0m \n");  // Third line
+            printf("\033[36m |  *  | \033[0m \n");  // star line
+            printf("\033[36m \\    /\033[0m \n");  // Fourth line with backslash and forward slash
+            printf("\033[36m  \\  / \033[0m \n");  // Fifth line
+            printf("\033[36m   \\/  \033[0m \n");
+        }
+		printf("\033[0;33m|-----------------------------|\033[0m\n");
         free(original->key);
         free(original->value);
         tmp = original;
@@ -16,7 +31,7 @@ void ft_backup(t_env *original)
         free(tmp);
     }
 }
-
+// I called the function normaly of env.
 void ft_env(t_minishell data)
 {
     int i = 0;

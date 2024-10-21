@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/18 06:53:21 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/10/21 02:45:17 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 typedef struct s_env
 {
 	char			*value;
+	char			*test;
 	char			*key;
 	char			equal;
 	struct s_env 	*next;

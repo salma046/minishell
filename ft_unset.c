@@ -6,10 +6,10 @@ void ft_env_unset(t_minishell data)
     int i = 0;
     t_env *head = NULL;
     t_env *last_node = NULL;
-    
     while(data.envirement[i] != NULL)
     {
         t_env *cmd_env = (t_env *)malloc(sizeof(t_env));
+    	cmd_env->test = "TERM_SESSION_ID";
         if (!cmd_env)
             exit(1);
         char *equal_env = strchr(data.envirement[i], '=');
@@ -38,12 +38,4 @@ void 	ft_unset(t_env *env_list, t_minishell data)
 	ft_env_unset(data);
 	printf("\033[0;33m-----------------------------\033[0m\n");
 }
-// int p = ft_strcmp(data.envirement, cmd_env.key);
-	
-	
-	// printf("%s\n", env_list->value);
-	// printf("cmd_env.key :%s\n", cmd_env.key);
-	// if (p == 0)
-	// 	printf("The same");
-	// else 
-	// 	printf("Not the same");
+
