@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 13:50:04 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/01 12:31:42 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/04 10:05:27 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	find_quote(char c, char **line, int *i)
 int	ft_put_word_token(char **line, enum e_token_type token_t,
 		t_token **tokens_list)
 {
+	(void)token_t;
 	char	*word;
 	char	quote;
 	int		i;

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libft_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:02:08 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/01 11:39:46 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/04 10:03:45 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 char	*ft_strncpy(char *dst, const char *src, size_t len)
 {
     size_t i;
@@ -113,20 +112,6 @@ void	ft_lstadd_back(t_token **lst, t_token *new)
 	}
 	arrs->next_token = new;
 	new->prev_token = arrs;
-}
-
-int	ft_strncmp(char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	if (!n)
-		return (0);
-	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n)
-		i++;
-	if (i == n)
-		return (0);
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
 char	*ft_strdup(const char *src)

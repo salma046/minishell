@@ -1,35 +1,52 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/08/30 10:47:56 by salaoui           #+#    #+#              #
-#    Updated: 2024/09/28 12:22:20 by salaoui          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
-SRC = minishell.c libft_utils.c tokenize.c tokenize_utils.c handle_quotes.c parsing.c \
-	  dollar.c nodes_utils.c
+#Colors:
+RED = "\033[0;31m"
+YELLOW = "\033[0;33m"
+BLACK = "\033[0m"
+MAGENTA= "\033[1;35m"
+CYAN = "\033[36m"
+GREEN0= "\033[32m"
+GREEN1 = "\033[38;5;121m"
 
+#Files:
+SRC = 	ft_cd.c ft_echo.c dollar.c handle_quotes.c \
+		libft_utils.c minishell.c nodes_utils.c parsing.c \
+		sjd_fun_utils.c tokenize_utils.c tokenize.c \
+		checking_cmd.c ft_pwd.c ft_env.c ft_exit.c ft_unset.c\
+
+OBJ = $(SRC:.c=.o)
+
+#Flags:
 CC = cc
-C_FLAGS = -Wall -Wextra -Werror -lreadline #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
+
+#Library:
 NAME = minishell
+LIBFT = libft.a
 
-SRC_o := $(SRC:.c=.o)
+all: $(NAME)
 
-all : $(NAME)
+$(NAME)	: $(OBJ) $(LIBFT)
+	@$(CC)  $(OBJ) $(LIBFT)  $(CFLAGS) -lreadline -o $(NAME) 
 
-$(NAME) : $(SRC_o)
-	$(CC) $(C_FLAGS) -o $(NAME) $(SRC_o)
 
-clean:
-	rm -f $(SRC_o)
+$(LIBFT):
+	@echo $(CYAN)Making libft .. 👾"\033[0m"
+	@make -C libft
+	@mv libft/libft.a .
+
+
+clean: 
+	@echo  $(GREEN0)Cleaning 🧹
+	@rm -rf  $(OBJ) 
+	@make -C  libft clean 
+	@rm -rf  $(LIBFT)
 
 fclean: clean
-	rm -f $(NAME)
+	@echo $(GREEN0)Full cleaning...
+	@rm -rf  $(NAME) 
+	@echo  $(YELLOW)Done cleaning ✨ 
 
 re: fclean all
 
-.SECONDARY: $(SRC_o)
+.PHONY: re clean fclean

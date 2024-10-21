@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/30 09:49:06 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/26 13:41:42 by salaoui          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -18,6 +7,21 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+//--->Sajida: new header Declarations
+# include <string.h>
+# include <signal.h>
+# include "libft/libft.h"
+
+typedef struct s_env
+{
+	char			*value;
+	char			*test;
+	char			*key;
+	char			equal;
+	struct s_env 	*next;
+}	t_env;
+/// Sajida
 
 typedef enum e_token_type
 {
@@ -78,6 +82,16 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *src);
 int		is_not_alpanum(char c);
 
-// minitest in the end of prog
-// cat lksdj < dalkf;> sdkfj<<sdf >>dslfj |ksdjj|osdfij|sdkfj+
+//Sajida
+int ft_strcmp(char *s1, char *s2);
+void ft_sigint(int x);
+void ft_echo(t_minishell cmd);
+int ft_cd(t_minishell data);
+void ft_pwd(t_minishell cmd);
+void check_command(t_minishell data);
+void ft_env(t_minishell data);
+void ft_exit(t_minishell data);
+void ft_unset(t_env *env_list,t_minishell data);
+void ft_backup(t_env *original, t_minishell data);
+void ft_env_unset(t_minishell data);
 # endif

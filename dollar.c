@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 11:47:57 by salaoui           #+#    #+#             */
-/*   Updated: 2024/10/01 11:57:38 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/04 10:15:30 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ char	*get_env_var(char *str, int i)
 
 int is_not_alpanum(char c)
 {
-	if (c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c == '_')
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_')
 		return (1);
 	else
 		return (0);
@@ -220,6 +220,8 @@ t_token	*rmp_dollar(t_token *tokens)
 	int i;
 	int count_quotes;
 	char *env_var;
+	
+	(void)count_quotes; //sjd
 	t_token	*temp_tokens;
 
 	temp_tokens = tokens;

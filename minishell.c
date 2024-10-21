@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 09:49:12 by salaoui           #+#    #+#             */
-/*   Updated: 2024/09/27 20:41:34 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/10/21 05:00:16 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,9 @@ void	fill_commands(t_node **node_list, t_token *tokens, int num_cmds)
 {
     int cmd_idx = 0;
     int arg_idx = 0;
-
+	(void)cmd_idx;
+	(void)arg_idx;
+	(void)num_cmds;
     while (tokens) {
 		fill_node(tokens, node_list);
 		while (tokens && tokens->data_type != PIPE)
@@ -149,19 +151,20 @@ t_node	*mk_nodes(t_token *tokens)
 	return (nodes);
 }
 
-int	main(int ac, char *av[], char **env)
+int	main(int ac, char *av[], char *env[])
 {
+	(void)ac;
+	(void)av;
 	g_minishell.envirement = env;
 	int i;
 	int j;
-
+	int p;
 	while (1)
 	{
-		// doing signals -sigint & -sigquit
-		g_minishell.command = readline("Minishell~$ ");
+		g_minishell.command = readline("~$ ");
 		if (!g_minishell.command)
 		{
-			printf("Quiting minishell!\n");
+			printf("\n Quiting minishell!\n");
 			exit(1);
 		}
 		add_history(g_minishell.command);
@@ -176,13 +179,15 @@ int	main(int ac, char *av[], char **env)
 		{
 			j = 0;
 			i = 0;
-			printf("----------------------------------------------------------\n");
+			p = 1;
+			printf("------------------1------------------\n");
 			while(g_minishell.nodes->cmd[j])
 			{
 				printf("the node \033[32m%d\033[0m cmds n* %d is :\033[32m %s\033[0m\n",
 				i, j, g_minishell.nodes->cmd[j]);
 				j++;
 			}
+			check_command(g_minishell);
 			while(g_minishell.nodes->redir)
 			{
 				printf("the redir file name is: %s\n",
@@ -191,7 +196,7 @@ int	main(int ac, char *av[], char **env)
 					g_minishell.nodes->redir->red_type);
 				g_minishell.nodes->redir = g_minishell.nodes->redir->next;
 			}
-			printf("----------------------------------------------------------\n");
+			printf("------------------2------------------\n");
 			g_minishell.nodes = g_minishell.nodes->next_node;
 			i++;
 		}
