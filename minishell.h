@@ -92,4 +92,6 @@ void ft_exit(t_token *data);
 void ft_unset(t_env *env_list,t_minishell data);
 void ft_backup(t_env *original, t_minishell data);
 void ft_env_unset(t_minishell data);
+int	main_heredoc(t_token *tokens);
+
 # endif
