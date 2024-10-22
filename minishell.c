@@ -117,14 +117,18 @@ int main_heredoc(t_token *tokens)
 	return (0);
 }
 
-int main3(t_token *tokens)
+int main3(t_minishell data)
 {
 	t_token	*temp_tokens;
 
-	temp_tokens = tokens;
+	temp_tokens = data.tokens;
 	while (temp_tokens)
 	{
-		ckeck_command(temp_tokens);
+		if (!ft_strcmp(data.tokens->data , "env") && data.tokens->data)
+			ft_env(data);
+		if (!ft_strcmp(data.tokens->data , "unset") && data.tokens->data)
+			ft_unset(NULL,  data);
+		check_command(temp_tokens);
 		temp_tokens = temp_tokens->next_token;
 	}
 	return (0);
@@ -135,11 +139,11 @@ int	main(int ac, char *av[], char **env)
 	(void)ac;
 	(void)av;
 	g_minishell.envirement = env;
-	t_node *tmp_node;
+	// t_node *tmp_node;
 	t_token	*current;
 	t_token	*next;
-	int i;
-	int j;
+	// int i;
+	// int j;
 
 	while (1)
 	{
@@ -147,6 +151,7 @@ int	main(int ac, char *av[], char **env)
 		if (!g_minishell.command)
 		{
 			printf("Quiting minishell!\n");
+			// free structs
 			exit(1);
 		}
 		add_history(g_minishell.command);
@@ -158,11 +163,11 @@ int	main(int ac, char *av[], char **env)
 		g_minishell.tokens = parsing(g_minishell);
 		if (main_heredoc(g_minishell.tokens) < 0)
 			continue;
-		if (unlink("/tmp/heredoc.txt") == -1)
-			dprintf(2, "error deleting the file\n");
-		main3(g_minishell.tokens); //execution starts here;;;;
+		// if (unlink("/tmp/heredoc.txt") == -1)
+		// 	dprintf(2, "error deleting the file\n");
+		main3(g_minishell); //execution starts here;;;;
 		g_minishell.nodes = mk_nodes(g_minishell.tokens);
-		tmp_node = g_minishell.nodes;
+		// tmp_node = g_minishell.nodes;
 		// while (tmp_node)
 		// {
 		// 	j = 0;

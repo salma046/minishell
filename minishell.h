@@ -83,12 +83,12 @@ t_node	*mk_nodes(t_token *tokens);
 //Sajida
 int ft_strcmp(char *s1, char *s2);
 void ft_sigint(int x);
-void ft_echo(t_minishell cmd);
-int ft_cd(t_minishell data);
-void ft_pwd(t_minishell cmd);
-void check_command(t_minishell data);
+void ft_echo(t_token *data);
+int ft_cd(t_token *data);
+void ft_pwd(t_token *data);
+void check_command(t_token *data);
 void ft_env(t_minishell data);
-void ft_exit(t_minishell data);
+void ft_exit(t_token *data);
 void ft_unset(t_env *env_list,t_minishell data);
 void ft_backup(t_env *original, t_minishell data);
 void ft_env_unset(t_minishell data);

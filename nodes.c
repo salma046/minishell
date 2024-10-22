@@ -96,7 +96,7 @@ void	fill_node(t_token *temp_tokens, t_node **node_list)
 	ft_node_add_back(node_list, node);
 }
 
-void	fill_commands(t_node **node_list, t_token *tokens, int num_cmds)
+void	fill_commands(t_node **node_list, t_token *tokens)
 {
 	int	cmd_idx;
 	int	arg_idx;
@@ -116,11 +116,11 @@ void	fill_commands(t_node **node_list, t_token *tokens, int num_cmds)
 t_node	*mk_nodes(t_token *tokens)
 {
 	t_node	*nodes;
-	int		cmd_count;
-	int		i;
+	// int		cmd_count;
+	// int		i;
 
-	i = 0;
-	cmd_count = count_pipe(tokens);
-	fill_commands(&nodes, tokens, cmd_count);
+	// i = 0;
+	// cmd_count = count_pipe(tokens);
+	fill_commands(&nodes, tokens);
 	return (nodes);
 }

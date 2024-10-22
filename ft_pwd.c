@@ -1,6 +1,6 @@
 #include "minishell.h"
 #include <limits.h>
-void ft_pwd(t_minishell data)
+void ft_pwd(t_token *data)
 {
 	(void)data;
 	char pwd[PATH_MAX];
