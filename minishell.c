@@ -32,7 +32,9 @@ void free_node(t_node *node)
     }
 
     if (node->redir)
+	{
         free_redir_list(node->redir);
+	}
 	free(node);
 }
 
