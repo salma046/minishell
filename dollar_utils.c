@@ -15,12 +15,3 @@ int check_4_space(char *env_var)
     return (0);
 }
 
-char	*new_token_env(t_token *tokens, char *env_var)
-{
-    t_token	*temp_tokens;
-    t_token	*next_tokens;
-
-	temp_tokens = tokens;
-    next_tokens = tokens->next_token;
-
-}

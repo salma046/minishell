@@ -75,11 +75,15 @@ int		ft_put_word_token(char **line, enum e_token_type token_t, t_token **tokens_
 t_token	*rm_qotes(t_token *tokens);
 t_token	*parsing(t_minishell g_minishell);
 t_token	*rmp_dollar(t_token *tokens);
+char	*remplace_doll_str(char	*data, char *env_var, int k);
 int		count_pipe(t_token *tokens);
 int		is_not_alpanum(char c);
 int		cmd_count(t_token *tokens);
 t_node	*mk_nodes(t_token *tokens);
 int		check_4_space(char *env_var);
+t_token	*new_token_env(char *str, t_token *tokens, char *edi_env);
+void	token_new_word(char *word, enum e_token_type token_t,
+		t_token **tokens_list);
 
 //Sajida
 int ft_strcmp(char *s1, char *s2);

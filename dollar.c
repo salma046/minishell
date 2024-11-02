@@ -53,15 +53,18 @@ int count_dollar_lenth(char *str)
 
 char	*remp_with_null(char *str)
 {
-	int i;
+	int i = 0;
 	int j;
 	int t = 0;
 	int	word_lenth;
 	char *word;
 
-	word_lenth = count_dollar_lenth(str);
-	i = ft_strlen(str);
-	word = malloc(sizeof(char) * i - word_lenth + 1);
+	if (str[i])
+	{
+		word_lenth = count_dollar_lenth(str);
+		i = ft_strlen(str);
+		word = malloc(sizeof(char) * i - word_lenth + 1);
+	}
 	i = 0;
 	j = 0;
 	while (str[i])
@@ -136,7 +139,7 @@ int is_not_valid_expend(char *str, int i)
 		return (1);
 }
 
-char	*remp_with_value(char *str, char *env_var)
+char	*remp_with_value(char *str, char *env_var, int re_type)
 {
 	int i;
 	int j;
@@ -148,6 +151,7 @@ char	*remp_with_value(char *str, char *env_var)
 	char *hi;
 	char *command_rest;
 
+	printf("1111 the env is: %s and re is: %d\n", env_var, re_type);
 	word_lenth = count_dollar_lenth(str);
 	i = ft_strlen(str);
 	k = ft_strlen(env_var);
@@ -209,6 +213,8 @@ char	*remp_with_value(char *str, char *env_var)
 		else if (str[i] && str[i] != '$' && str[i - 1] != '$' && str[i] != '"' && str[i] != '\'')
 			i++;
 	}
+	if (re_type == 1)
+		return (word);
 	command_rest = after_dol_word(str, l, ft_strlen(str));
 	hi = ft_strjoin(word, command_rest);
 	free(command_rest);
@@ -216,13 +222,13 @@ char	*remp_with_value(char *str, char *env_var)
 	return (hi);
 }
 
-char	*remplace_doll_str(char	*data, char *env_var)
+char	*remplace_doll_str(char	*data, char *env_var, int k)
 {
 	if (env_var == NULL)
 		return (remp_with_null(data));
 	else 
 	{
-		char *word = remp_with_value(data, env_var);
+		char *word = remp_with_value(data, env_var, k);
 		return (word);
 	}
 }
@@ -327,9 +333,9 @@ t_token	*rmp_dollar(t_token *tokens)
 				{
 					env_var = get_env_var(temp_tokens->data, i);
 					if (check_4_space(env_var) == 1)
-						temp_tokens->data = new_token_env(temp_tokens, env_var);
+						temp_tokens = new_token_env(temp_tokens->data, temp_tokens, env_var);
 					else
-						temp_tokens->data = remplace_doll_str(temp_tokens->data, env_var);
+						temp_tokens->data = remplace_doll_str(temp_tokens->data, env_var, 0);
 					i = 0;
 					printf("the env is: %s\n", env_var);
 				}

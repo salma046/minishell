@@ -19,7 +19,7 @@ char	*ft_strncpy(char *dst, const char *src, size_t len)
 
 int	is_space(char *line)
 {
-	if (*line == ' ' || *line == '\t' || *line == '\n')
+	if (*line == ' ' || *line == '\t' || *line == '\n' || *line == '\f')
         return (1);
     return (0);
 }
