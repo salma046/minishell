@@ -1,9 +1,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -71,19 +71,21 @@ int		 is_space(char *line);
 void	ft_lstadd_back_token(t_token **lst, t_token *new);
 char	*get_word(char *str, int i);
 void	ft_put_token(char **line, enum e_token_type token_t, t_token **tokens_list);
-int		ft_put_word_token(char **line, enum e_token_type token_t, t_token **tokens_list);
+int		ft_put_word_token(char **line, enum e_token_type token_t, t_token **tokens_list, int heredoc);
 t_token	*rm_qotes(t_token *tokens);
 t_token	*parsing(t_minishell g_minishell);
-t_token	*rmp_dollar(t_token *tokens);
-char	*remplace_doll_str(char	*data, char *env_var, int k);
+char	*rmp_dollar(char *tokens_word, t_token **tokens_list);
 int		count_pipe(t_token *tokens);
 int		is_not_alpanum(char c);
 int		cmd_count(t_token *tokens);
 t_node	*mk_nodes(t_token *tokens);
 int		check_4_space(char *env_var);
-t_token	*new_token_env(char *str, t_token *tokens, char *edi_env);
+char *token_edi_env(char *str, char *env_var, t_token **tokens_list);
 void	token_new_word(char *word, enum e_token_type token_t,
-		t_token **tokens_list);
+		t_token **tokens_list, int heredoc);
+char *after_dol_word(char *str, int l, int str_len);
+int count_dollar_lenth(char *str);
+int is_not_valid_expend(char *str, int i);;
 
 //Sajida
 int ft_strcmp(char *s1, char *s2);

@@ -29,8 +29,10 @@ t_token	*ft_tokenize(t_minishell g_minishell)
 {
 	t_token	*tokens_list;
 	char	*line;
+	int		herdoc;
 
 	tokens_list = NULL;
+	herdoc = -1;
 	line = g_minishell.command;
 	while (*line)
 	{
@@ -41,15 +43,19 @@ t_token	*ft_tokenize(t_minishell g_minishell)
 		else if (ft_strncmp(line, ">>", 2) == 0)
 			ft_put_token(&line, APPEND, &tokens_list);
 		else if (ft_strncmp(line, "<<", 2) == 0)
+		{
 			ft_put_token(&line, HER_DOC, &tokens_list);
+			herdoc = 1;
+		}
 		else if (ft_strncmp(line, ">", 1) == 0)
 			ft_put_token(&line, OUT_REDIR, &tokens_list);
 		else if (ft_strncmp(line, "<", 1) == 0)
 			ft_put_token(&line, INP_REDIR, &tokens_list);
 		else
 		{
-			if (ft_put_word_token(&line, WORD, &tokens_list) == 0)
+			if (ft_put_word_token(&line, WORD, &tokens_list, herdoc) == 0)
 				return (NULL);
+			herdoc = -1;
 		}
 	}
 	return (tokens_list);

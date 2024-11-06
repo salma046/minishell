@@ -98,11 +98,6 @@ void	fill_node(t_token *temp_tokens, t_node **node_list)
 
 void	fill_commands(t_node **node_list, t_token *tokens)
 {
-	int	cmd_idx;
-	int	arg_idx;
-
-	cmd_idx = 0;
-	arg_idx = 0;
 	while (tokens)
 	{
 		fill_node(tokens, node_list);
@@ -116,11 +111,21 @@ void	fill_commands(t_node **node_list, t_token *tokens)
 t_node	*mk_nodes(t_token *tokens)
 {
 	t_node	*nodes;
-	// int		cmd_count;
-	// int		i;
+	t_token	*current;
+	t_token	*next;
+	int		cmd_count;
 
-	// i = 0;
-	// cmd_count = count_pipe(tokens);
+	nodes = NULL;
+	current = tokens;
+	cmd_count = count_pipe(tokens);
 	fill_commands(&nodes, tokens);
+	while (current)
+	{
+		cmd_count++;
+		next = current->next_token;
+		free(current->data);
+		free(current);
+		current = next;
+	}
 	return (nodes);
 }

@@ -12,8 +12,7 @@ GREEN1 = "\033[38;5;121m"
 SRC = 	ft_cd.c ft_echo.c dollar.c handle_quotes.c \
 		libft_utils.c minishell.c nodes_utils.c parsing.c nodes.c \
 		sjd_fun_utils.c tokenize_utils.c tokenize.c heredoc.c \
-		checking_cmd.c ft_pwd.c ft_env.c ft_exit.c ft_unset.c\
-		dollar_utils.c ed_expend.c\
+		checking_cmd.c ft_pwd.c ft_env.c ft_exit.c ft_unset.c dollar_utils.c\
 
 OBJ = $(SRC:.c=.o)
 

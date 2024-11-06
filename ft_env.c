@@ -38,7 +38,6 @@ void ft_backup(t_env *original, t_minishell data)
 void ft_env(t_minishell data)
 {
     int i = 0;
-    t_env *head = NULL;
     t_env *last_node = NULL;
     
     while(data.envirement[i] != NULL)
@@ -57,9 +56,7 @@ void ft_env(t_minishell data)
             printf("%c", cmd_env->equal);
             printf("%s\n", cmd_env->value);
         }
-        if( last_node == NULL)
-            head = cmd_env;
-        else
+        if( last_node != NULL)
             last_node->next = cmd_env;
         last_node = cmd_env;
         i++;
