@@ -96,8 +96,8 @@ int	main(int ac, char *av[], char **env)
 		g_minishell.tokens = parsing(g_minishell);
 		if (main_heredoc(g_minishell.tokens) < 0)
 			continue;
-		if (unlink("/tmp/heredoc.txt") == -1)
-			dprintf(2, "error deleting the file\n");
+		// if (unlink("/tmp/heredoc.txt") == -1)
+		// 	dprintf(2, "error deleting the file\n");
 		main3(g_minishell); //execution starts here;;;;
 		g_minishell.nodes = mk_nodes(g_minishell.tokens); ///// This function just took me somuch time and now there is a possibility it won't be used at all ooof
 		tmp_node = g_minishell.nodes;

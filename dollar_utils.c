@@ -3,6 +3,20 @@
 char	*remp_with_edi_value(char *str, char *env_var);
 int get_l(char *str, char *env_var);
 
+void	token_new_edi_word(char *word, enum e_token_type token_t,
+		t_token **tokens_list)
+{
+	t_token	*new_token;
+
+	new_token = malloc(sizeof(t_token));
+	if (!new_token)
+		return ;
+	new_token->data = word;
+	new_token->data_type = token_t;
+	new_token->next_token = NULL;
+	ft_lstadd_back_token(tokens_list, new_token);
+}
+
 char *token_edi_env(char *str, char *env_var, t_token **token_list)
 {
     int i = 0;
@@ -11,22 +25,18 @@ char *token_edi_env(char *str, char *env_var, t_token **token_list)
     char *last_word;
     char *new_token_data;
     char modified_part[256];
-    // printf("the str is :->%s\n", str);
 
     while (env_var[i] != ' ' && env_var[i] != '\t' && env_var[i] != '\n' && env_var[i] != '\0')
     {
         modified_part[j] = env_var[i];
-        // printf("the edi env is: %c\n", (*edi_env)[i]);
         j++;
         i++;
     }
     modified_part[j] = '\0';
-    // printf("the new data is: %s\n", modified_part);
     int l = get_l(str, env_var);
 	char *command_rest = after_dol_word(str, l, ft_strlen(str));
-    // printf("the rest is: %s\n", command_rest);
     new_token_data = remp_with_edi_value(str, modified_part);
-    token_new_word(new_token_data, WORD, token_list, -1);
+    token_new_edi_word(new_token_data, WORD, token_list);
     while (env_var[i] != '\0')
     {
         j = 0;
@@ -39,16 +49,14 @@ char *token_edi_env(char *str, char *env_var, t_token **token_list)
             i++;
         }
         modified_part[j] = '\0';
-        printf("the new data is: %s\n", modified_part);
+		char *middle_part = strdup(modified_part);
         if (env_var[i] != '\0')
-        {
-            printf("kslfsld;\n");
-            token_new_word(modified_part, WORD, token_list, -1);
-        }
+            token_new_edi_word(middle_part, WORD, token_list);
         else
-        {
-            last_word = ft_strjoin(modified_part, command_rest);
-        }
+		{
+            last_word = ft_strjoin(middle_part, command_rest);
+			free(middle_part);
+		}
     }
     return (last_word);
 }
@@ -280,10 +288,8 @@ int check_4_space(char *env_var)
     int i;
 
     i = 0;
-    // printf("hello world %s\n", env_var);
     while (env_var[i])
     {
-        // printf("--%c\n", env_var[i]);
         if (env_var[i] == ' ' || env_var[i] == '\t' || env_var[i] == '\n' || env_var[i] == '\f')
             return (1);
         i++;

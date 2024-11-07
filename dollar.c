@@ -264,6 +264,7 @@ char	*rmp_dollar(char *tokens_word, t_token **tokens_list)
 	int i;
 	int t = 0;
 	char *env_var;
+	int to_split = -1;
 
 	i = 0;
 	env_var = NULL;
@@ -281,6 +282,7 @@ char	*rmp_dollar(char *tokens_word, t_token **tokens_list)
 		if (tokens_word[i] == '"')
 		{
 			i++;
+			to_split = -1;
 			while (tokens_word[i] && tokens_word[i] != '"' && t != 1)
 			{
 				if (tokens_word[i] == '$' && tokens_word[i + 1] == '$')
@@ -291,7 +293,10 @@ char	*rmp_dollar(char *tokens_word, t_token **tokens_list)
 				if (tokens_word[i] != '$')
 					i++;
 				else
+				{
+					to_split = 1;
 					t = 1;
+				}
 			}
 			t = 0;
 			if (tokens_word[i] == '"')
@@ -313,7 +318,7 @@ char	*rmp_dollar(char *tokens_word, t_token **tokens_list)
 		else if (tokens_word[i] == '$')
 		{
 			env_var = get_env_var(tokens_word, i);
-			if (env_var != NULL && check_4_space(env_var) == 1)
+			if (env_var != NULL && check_4_space(env_var) == 1 && to_split < 0)
 				tokens_word = token_edi_env(tokens_word, env_var, tokens_list);
 			else
 				tokens_word = remplace_doll_str(tokens_word, env_var);

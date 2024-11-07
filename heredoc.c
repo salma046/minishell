@@ -35,6 +35,8 @@ int ft_heredoc(t_token *tokens)
 	char *limiter;
 	int fd;
 
+	if (unlink("/tmp/heredoc.txt") == -1)
+		dprintf(2, "no file found 2be del\n");
 	fd = open("/tmp/heredoc.txt", O_RDWR | O_CREAT | O_TRUNC | O_EXCL, 0644);
 	if (fd < 0)
 		return (-1);
