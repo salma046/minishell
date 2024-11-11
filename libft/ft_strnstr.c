@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static	char	*comp_func(const char *s, const char *need, size_t i, size_t l)
+static char	*comp_func(const char *s, const char *need, size_t i, size_t l)
 {
 	const char	*temp_s1;
 	const char	*temp_s2;

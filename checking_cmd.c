@@ -13,5 +13,10 @@ void check_command(t_token *data)
 		ft_pwd(temp_tokens);
 	if (!ft_strcmp(temp_tokens->data , "exit") && temp_tokens->data)
 		ft_exit(temp_tokens);
-
+	//mine 
+	// if (!ft_strcmp(data.tokens->data , "export") && data.tokens->data)
+		// ft_export(data);
+	// target
+	// if (!ft_strcmp(temp_tokens->data , "export") && temp_tokens->data)
+	// 	ft_export(data);
 }

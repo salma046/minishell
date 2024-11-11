@@ -61,4 +61,6 @@ void ft_env(t_minishell data)
         last_node = cmd_env;
         i++;
     }
+    // if (next node is an key than call this fnc) /// test: env KEY as argumen
+        // ft_backup(last_node, data);
 }

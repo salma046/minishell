@@ -21,7 +21,17 @@ typedef struct s_env
 	char			equal;
 	struct s_env 	*next;
 }	t_env;
+
+
+typedef struct s_senv
+{
+	char *svalue;
+	char *skey;
+	char sequal;
+	struct s_senv *next;
+} t_senv;
 /// Sajida
+
 
 typedef enum e_token_type
 {
@@ -86,10 +96,15 @@ void	token_new_word(char *word, enum e_token_type token_t,
 char *after_dol_word(char *str, int l, int str_len);
 int count_dollar_lenth(char *str);
 int is_not_valid_expend(char *str, int i);;
+int	main_heredoc(t_token *tokens);
 
-//Sajida
+//  🥳 EXECUTION PART:
+
+// functionts utils:
 int ft_strcmp(char *s1, char *s2);
 void ft_sigint(int x);
+
+//commands:
 void ft_echo(t_token *data);
 int ft_cd(t_token *data);
 void ft_pwd(t_token *data);
@@ -99,6 +114,12 @@ void ft_exit(t_token *data);
 void ft_unset(t_env *env_list,t_minishell data);
 void ft_backup(t_env *original, t_minishell data);
 void ft_env_unset(t_minishell data);
-int	main_heredoc(t_token *tokens);
+void sort_env(t_senv *node);
+void ft_env_export_once(t_minishell data, int active);
+void ft_add_to_export_arg(t_minishell data);
+void ft_export(t_token data);
+
+// executr commands:
+void ft_sd(t_token *data);
 
 # endif

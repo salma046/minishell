@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static	int	ft_len(int n)
+static int	ft_len(int n)
 {
 	int	len;
 
@@ -29,7 +29,7 @@ static	int	ft_len(int n)
 	return (len);
 }
 
-static	char	*ft_putchar(char *ptr, unsigned int n, int len)
+static char	*ft_putchar(char *ptr, unsigned int n, int len)
 {
 	while (n > 0)
 	{

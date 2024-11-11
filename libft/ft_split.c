@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static	int	count_words(char const *s, char c)
+static int	count_words(char const *s, char c)
 {
 	int	count_w;
 	int	i;
@@ -28,9 +28,9 @@ static	int	count_words(char const *s, char c)
 	return (count_w);
 }
 
-static	void	ft_str(char *ptr, char c, char const *str)
+static void	ft_str(char *ptr, char c, char const *str)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (str[i] && str[i] != c)
@@ -41,7 +41,7 @@ static	void	ft_str(char *ptr, char c, char const *str)
 	ptr[i] = '\0';
 }
 
-static	int	free_memory(char **arrs_ptr, int index)
+static int	free_memory(char **arrs_ptr, int index)
 {
 	while (index-- > 0)
 		free(arrs_ptr[index]);
@@ -49,11 +49,11 @@ static	int	free_memory(char **arrs_ptr, int index)
 	return (0);
 }
 
-static	int	allocate_words(char const *s, char c, char **arrs_ptr)
+static int	allocate_words(char const *s, char c, char **arrs_ptr)
 {
-	int			j;
-	int			i;
-	int			n;
+	int	j;
+	int	i;
+	int	n;
 
 	i = 0;
 	n = 0;
@@ -84,7 +84,7 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	count_w = count_words (s, c);
+	count_w = count_words(s, c);
 	arrs_ptr = malloc((count_w + 1) * sizeof(char *));
 	if (!arrs_ptr)
 		return (NULL);

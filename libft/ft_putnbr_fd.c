@@ -18,8 +18,8 @@ void	ft_putnbr_fd(int n, int fd)
 		return ;
 	if (n == -2147483648)
 	{
-		write (fd, "-", 1);
-		write (fd, "2147483648", 10);
+		write(fd, "-", 1);
+		write(fd, "2147483648", 10);
 	}
 	else if (n < 0)
 	{
