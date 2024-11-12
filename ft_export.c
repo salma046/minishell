@@ -130,7 +130,7 @@ void ft_add_to_export_arg(t_minishell data)
     data.envirement[i + 1] = NULL; 
 }
 
-void ft_export(t_token data)
+void ft_export(t_minishell data)
 {
     int active = 1;
 

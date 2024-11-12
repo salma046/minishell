@@ -117,7 +117,7 @@ void ft_env_unset(t_minishell data);
 void sort_env(t_senv *node);
 void ft_env_export_once(t_minishell data, int active);
 void ft_add_to_export_arg(t_minishell data);
-void ft_export(t_token data);
+void ft_export(t_minishell data);
 
 // executr commands:
 void ft_sd(t_token *data);

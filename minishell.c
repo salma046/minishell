@@ -64,6 +64,7 @@ int main3(t_minishell data)
 		if (!ft_strcmp(data.tokens->data , "unset") && data.tokens->data)
 			ft_unset(NULL,  data);
 		check_command(temp_tokens);
+		ft_sd(temp_tokens);
 		temp_tokens = temp_tokens->next_token;
 	}
 	return (0);
@@ -71,7 +72,8 @@ int main3(t_minishell data)
 
 int	main(int ac, char *av[], char **env)
 {
-	(void)ac;
+	if (ac > 2)
+		return (1);
 	(void)av;
 	g_minishell.envirement = env;
 	t_node *tmp_node;
