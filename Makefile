@@ -28,11 +28,11 @@ LIBFT = libft.a
 all: $(NAME)
 
 $(NAME)	: $(OBJ) $(LIBFT)
+	@echo $(CYAN)Making minishell .. 👾"\033[0m"
 	@$(CC)  $(OBJ) $(LIBFT)  $(CFLAGS) -lreadline -o $(NAME) 
 
 
 $(LIBFT):
-	@echo $(CYAN)Making libft .. 👾"\033[0m"
 	@make -C libft
 	@mv libft/libft.a .
 
@@ -44,7 +44,6 @@ clean:
 	@rm -rf  $(LIBFT)
 
 fclean: clean
-	@echo $(GREEN0)Full cleaning...
 	@rm -rf  $(NAME) 
 	@echo  $(YELLOW)Done cleaning ✨ 
 

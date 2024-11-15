@@ -64,7 +64,7 @@ int main3(t_minishell data)
 		if (!ft_strcmp(data.tokens->data , "unset") && data.tokens->data)
 			ft_unset(NULL,  data);
 		check_command(temp_tokens);
-		ft_sd(temp_tokens);
+		// ft_execute(&data);
 		temp_tokens = temp_tokens->next_token;
 	}
 	return (0);
@@ -72,7 +72,7 @@ int main3(t_minishell data)
 
 int	main(int ac, char *av[], char **env)
 {
-	if (ac > 2)
+	if (ac > 2) // Sojod
 		return (1);
 	(void)av;
 	g_minishell.envirement = env;
@@ -107,22 +107,22 @@ int	main(int ac, char *av[], char **env)
 		{
 			j = 0;
 			i = 0;
-			printf("----------------------------------------------------------\n");
-			while(tmp_node->cmd[j])
-			{
-				printf("the node \033[32m%d\033[0m cmds n* %d is :\033[32m %s\033[0m\n",
-				i, j, tmp_node->cmd[j]);
-				j++;
-			}
-			while(tmp_node->redir)
-			{
-				printf("the redir file name is: %s\n",
-					tmp_node->redir->file);
-				printf("the redir type is: %d\n",
-					tmp_node->redir->red_type);
-				tmp_node->redir = tmp_node->redir->next;
-			}
-			printf("----------------------------------------------------------\n");
+			// printf("----------------------------------------------------------\n");
+			// while(tmp_node->cmd[j])
+			// {
+			// 	printf("the node \033[32m%d\033[0m cmds n* %d is :\033[32m %s\033[0m\n",
+			// 	i, j, tmp_node->cmd[j]);
+			// 	j++;
+			// }
+			// while(tmp_node->redir)
+			// {
+			// 	printf("the redir file name is: %s\n",
+			// 		tmp_node->redir->file);
+			// 	printf("the redir type is: %d\n",
+			// 		tmp_node->redir->red_type);
+			// 	tmp_node->redir = tmp_node->redir->next;
+			// }
+			// printf("----------------------------------------------------------\n");
 			tmp_node = tmp_node->next_node;
 			i++;
 		}

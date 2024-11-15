@@ -120,6 +120,8 @@ void ft_add_to_export_arg(t_minishell data);
 void ft_export(t_minishell data);
 
 // executr commands:
-void ft_sd(t_token *data);
+void ft_execute(t_minishell *data);
+
+
 
 # endif
