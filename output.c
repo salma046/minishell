@@ -1,4 +1,4 @@
-// #include "red.h" // ur  header
+#include "minishell.h" // ur  header
 
 void ft_output(int ac, char *av[])
 {
@@ -39,9 +39,9 @@ void ft_output(int ac, char *av[])
 	close (fd);
 	close  (original_stdout);
 }
-int main(int ac, char *av[])
-{
-	ft_output(ac, av);
-	return 0;
-}
+// int main(int ac, char *av[])
+// {
+// 	ft_output(ac, av);
+// 	return 0;
+// }
 

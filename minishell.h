@@ -12,7 +12,8 @@
 # include <string.h>
 # include <signal.h>
 # include "libft/libft.h"
-
+#include <stdio.h>
+#include <errno.h>
 typedef struct s_env
 {
 	char			*value;
@@ -122,6 +123,9 @@ void ft_export(t_minishell data);
 // executr commands:
 void ft_execute(t_minishell *data);
 
+//redirectios:
+void ft_output(int ac, char *av[]);
+void ft_input(int ac, char *av[]);
 
 
 # endif
