@@ -98,6 +98,11 @@ int	main(int ac, char *av[], char **env)
 		g_minishell.tokens = parsing(g_minishell);
 		if (main_heredoc(g_minishell.tokens) < 0)
 			continue;
+		if (ft_output(g_minishell.tokens) < 0) 
+        	continue;
+        
+   		// if (ft_input(g_minishell.tokens) < 0) 
+        // 	continue;
 		// if (unlink("/tmp/heredoc.txt") == -1)
 		// 	dprintf(2, "error deleting the file\n");
 		main3(g_minishell); //execution starts here;;;;

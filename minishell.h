@@ -124,7 +124,7 @@ void ft_export(t_minishell data);
 void ft_execute(t_minishell *data);
 
 //redirectios:
-void ft_output(int ac, char *av[]);
+int ft_output(t_token *tokens);
 void ft_input(int ac, char *av[]);
 
 
