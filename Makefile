@@ -14,7 +14,7 @@ SRC = 	ft_cd.c ft_echo.c dollar.c handle_quotes.c nodes.c\
 		sjd_fun_utils.c tokenize_utils.c tokenize.c heredoc.c \
 		checking_cmd.c ft_pwd.c ft_env.c ft_exit.c ft_unset.c \
 		dollar_utils.c ft_export.c execute_commands.c input.c\
-		output.c
+		output.c append.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -46,7 +46,7 @@ clean:
 
 fclean: clean
 	@rm -rf  $(NAME) 
-	@echo  $(YELLOW)Done cleaning ✨ 
+	@echo "\033[0;33mDone cleaning \033[0m"✨ 
 
 re: fclean all
 

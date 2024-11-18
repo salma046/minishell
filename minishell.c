@@ -101,8 +101,8 @@ int	main(int ac, char *av[], char **env)
 		// if (ft_output(g_minishell.tokens) < 0)  // sojod
         // 	continue;
         
-   		if (ft_input(g_minishell.tokens) < 0)  //sojod
-        	continue;
+   		// if (ft_input(g_minishell.tokens) < 0)  //sojod
+        // 	continue;
 		// if (unlink("/tmp/heredoc.txt") == -1)
 		// 	dprintf(2, "error deleting the file\n");
 		main3(g_minishell); //execution starts here;;;;

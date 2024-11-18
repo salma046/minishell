@@ -126,6 +126,6 @@ void ft_execute(t_minishell *data);
 //redirectios:
 int ft_output(t_token *tokens);
 int ft_input(t_token *tokens);
-
+int ft_append(t_token *tokens);
 
 # endif
