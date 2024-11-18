@@ -127,5 +127,5 @@ void ft_execute(t_minishell *data);
 int ft_output(t_token *tokens);
 int ft_input(t_token *tokens);
 int ft_append(t_token *tokens);
-
+int ft_check_redirections(t_minishell *data, t_token *tokens);
 # endif
