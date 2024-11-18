@@ -96,12 +96,14 @@ int	main(int ac, char *av[], char **env)
 		// g_minishell.tokens = rmp_dollar(g_minishell.tokens);
 		g_minishell.tokens = rm_qotes(g_minishell.tokens);
 		g_minishell.tokens = parsing(g_minishell);
-		if (main_heredoc(g_minishell.tokens) < 0)
-			continue;
+		// if (main_heredoc(g_minishell.tokens) < 0)
+		// 	continue;
 		// if (ft_output(g_minishell.tokens) < 0)  // sojod
         // 	continue;
         
    		// if (ft_input(g_minishell.tokens) < 0)  //sojod
+        // 	continue;
+		// if (ft_append(g_minishell.tokens) < 0)  //sojod
         // 	continue;
 		// if (unlink("/tmp/heredoc.txt") == -1)
 		// 	dprintf(2, "error deleting the file\n");
