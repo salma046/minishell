@@ -1,4 +1,5 @@
-#include "minishell.h"
+#include "../minishell.h"
+
 
 int	ft_start_heredoc(int fd, char *limiter)
 {

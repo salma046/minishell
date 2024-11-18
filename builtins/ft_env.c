@@ -1,5 +1,5 @@
 
-#include "minishell.h"
+#include "../minishell.h"
 
 // hnaya dert wahed l copy l env bax n9der n9arenha m3a l key w nchof xno radi i5sni n delete
 

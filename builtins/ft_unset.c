@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 // You need to free it .
 void	ft_env_unset(t_minishell data)

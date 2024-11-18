@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 int	ft_check_redirections(t_minishell *data, t_token *tokens)
 {

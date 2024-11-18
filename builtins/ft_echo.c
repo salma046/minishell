@@ -1,5 +1,4 @@
-
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_print(t_token *tokens)
 {
