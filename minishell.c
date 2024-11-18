@@ -98,8 +98,8 @@ int	main(int ac, char *av[], char **env)
 		g_minishell.tokens = parsing(g_minishell);
 		if (main_heredoc(g_minishell.tokens) < 0)
 			continue;
-		if (ft_output(g_minishell.tokens) < 0) 
-        	continue;
+		// if (ft_output(g_minishell.tokens) < 0) 
+        // 	continue;
         
    		if (ft_input(g_minishell.tokens) < 0) 
         	continue;
