@@ -3,49 +3,79 @@
 int ft_input(t_token *tokens)
 {
     t_token *current = tokens;
-    // int fd;
-    char *filename;
+    int fd;
+    int original_stdin;
+    pid_t pid;
+    char *cmd;
 
-    // Find the input redirection token
-    while (current)
-    {
-        printf(" \033[36m current --> %s \033[0m\n", current->data);
-        if (current->data_type == INP_REDIR)  // '<' input redirect
-        {
-            printf(" \033[32m current --> %u \033[0m\n", current->data_type);
-            printf(" \033[32m current->next_token --> %s \033[0m\n", current->next_token->data);
-        //     // Check if there's a filename after the redirection token
-            if (!current->next_token || !current->next_token->data)
-                return (printf("syntax error near unexpected token '<'"));
-            filename = current->next_token->data;
-            
-            // Check if file exists and is readable
-            if (access(filename, R_OK) == -1) 
-            {
-                if (errno == ENOENT) 
-                    return (printf("File does not exist\n"));
-                else if (errno == EACCES) 
-                    return (printf("Permission denied\n"));
-                return (printf("Error accessing file\n"));
-            }
-        }
-        //     // Open the file for reading
-        //     fd = open(filename, O_RDONLY);
-        //     if (fd < 0)
-        //         return (printf("Error: Cannot open file\n"));
+    // storing the comd
+    cmd = tokens->data;
 
-        //     // Redirect input to read from the file
-        //     if (dup2(fd, STDIN_FILENO) == -1)
-        //     {
-        //         close(fd);
-        //         return (printf("Error: Cannot redirect input\n"));
-        //     }
-        //     close(fd);
-
-        //     return (0);
-        // }
+    // Finding the <
+    while (current && current->data_type != INP_REDIR)
         current = current->next_token;
+
+    // looking for the file nameeeee
+    if (!current || !current->next_token)
+    {
+        printf("I need the file name please :)\n");
+        return 1;
     }
 
-    return (0);  // No input redirection found
+    // Save original stdin bax matmxix liyaaaaa
+    original_stdin = dup(STDIN_FILENO);
+    if (original_stdin == -1)
+    {
+        perror("dup");
+        return 1;
+    }
+
+    fd = open(current->next_token->data, O_RDONLY);
+    if (fd == -1)
+    {
+        perror("fd");
+        close(original_stdin);
+        return 1;
+    }
+    // hna radi ntsnaw had lprocess dyal l inout hta tsali bax makitisx liya 
+    pid = fork();
+    if (pid == -1)
+    {
+        perror("fork");
+        close(fd);
+        close(original_stdin);
+        return 1;
+    }
+
+    if (pid == 0)  
+    {
+        // had l inout radi nhtoha f STDIN_FILE
+        if (dup2(fd, STDIN_FILENO) == -1)
+        {
+            perror("dup2");
+            exit(EXIT_FAILURE);
+        }
+        close(fd);
+        
+        // Hadi mn be3d radi thyed bax maywlix liya bzaf d sig
+        if (execlp(cmd, cmd, NULL) == -1)
+        {
+            perror("execlp");
+            exit(EXIT_FAILURE);
+        }
+    }
+    else  // hna radi tnsnaw hta tsali l process (pareny)
+    {
+        int status;
+        waitpid(pid, &status, 0);
+        close(fd);
+        
+        // Hna hadi nrj3o dakxi kima kan
+        if (dup2(original_stdin, STDIN_FILENO) == -1)
+        {
+            perror("dup2");
+        }
+        close(original_stdin);
+    }
+    return 0;
 }
