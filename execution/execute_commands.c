@@ -34,7 +34,7 @@
 //         }
 //     }
 // }
-#include "minishell.h"
+#include "../minishell.h"
 
 void ft_execute(t_minishell *data)
 {

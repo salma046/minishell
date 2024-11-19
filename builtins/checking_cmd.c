@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void check_command(t_token *data)
 {
@@ -18,5 +18,5 @@ void check_command(t_token *data)
 		// ft_export(data);
 	// target
 	// if (!ft_strcmp(temp_tokens->data , "export") && temp_tokens->data)
-	// 	ft_export(data);
+		ft_export(data);
 }

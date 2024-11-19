@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void	token_new_sep(enum e_token_type token_t, t_token **tokens_list)
 {

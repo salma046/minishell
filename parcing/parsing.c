@@ -1,5 +1,5 @@
+#include "../minishell.h"
 
-#include "minishell.h"
 
 t_token	*parsing(t_minishell g_minishell)
 {

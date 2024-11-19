@@ -1,4 +1,5 @@
-#include "minishell.h"
+#include "../minishell.h"
+
 
 int is_not_valid_expend(char *str, int i);
 

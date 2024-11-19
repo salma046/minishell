@@ -1,4 +1,3 @@
-
 #Colors:
 RED = "\033[0;31m"
 YELLOW = "\033[0;33m"
@@ -9,16 +8,20 @@ GREEN0= "\033[32m"
 GREEN1 = "\033[38;5;121m"
 
 #Files:
-SRC = 	dollar.c handle_quotes.c nodes.c libft_utils.c\
-		minishell.c nodes_utils.c parsing.c \
-		sjd_fun_utils.c tokenize_utils.c tokenize.c  \
-		checking_cmd.c  dollar_utils.c  execute_commands.c  \
-		builtins/ft_cd.c builtins/ft_echo.c builtins/ft_pwd.c\
-		builtins/ft_env.c builtins/ft_exit.c builtins/ft_unset.c \
-		builtins/ft_export.c \
+SRC = 	parcing/dollar.c parcing/handle_quotes.c \
+		parcing/nodes.c  parcing/parsing.c \
+		parcing/nodes_utils.c parcing/dollar_utils.c \
+		parcing/tokenize_utils.c parcing/tokenize.c \
+		builtins/checking_cmd.c builtins/ft_cd.c \
+		builtins/ft_echo.c builtins/ft_env.c \
+		builtins/ft_pwd.c  builtins/ft_exit.c \
+		builtins/ft_unset.c builtins/ft_export.c \
 		redirections/heredoc.c redirections/input.c \
 		redirections/output.c redirections/append.c \
-		redirections/ft_redirections.c
+		redirections/ft_redirections.c \
+		utilss/libft_utils.c utilss/sjd_fun_utils.c \
+		execution/execute_commands.c \
+		minishell.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -40,7 +43,6 @@ $(NAME)	: $(OBJ) $(LIBFT)
 $(LIBFT):
 	@make -C libft
 	@mv libft/libft.a .
-
 
 clean: 
 	@echo  $(GREEN0)Cleaning 🧹

@@ -1,4 +1,5 @@
-#include "minishell.h"
+#include "../minishell.h"
+
 
 char	*remp_with_edi_value(char *str, char *env_var);
 int get_l(char *str, char *env_var);
