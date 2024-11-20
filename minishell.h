@@ -50,6 +50,7 @@ typedef struct s_token
 	token_type		data_type;
 	struct s_token	*next_token;
 	struct s_token	*prev_token;
+	char            **envirement;    //Sojod
 }					t_token;
 
 typedef struct s_redir
@@ -112,16 +113,16 @@ void				ft_sigint(int x);
 void				ft_echo(t_token *data);
 int					ft_cd(t_token *data);
 void				ft_pwd(t_token *data);
-void				check_command(t_token *data);
+void				check_command(t_token *data, char **env);
 void				ft_env(t_minishell data);
 void				ft_exit(t_token *data);
 void				ft_unset(t_env *env_list, t_minishell data);
 void				ft_backup(t_env *original, t_minishell data);
 void				ft_env_unset(t_minishell data);
-void				sort_env(t_senv *node);
-void				ft_env_export_once(t_minishell data, int active);
-void				ft_add_to_export_arg(t_minishell data);
-void				ft_export(t_minishell data);
+void    			ft_export(t_token *tokens, char **env) ; 
+// void				ft_env_export_once(t_token *token, int active);
+// void			ft_add_to_export_arg(t_token *token);
+
 
 // executr commands:
 void				ft_execute(t_minishell *data);
