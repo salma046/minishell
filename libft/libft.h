@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 21:48:52 by salaoui           #+#    #+#             */
-/*   Updated: 2024/11/11 15:07:38 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/11/21 04:17:13 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	*ft_strcat(char *dest, char *src);
-char *ft_strndup(char *str, int j);
+char *ft_strndup(const char *s, size_t n);
 typedef struct s_list
 {
 	void			*content;
