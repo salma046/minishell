@@ -28,38 +28,45 @@ char	*remplac_str(char *data, int i, int count_quotes)
 	word[j] = '\0';
 	return (word);
 }
+int	count_quotes(char *data, int *len)
+{
+	int		count;
+	char	quote;
+
+	count = 0;
+	*len = 0;
+	while (data[*len])
+	{
+		if (data[*len] == '\'' || data[*len] == '"')
+		{
+			quote = data[(*len)++];
+			count++;
+			while (data[*len] && data[*len] != quote)
+				(*len)++;
+			if (data[*len] == quote)
+				(*len)++;
+		}
+		else
+			(*len)++;
+	}
+	return (count);
+}
 
 t_token	*rm_qotes(t_token *tokens)
 {
-	int		i;
+	int		len;
 	int		n_quotes;
-	char	quot;
 	t_token	*temp_tokens;
 
 	temp_tokens = tokens;
 	while (temp_tokens)
 	{
-		i = 0;
-		n_quotes = 0;
 		if (temp_tokens->data_type == 0)
 		{
-			while (temp_tokens->data[i])
-			{
-				if (temp_tokens->data[i] == '\'' || temp_tokens->data[i] == '"')
-				{
-					quot = temp_tokens->data[i];
-					n_quotes++;
-					i++;
-					while (temp_tokens->data[i] && temp_tokens->data[i] != quot)
-						i++;
-					if (temp_tokens->data[i] == quot)
-						i++;
-				}
-				else if (temp_tokens->data[i] != '\0')
-					i++;
-			}
+			n_quotes = count_quotes(temp_tokens->data, &len);
 			if (n_quotes)
-				temp_tokens->data = remplac_str(temp_tokens->data, i, n_quotes);
+				temp_tokens->data = remplac_str(temp_tokens->data,
+						len, n_quotes);
 		}
 		temp_tokens = temp_tokens->next_token;
 	}

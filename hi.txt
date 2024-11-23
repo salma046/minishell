@@ -1,7 +1,8 @@
 '"'$USER'"''$gfhvk'"'$USER'" //first problem
 '"'$USER'"''$gfhvk'"'$USER'"
 
-"'"$$USER'"''$HOME'""// like $kdsjf // ADD to this command an expend and it's result is null;
+"'"$$USER'"''$HOME'""// like $kdsjf
+	// ADD to this command an expend and it's result is null;
 
 '"'$$$USER'"''$HOME'"$USER"
 
@@ -23,4 +24,5 @@ $USER$USER
 "'"$$USER'"''$HOME'""
 "'"$$$USER'"''$HOME'"" --> infinite loup whith any % 2 == 1 number
 
-'"'$USER"'"'$gfhvk'"'$USER'" || "'"$USER'"''$gfhvk'"'$USER'" // resent test fih loop infinite(les deux) croissant
+'"'$USER"'"'$gfhvk'"'$USER'" || "'"$USER'"''$gfhvk'"'$USER'"
+	// resent test fih loop infinite(les deux) croissant

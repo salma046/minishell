@@ -21,11 +21,6 @@ int	ft_check_redirections(t_minishell *data, t_token *tokens)
 			if (ft_append(tokens) < 0)
 				return (-1);
 		}
-		else if (current->data_type == HER_DOC) //
-		{
-			if (main_heredoc(tokens) < 0)
-				return (-1);
-		}
 		current = current->next_token;
 	}
 

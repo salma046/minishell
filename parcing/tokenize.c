@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-
 int	ft_skipp_spaces(char **line)
 {
 	while (**line == ' ' || **line == '\t' || **line == '\n' || **line == 'v'
