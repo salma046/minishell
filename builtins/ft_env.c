@@ -3,7 +3,6 @@
 // I called the function normaly of env.
 void	ft_env(t_minishell data)
 {
-
 	t_env	*tmp;
 	tmp = data.envir;
 	while (tmp)
@@ -15,7 +14,3 @@ void	ft_env(t_minishell data)
 		tmp = tmp->next;
 	}
 }
-
-
-// Hi Sajida if you're reading this so I remplaced strndup with ft_strndup(from libft) cause strdup is not allowed / same for strchr
-// nothing else   lcode nadii 

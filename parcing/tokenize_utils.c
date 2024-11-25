@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenize_utils.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 09:53:42 by salaoui           #+#    #+#             */
-/*   Updated: 2024/11/24 09:53:43 by salaoui          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../minishell.h"
 
 void	token_new_sep(enum e_token_type token_t, t_token **tokens_list)
@@ -97,7 +85,7 @@ int	ft_put_word_token(char **line, enum e_token_type token_t,
 	{
 		if (**line == '&')
 		{
-			printf("syntax error\n");
+			printf("syntkax error\n");
 			return (0);
 		}
 		if (**line == '"' || **line == '\'')
