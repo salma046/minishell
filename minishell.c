@@ -83,7 +83,7 @@ int	main(int ac, char *av[], char **env)
 
 	while (1)
 	{
-		g_minishell.command = readline("Minishell~$ ");
+		g_minishell.command = readline("\033[1;35m Minishell~$ \033[0m");
 		if (!g_minishell.command)
 		{
 			printf("Quiting minishell!\n");
