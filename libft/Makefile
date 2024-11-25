@@ -6,7 +6,7 @@
 #    By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/20 15:08:09 by salaoui           #+#    #+#              #
-#    Updated: 2024/11/24 14:21:41 by salaoui          ###   ########.fr        #
+#    Updated: 2024/11/25 11:25:31 by salaoui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCB = ft_lstnew_bonus.c ft_lstsize_bonus.c ft_lstadd_front_bonus.c \
 	   ft_lstadd_back_bonus.c ft_lstlast_bonus.c
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
 
 SRC_o := $(SRC:.c=.o)

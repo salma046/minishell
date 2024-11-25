@@ -87,6 +87,7 @@ int ft_check(char **env, char *key, char *value)
 
 void	ft_env_export_once(t_token *data, char **env, int active)
 {
+	(void)data;
 	t_senv	*head;
 	t_senv	*last_node;
 	int		i;
@@ -94,7 +95,6 @@ void	ft_env_export_once(t_token *data, char **env, int active)
 	char	*equal_env;
 	t_senv	*current;
 
-	(void)data;
 	head = NULL;
 	last_node = NULL;
 	i = 0;
@@ -108,9 +108,6 @@ void	ft_env_export_once(t_token *data, char **env, int active)
 		{
 			cmd_env->skey = strndup(env[i], equal_env- env[i]);
 			cmd_env->svalue = strndup(equal_env + 1, strlen(env[i]+ 1));
-=======
-			cmd_env->skey = strndup(env[i], equal_env - env[i]);
-			cmd_env->svalue = strndup(equal_env + 1, strlen(env[i] + 1));
 			cmd_env->sequal = '=';
 			cmd_env->next = NULL;
 		}
@@ -230,7 +227,7 @@ void ft_add_to_export_arg(t_token *tokens, char **env)
             is_special_char(token_data[0]) ||
             has_doubled_special_chars(token_data))
         {
-            printf("bash: export: `%s': not a valid identifier\n", token_data);
+            printf("bash: export: %s': not a valid identifier\n", token_data);
             current_token = current_token->next_token;
             continue;
         }
@@ -240,7 +237,7 @@ void ft_add_to_export_arg(t_token *tokens, char **env)
         {
             if (is_special_char(token_data[i]))
             {
-                printf("bash: export: `%s': not a valid identifier\n", token_data);
+                printf("bash: export: %s': not a valid identifier\n", token_data);
                 current_token = current_token->next_token;
                 break;
             }
@@ -312,129 +309,9 @@ void ft_add_to_export_arg(t_token *tokens, char **env)
         
         current_token = current_token->next_token;
     }
-=======
-int	ft_check(char **env, char *key, char *value, int active)
-{
-	int		i;
-	size_t	key_len;
-	size_t	new_len;
-
-	i = 0;
-	active = 0;
-	if (!env || !key || !value)
-		return (0);
-	key_len = ft_strlen(key);
-	while (env[i] != NULL)
-	{
-		if (ft_strncmp(env[i], key, key_len) == 0 && env[i][key_len] == '=')
-		{
-			active = 1;
-			free(env[i]);
-			new_len = key_len + ft_strlen(value) + 2;
-			env[i] = malloc(new_len);
-			if (!env[i])
-			{
-				perror("malloc");
-				return (1);
-			}
-			ft_strlcpy(env[i], key, new_len);
-			ft_strlcat(env[i], "=", new_len);
-			ft_strlcat(env[i], value, new_len);
-			return (0);
-		}
-		i++;
-	}
-	return (0);
-}
-void	ft_add_to_export_arg(t_token *tokens, char **env)
-{
-	t_token	*current_token;
-	t_env	*expo;
-	char	*token_data;
-	char	*splitVar;
-	size_t	len;
-	char	*new_env_str;
-	int		i;
-	int		active;
-
-	active = 0;
-	if (!tokens || !tokens->next_token || !env)
-		return ;
-	current_token = tokens->next_token;
-	while (current_token != NULL)
-	{
-		token_data = current_token->data;
-		if (ft_strcmp(token_data, "=") == 0)
-		{
-			printf("bash: export: `%s': not a valid identifier\n", token_data);
-			current_token = current_token->next_token;
-			continue ;
-		}
-		if (token_data[0] == '=')
-		{
-			printf("bash: export: `%s': not a valid identifier\n", token_data);
-			current_token = current_token->next_token;
-			continue ;
-		}
-		if (ft_isdigit(token_data[0]))
-		{
-			printf("bash: export: `%s': not a valid identifier\n", token_data);
-			current_token = current_token->next_token;
-			continue ;
-		}
-		expo = malloc(sizeof(t_env));
-		if (!expo)
-		{
-			perror("malloc");
-			return ;
-		}
-		splitVar = ft_strchr(token_data, '=');
-		if (!splitVar)
-		{
-			free(expo);
-			current_token = current_token->next_token;
-			continue ;
-		}
-		expo->key = ft_strndup(token_data, splitVar - token_data);
-		expo->value = ft_strdup(splitVar + 1);
-		if (!expo->key || !expo->value)
-		{
-			free(expo->key);
-			free(expo->value);
-			free(expo);
-			current_token = current_token->next_token;
-			continue ;
-		}
-		i = 0;
-		while (env[i] != NULL)
-			i++;
-		len = ft_strlen(expo->key) + ft_strlen(expo->value) + 2;
-		new_env_str = malloc(len);
-		if (!new_env_str)
-		{
-			free(expo->key);
-			free(expo->value);
-			free(expo);
-			current_token = current_token->next_token;
-			continue ;
-		}
-		ft_strlcpy(new_env_str, expo->key, len);
-		ft_strlcat(new_env_str, "=", len);
-		ft_strlcat(new_env_str, expo->value, len);
-		if (!ft_check(env, expo->key, expo->value, active))
-		{
-			printf("\033[0;33m-------->HAdi raha %d<----------\033[0m", active);
-		}
-		env[i] = new_env_str;
-		env[i + 1] = NULL;
-		free(expo->key);
-		free(expo->value);
-		free(expo);
-		current_token = current_token->next_token;
-	}
 }
 
-void	ft_export(t_token *tokens, char **env)
+void    ft_export(t_token *tokens, char **env)  
 {
     int active = 0;
 	
@@ -444,8 +321,7 @@ void	ft_export(t_token *tokens, char **env)
     active = 1;
     if ((tokens->next_token == NULL && tokens->data)) 
     {
-        // ft_env_export_once(tokens, env, active);
-        printf("--");
+        ft_env_export_once(tokens, env, active);
     }
     else
     {

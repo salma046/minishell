@@ -1,56 +1,55 @@
 #include "../minishell.h"
 
-// You need to free it .
-void	ft_env_unset(t_minishell data)
-{
-	int		i;
-	t_env	*head;
-	t_env	*last_node;
-	t_env	*cmd_env;
-	char	*equal_env;
+void removeNode(t_env** head, char *valueToRemove) {
+	t_env*	current = *head;
+	t_env*	prev = NULL;
 
-	printf(" \033[36m------------> %s  <---------\033[0m\n\n\n",
-			data.tokens->data);
-	if (data.tokens->next_token == NULL)
-		return ;
-	i = 0;
-	head = NULL;
-	last_node = NULL;
-	while (data.envirement[i] != NULL)
-	{
-		cmd_env = (t_env *)malloc(sizeof(t_env));
-		cmd_env->test = "TERM_SESSION_ID";
-		if (!cmd_env)
-			exit(1);
-		equal_env = ft_strchr(data.envirement[i], '=');
-		if (equal_env != NULL)
+	while (current != NULL) {
+		if (!ft_strcmp(valueToRemove, current->key))
 		{
-			cmd_env->key = ft_strndup(data.envirement[i], equal_env
-					- data.envirement[i]);
-			cmd_env->value = ft_strndup(equal_env + 1, ft_strlen(data.envirement[i]
-						+ 1));
-			cmd_env->equal = '=';
-			cmd_env->next = NULL;
+			if (prev == NULL)
+				*head = current->next;
+			else
+				prev->next = current->next;
+			free(current);
+			return;
 		}
-		if (last_node == NULL)
-			head = cmd_env;
-		else
-			last_node->next = cmd_env;
-		last_node = cmd_env;
-		i++;
+		prev = current;
+		current = current->next;
 	}
-	// printf("HELLO WORLD\n");
-	ft_backup(head, data); // now the head got updated when the unset executed
+}
+
+// You need to free it .
+t_env	*ft_env_unset(t_minishell data)
+{
 	t_env	*tmp;
-	tmp = head;
+	// t_env	*to_checkk;
+	t_token	*temp_tokens;
+
+	temp_tokens = data.tokens;
+	tmp = data.envir;
+	if (data.tokens->next_token == NULL)
+		return (tmp);
 	while (tmp)
 	{
-		tmp->test = data.tokens->next_token->data;
-		printf("-->:%s", tmp->key);
-		printf("<%c>", tmp->equal);
-		printf("-->%s\n", tmp->value);
+		tmp->test = temp_tokens->next_token->data;
+		if (tmp->next != NULL && !ft_strcmp(tmp->test, tmp->next->key))
+		{
+			removeNode(&data.envir, tmp->test);
+		}
 		tmp = tmp->next;
 	}
+	// to_checkk = data.envir;
+	// while (to_checkk)
+	// {
+	// 	to_checkk->test = temp_tokens->next_token->data;
+	// 	// printf("\nJust to check that test is LESS ->: %s\n", tmp->test);
+	// 	printf("kkkkkkkkk:%s", to_checkk->key);
+	// 	printf("<%c>", to_checkk->equal);
+	// 	printf("-->%s\n", to_checkk->value);
+	// 	to_checkk = to_checkk->next;
+	// }
+	return (tmp);
 }
 
 void	ft_unset(t_env *env_list, t_minishell data)
@@ -58,6 +57,6 @@ void	ft_unset(t_env *env_list, t_minishell data)
 	(void)data;
 	(void)env_list;
 	printf("\033[36m-------  I'm in the unset -------\033[0m \n");
-	ft_env_unset(data);
+	data.envir = ft_env_unset(data);
 	printf("\033[0;33m-----------------------------\033[0m\n");
 }

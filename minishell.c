@@ -3,7 +3,7 @@
 t_minishell	g_minishell;
 
 
-int main3(t_minishell data, char **env)
+int main3(t_minishell data,  char **env)
 {
 	t_token	*temp_tokens;
 
@@ -15,7 +15,7 @@ int main3(t_minishell data, char **env)
 			ft_env(data);
 		if (!ft_strcmp(temp_tokens->data , "unset") && temp_tokens->data)
 			ft_unset(NULL,  data);
-		check_command(temp_tokens, env);
+		check_command(temp_tokens,  env);
 		// ft_execute(&data);
 		temp_tokens = temp_tokens->next_token;
 	}
@@ -33,17 +33,6 @@ int	main(int ac, char *av[], char **env)
 	(void)av;
 	g_minishell.envirement = env;
 	g_minishell.envir = mk_env(g_minishell.envirement);
-	t_env	*tmp;
-	tmp = g_minishell.envir;
-	while (tmp)
-	{
-		// tmp->test = data.tokens->next_token->data;
-		printf("-->:%s", tmp->key);
-		printf("<%c>", tmp->equal);
-		printf("-->%s\n", tmp->value);
-		tmp = tmp->next;
-	}
-	exit(0);
 	while (1)
 	{
 		g_minishell.command = readline("\033[1;35m Minishell~$ \033[0m");
@@ -66,7 +55,7 @@ int	main(int ac, char *av[], char **env)
 		// if (unlink("/tmp/heredoc.txt") == -1)
 		// 	dprintf(2, "error deleting the file\n");
 
-		main3(g_minishell, env); //execution starts here;;;;
+		main3(g_minishell,  env); //execution starts here;;;;
 		g_minishell.nodes = mk_nodes(g_minishell.tokens); ///// This function just took me somuch time and now there is a possibility it won't be used at all ooof
 		// tmp_node = g_minishell.nodes;
 		// while (tmp_node)
