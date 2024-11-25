@@ -52,7 +52,7 @@ typedef struct s_token
 	token_type		data_type;
 	struct s_token	*next_token;
 	struct s_token	*prev_token;
-	char            **envirement;    //Sojod
+	char			**envirement;    //Sojod
 }					t_token;
 
 typedef struct s_redir
@@ -73,6 +73,7 @@ typedef struct s_node
 typedef struct s_minishell
 {
 	char			**envirement;
+	t_env			*envir;
 	char			*command;
 	t_token			*tokens;
 	t_node			*nodes;
@@ -107,6 +108,9 @@ int					put_env_in_word(char *str, char *word, char *env_var,
 						int *i, int *j);
 int					ft_put_word_token(char **line, enum e_token_type token_t,
 						t_token **tokens_list, int heredoc);
+void				free_node(t_node *node);
+void				free_redir_list(t_redir *redir);
+void				free_node_list(t_node *node_list);
 void				skip_double_signs(char *str, int *i);
 void				skip_quo(char *tokens_word, int *i, int quot);
 void				skip_if_isalnum(char *tokens_word, int *i);
@@ -130,6 +134,8 @@ t_node				*mk_nodes(t_token *tokens);
 t_node				*allocate_for_node(t_token *temp_tokens);
 
 //  🥳 EXECUTION PART:
+
+void	*mk_env(char **envirement);
 
 // functionts utils:
 int					ft_strcmp(char *s1, char *s2);

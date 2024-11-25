@@ -1,5 +1,16 @@
-#include "../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/24 09:55:00 by salaoui           #+#    #+#             */
+/*   Updated: 2024/11/24 09:55:01 by salaoui          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../minishell.h"
 
 int	ft_start_heredoc(int fd, char *limiter)
 {
@@ -19,7 +30,7 @@ int	ft_start_heredoc(int fd, char *limiter)
 		ft_putendl_fd(line, fd);
 		line = readline("heredoc>");
 	}
-	return (0); // del this line
+	return (0);
 }
 
 int	start_heredoc(int fd, char *limiter)
@@ -28,7 +39,7 @@ int	start_heredoc(int fd, char *limiter)
 		return (-1);
 	if (ft_start_heredoc(fd, limiter) < 0)
 		return (-1);
-	return (0); // del this line
+	return (0);
 }
 
 int	ft_heredoc(t_token *tokens)

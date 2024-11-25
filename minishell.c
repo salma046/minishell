@@ -2,61 +2,8 @@
 
 t_minishell	g_minishell;
 
-void	free_redir_list(t_redir *redir)
-{
-	t_redir	*current;
-	t_redir	*next;
 
-	current = redir;
-	while (current != NULL)
-	{
-		next = current->next;
-		free(current->file);
-		free(current);
-		current = next;
-	}
-}
-
-void	free_node(t_node *node)
-{
-	int	i;
-
-	i = 0;
-	if (node->cmd)
-	{
-		while (node->cmd[i])
-		{
-			free(node->cmd[i]);
-			i++;
-		}
-		free(node->cmd);
-	}
-	if (node->redir)
-	{
-		free_redir_list(node->redir);
-	}
-	free(node);
-}
-
-void	free_node_list(t_node *node_list)
-{
-	t_node	*current;
-	t_node	*next;
-
-	current = node_list;
-	while (current != NULL)
-	{
-		next = current->next_node;
-		free_node(current);
-		current = next;
-	}
-}
-
-<<<<<<< HEAD
-int	main3(t_minishell data)
-=======
 int main3(t_minishell data, char **env)
->>>>>>> 48b44921936deef6e2c463d378cb4449e3fed8eb
 {
 	t_token	*temp_tokens;
 
@@ -64,17 +11,11 @@ int main3(t_minishell data, char **env)
 	
 	while (temp_tokens)
 	{
-		if (!ft_strcmp(data.tokens->data, "env") && data.tokens->data)
+		if (!ft_strcmp(temp_tokens->data, "env") && temp_tokens->data)
 			ft_env(data);
-<<<<<<< HEAD
-		if (!ft_strcmp(data.tokens->data, "unset") && data.tokens->data)
-			ft_unset(NULL, data);
-		check_command(temp_tokens);
-=======
-		if (!ft_strcmp(data.tokens->data , "unset") && data.tokens->data)
+		if (!ft_strcmp(temp_tokens->data , "unset") && temp_tokens->data)
 			ft_unset(NULL,  data);
 		check_command(temp_tokens, env);
->>>>>>> 48b44921936deef6e2c463d378cb4449e3fed8eb
 		// ft_execute(&data);
 		temp_tokens = temp_tokens->next_token;
 	}
@@ -91,6 +32,18 @@ int	main(int ac, char *av[], char **env)
 		return (1);
 	(void)av;
 	g_minishell.envirement = env;
+	g_minishell.envir = mk_env(g_minishell.envirement);
+	t_env	*tmp;
+	tmp = g_minishell.envir;
+	while (tmp)
+	{
+		// tmp->test = data.tokens->next_token->data;
+		printf("-->:%s", tmp->key);
+		printf("<%c>", tmp->equal);
+		printf("-->%s\n", tmp->value);
+		tmp = tmp->next;
+	}
+	exit(0);
 	while (1)
 	{
 		g_minishell.command = readline("Minishell~$ ");
@@ -112,42 +65,14 @@ int	main(int ac, char *av[], char **env)
 			continue ;
 		// if (unlink("/tmp/heredoc.txt") == -1)
 		// 	dprintf(2, "error deleting the file\n");
-<<<<<<< HEAD
-		main3(g_minishell);
-		//execution starts here;;;;
-		g_minishell.nodes = mk_nodes(g_minishell.tokens);
-		///// This function just took me somuch time and now there is a possibility it won't be used at all ooof
+
+		main3(g_minishell, env); //execution starts here;;;;
+		g_minishell.nodes = mk_nodes(g_minishell.tokens); ///// This function just took me somuch time and now there is a possibility it won't be used at all ooof
 		// tmp_node = g_minishell.nodes;
 		// while (tmp_node)
 		// {
 		// 	j = 0;
 		// 	i = 0;
-		// 	printf("----------------------------------------------------------\n");
-		// 	while (tmp_node->cmd[j])
-		// 	{
-		// 		printf("the node \033[32m%d\033[0m cmds n* %d is :\033[32m %s\033[0m\n", i, j, tmp_node->cmd[j]);
-		// 		j++;
-		// 	}
-		// 	while (tmp_node->redir)
-		// 	{
-		// 		printf("the redir file name is: %s\n",
-		// 				tmp_node->redir->file);
-		// 		printf("the redir type is: %d\n",
-		// 				tmp_node->redir->red_type);
-		// 		tmp_node->redir = tmp_node->redir->next;
-		// 	}
-		// 	printf("----------------------------------------------------------\n");
-		// 	tmp_node = tmp_node->next_node;
-		// 	i++;
-		// }
-=======
-		main3(g_minishell, env); //execution starts here;;;;
-		g_minishell.nodes = mk_nodes(g_minishell.tokens); ///// This function just took me somuch time and now there is a possibility it won't be used at all ooof
-		tmp_node = g_minishell.nodes;
-		while (tmp_node)
-		{
-			j = 0;
-			i = 0;
 			// printf("----------------------------------------------------------\n");
 			// while(tmp_node->cmd[j])
 			// {
@@ -163,11 +88,10 @@ int	main(int ac, char *av[], char **env)
 			// 		tmp_node->redir->red_type);
 			// 	tmp_node->redir = tmp_node->redir->next;
 			// }
-			// printf("----------------------------------------------------------\n");
-			tmp_node = tmp_node->next_node;
-			i++;
-		}
->>>>>>> 48b44921936deef6e2c463d378cb4449e3fed8eb
+		 	// printf("----------------------------------------------------------\n");
+		// 	tmp_node = tmp_node->next_node;
+		// 	i++;
+		// }
 		free_node_list(g_minishell.nodes);
 	}
 }

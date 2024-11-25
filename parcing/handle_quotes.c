@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_quotes.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/24 09:53:36 by salaoui           #+#    #+#             */
+/*   Updated: 2024/11/25 10:41:17 by salaoui          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	*remplac_str(char *data, int i, int count_quotes)
@@ -28,6 +40,7 @@ char	*remplac_str(char *data, int i, int count_quotes)
 	word[j] = '\0';
 	return (word);
 }
+
 int	count_quotes(char *data, int *len)
 {
 	int		count;
