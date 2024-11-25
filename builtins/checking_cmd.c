@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void	check_command(t_token *data, char **env)
+void	check_command(t_token *data, t_env *envir, char **env)
 {
 	t_token	*temp_tokens;
 
@@ -14,5 +14,5 @@ void	check_command(t_token *data, char **env)
 	if (!ft_strcmp(temp_tokens->data, "exit") && temp_tokens->data)
 		ft_exit(temp_tokens);
 	if (!ft_strcmp(temp_tokens->data, "export") && temp_tokens->data)
-		ft_export(temp_tokens, env);
+		ft_export(temp_tokens, envir, env);
 }
