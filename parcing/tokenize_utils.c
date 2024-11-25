@@ -46,6 +46,7 @@ void	token_new_word(char *word, enum e_token_type token_t,
 	}
 	else
 		new_word = word;
+	new_token->prev_token = NULL;
 	new_token->data = new_word;
 	new_token->data_type = token_t;
 	new_token->next_token = NULL;
