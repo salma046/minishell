@@ -19,10 +19,31 @@ void removeNode(t_env** head, char *valueToRemove) {
 	}
 }
 
+// int	check_valid_key(t_env *envir, t_token *tooken)
+// {
+// 	t_env	*tmp;
+// 	int		is_valid;
+
+// 	is_valid = 0;
+// 	tmp = envir;
+// 	if (data.tokens->next_token == NULL)
+// 		return (tmp);
+// 	while (tmp)
+// 	{
+// 		if (tmp->next != NULL && !ft_strcmp(tooken->data, tmp->next->key))
+// 		{
+// 			is_valid = 1;
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	if (tooken->data_type == WORD && )
+// }
+
 // You need to free it .
 t_env	*ft_env_unset(t_minishell data)
 {
 	t_env	*tmp;
+	char	*test;
 	// t_env	*to_checkk;
 	t_token	*temp_tokens;
 
@@ -30,12 +51,13 @@ t_env	*ft_env_unset(t_minishell data)
 	tmp = data.envir;
 	if (data.tokens->next_token == NULL)
 		return (tmp);
+	// while (check_valid_key(temp_tokens) == 1)
 	while (tmp)
 	{
-		tmp->test = temp_tokens->next_token->data;
-		if (tmp->next != NULL && !ft_strcmp(tmp->test, tmp->next->key))
+		test = temp_tokens->next_token->data;
+		if (tmp->next != NULL && !ft_strcmp(test, tmp->next->key))
 		{
-			removeNode(&data.envir, tmp->test);
+			removeNode(&data.envir, test);
 		}
 		tmp = tmp->next;
 	}

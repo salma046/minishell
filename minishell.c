@@ -3,7 +3,7 @@
 t_minishell	g_minishell;
 
 
-int main3(t_minishell data, t_env *envir, char **env)
+int main3(t_minishell data,  char **env)
 {
 	t_token	*temp_tokens;
 
@@ -15,7 +15,7 @@ int main3(t_minishell data, t_env *envir, char **env)
 			ft_env(data);
 		if (!ft_strcmp(temp_tokens->data , "unset") && temp_tokens->data)
 			ft_unset(NULL,  data);
-		check_command(temp_tokens, envir, env);
+		check_command(temp_tokens,  env);
 		// ft_execute(&data);
 		temp_tokens = temp_tokens->next_token;
 	}
@@ -55,7 +55,7 @@ int	main(int ac, char *av[], char **env)
 		// if (unlink("/tmp/heredoc.txt") == -1)
 		// 	dprintf(2, "error deleting the file\n");
 
-		main3(g_minishell, g_minishell.envir, env); //execution starts here;;;;
+		main3(g_minishell, env); //execution starts here;;;;
 		g_minishell.nodes = mk_nodes(g_minishell.tokens); ///// This function just took me somuch time and now there is a possibility it won't be used at all ooof
 		// tmp_node = g_minishell.nodes;
 		// while (tmp_node)

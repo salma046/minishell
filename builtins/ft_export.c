@@ -189,11 +189,11 @@ void	ft_add_to_export_arg(t_token *tokens, char **env)
 	}
 }
 
-void	ft_export(t_token *tokens, t_env *envir, char **env)
+void	ft_export(t_token *tokens, char **env)
 {
 	int	active;
 
-	(void)envir;
+	// (void)envir;
 	if (!tokens || !env)
 		return ;
 	active = 1;
