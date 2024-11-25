@@ -6,15 +6,17 @@
 # include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <unistd.h>
 
 //--->Sajida: new header Declarations
 # include "libft/libft.h"
 # include <errno.h>
+# include <limits.h>
 # include <signal.h>
 # include <stdio.h>
 # include <string.h>
-#include <limits.h>
 
 typedef struct s_env
 {
@@ -50,7 +52,7 @@ typedef struct s_token
 	token_type		data_type;
 	struct s_token	*next_token;
 	struct s_token	*prev_token;
-	char            **envirement;    //Sojod
+	char			**envirement;    //Sojod
 }					t_token;
 
 typedef struct s_redir
@@ -71,6 +73,7 @@ typedef struct s_node
 typedef struct s_minishell
 {
 	char			**envirement;
+	t_env			*envir;
 	char			*command;
 	t_token			*tokens;
 	t_node			*nodes;
@@ -78,32 +81,61 @@ typedef struct s_minishell
 
 extern t_minishell	minishell;
 
-t_token				*ft_tokenize(t_minishell g_minishell);
-int					is_space(char *line);
-void				ft_lstadd_back_token(t_token **lst, t_token *new);
 char				*get_word(char *str, int i);
-void				ft_put_token(char **line, enum e_token_type token_t,
-						t_token **tokens_list);
-int					ft_put_word_token(char **line, enum e_token_type token_t,
-						t_token **tokens_list, int heredoc);
-t_token				*rm_qotes(t_token *tokens);
-t_token				*parsing(t_minishell g_minishell);
+char				*get_env_var(char *str, int i);
+char				*fill_first_part(char *env_var, int *i);
+char				*fill_middle_part(char *env_var, int *i);
+char				*allocate_4_nword(char *str, char *env_var);
+char				*ft_join_words(char *word, char *str, int l);
+char				*remplace_doll_str(char *data, char *env_var);
+char				*after_dol_word(char *str, int l, int str_len);
 char				*rmp_dollar(char *tokens_word, t_token **tokens_list);
-int					count_pipe(t_token *tokens);
+char				*rmp_dollar2(char *t_word, int *i, int to_split,
+						t_token **tokens_list);
+char				*token_edi_env(char *str, char *env_var,
+						t_token **tokens_list);
+int					is_space(char *line);
 int					is_not_alpanum(char c);
 int					cmd_count(t_token *tokens);
-t_node				*mk_nodes(t_token *tokens);
+int					count_pipe(t_token *tokens);
 int					check_4_space(char *env_var);
-char				*token_edi_env(char *str, char *env_var,
+int					valid_word(char *str, int i);
+int					count_dollar_lenth(char *str);
+int					check_is_num(char *str, int i);
+int					count_lenth2(char *str, int *i);
+int					is_not_valid_expend(char *str, int i);
+int					put_env_in_word(char *str, char *word, char *env_var,
+						int *i, int *j);
+int					ft_put_word_token(char **line, enum e_token_type token_t,
+						t_token **tokens_list, int heredoc);
+void				free_node(t_node *node);
+void				free_redir_list(t_redir *redir);
+void				free_node_list(t_node *node_list);
+void				skip_double_signs(char *str, int *i);
+void				skip_quo(char *tokens_word, int *i, int quot);
+void				skip_if_isalnum(char *tokens_word, int *i);
+void				ft_lstadd_back_token(t_token **lst, t_token *new);
+void				skip_double_quo(char *tokens_word, int *to_split, int *i);
+void				fill_word_sgl_quot(char *word, char *str, int *i, int *j);
+void				ft_redi_add_back(t_redir **redirections,
+						t_redir *new_redir);
+void				fill_redi(enum e_token_type token_t, char *red_file,
+						t_redir **redirections);
+void				token_new_edi_word(char *word, enum e_token_type token_t,
+						t_token **tokens_list);
+void				ft_put_token(char **line, enum e_token_type token_t,
 						t_token **tokens_list);
 void				token_new_word(char *word, enum e_token_type token_t,
 						t_token **tokens_list, int heredoc);
-char				*after_dol_word(char *str, int l, int str_len);
-int					count_dollar_lenth(char *str);
-int					is_not_valid_expend(char *str, int i);
-;
+t_token				*ft_tokenize(t_minishell g_minishell);
+t_token				*rm_qotes(t_token *tokens);
+t_token				*parsing(t_minishell g_minishell);
+t_node				*mk_nodes(t_token *tokens);
+t_node				*allocate_for_node(t_token *temp_tokens);
 
 //  🥳 EXECUTION PART:
+
+void	*mk_env(char **envirement);
 
 // functionts utils:
 int					ft_strcmp(char *s1, char *s2);

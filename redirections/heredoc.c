@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-
 int	ft_start_heredoc(int fd, char *limiter)
 {
 	char	*line;
@@ -19,7 +18,7 @@ int	ft_start_heredoc(int fd, char *limiter)
 		ft_putendl_fd(line, fd);
 		line = readline("heredoc>");
 	}
-	return (0); // del this line
+	return (0);
 }
 
 int	start_heredoc(int fd, char *limiter)
@@ -28,7 +27,7 @@ int	start_heredoc(int fd, char *limiter)
 		return (-1);
 	if (ft_start_heredoc(fd, limiter) < 0)
 		return (-1);
-	return (0); // del this line
+	return (0);
 }
 
 int	ft_heredoc(t_token *tokens)

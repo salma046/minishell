@@ -9,8 +9,10 @@ void	ft_env_unset(t_minishell data)
 	t_env	*cmd_env;
 	char	*equal_env;
 
-	printf(" \033[36m------------> %s  <---------\033[36m\n\n\n\n",
-		data.tokens->data);
+	printf(" \033[36m------------> %s  <---------\033[0m\n\n\n",
+			data.tokens->data);
+	if (data.tokens->next_token == NULL)
+		return ;
 	i = 0;
 	head = NULL;
 	last_node = NULL;
@@ -20,12 +22,12 @@ void	ft_env_unset(t_minishell data)
 		cmd_env->test = "TERM_SESSION_ID";
 		if (!cmd_env)
 			exit(1);
-		equal_env = strchr(data.envirement[i], '=');
+		equal_env = ft_strchr(data.envirement[i], '=');
 		if (equal_env != NULL)
 		{
-			cmd_env->key = strndup(data.envirement[i], equal_env
+			cmd_env->key = ft_strndup(data.envirement[i], equal_env
 					- data.envirement[i]);
-			cmd_env->value = strndup(equal_env + 1, ft_strlen(data.envirement[i]
+			cmd_env->value = ft_strndup(equal_env + 1, ft_strlen(data.envirement[i]
 						+ 1));
 			cmd_env->equal = '=';
 			cmd_env->next = NULL;
@@ -37,7 +39,18 @@ void	ft_env_unset(t_minishell data)
 		last_node = cmd_env;
 		i++;
 	}
-	ft_backup(head, data);
+	// printf("HELLO WORLD\n");
+	ft_backup(head, data); // now the head got updated when the unset executed
+	t_env	*tmp;
+	tmp = head;
+	while (tmp)
+	{
+		tmp->test = data.tokens->next_token->data;
+		printf("-->:%s", tmp->key);
+		printf("<%c>", tmp->equal);
+		printf("-->%s\n", tmp->value);
+		tmp = tmp->next;
+	}
 }
 
 void	ft_unset(t_env *env_list, t_minishell data)

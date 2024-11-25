@@ -1,22 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   nodes.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/22 14:59:29 by salaoui           #+#    #+#             */
+/*   Updated: 2024/11/22 15:13:36 by salaoui          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
-
-
-void	ft_redi_add_back(t_redir **redirections, t_redir *new_redir)
-{
-	t_redir	*arrs;
-
-	arrs = *redirections;
-	if (!redirections || !new_redir)
-		return ;
-	if (*redirections == NULL)
-	{
-		*redirections = new_redir;
-		return ;
-	}
-	while (arrs->next != NULL)
-		arrs = arrs->next;
-	arrs->next = new_redir;
-}
 
 void	fill_redi(enum e_token_type token_t, char *red_file,
 		t_redir **redirections)
@@ -53,33 +47,26 @@ void	ft_node_add_back(t_node **node_list, t_node *new_node)
 void	fill_node(t_token *temp_tokens, t_node **node_list)
 {
 	t_node	*node;
-	t_redir	*redirections;
+	t_redir	*redir;
 	t_token	*tokens;
-	int		cmd_idx;
 	int		i;
 
 	i = 0;
 	tokens = temp_tokens;
-	redirections = NULL;
-	node = malloc(sizeof(t_node));
-	if (!node)
-		return ;
-	cmd_idx = cmd_count(temp_tokens);
-	node->cmd = malloc(sizeof(char *) * (cmd_idx + 1));
+	redir = NULL;
+	node = allocate_for_node(temp_tokens);
 	while (tokens && tokens->data_type != PIPE)
 	{
-		if (tokens->data_type == OUT_REDIR || tokens->data_type == APPEND
-			|| tokens->data_type == INP_REDIR || tokens->data_type == HER_DOC)
+		if (tokens->data_type != PIPE && tokens->data_type != WORD)
 		{
-			fill_redi(tokens->data_type, tokens->next_token->data,
-				&redirections);
+			fill_redi(tokens->data_type, tokens->next_token->data, &redir);
 			tokens = tokens->next_token;
 		}
 		else
 			node->cmd[i++] = ft_strdup(tokens->data);
 		tokens = tokens->next_token;
 	}
-	node->redir = redirections;
+	node->redir = redir;
 	node->cmd[i] = NULL;
 	node->next_node = NULL;
 	ft_node_add_back(node_list, node);
@@ -102,15 +89,12 @@ t_node	*mk_nodes(t_token *tokens)
 	t_node	*nodes;
 	t_token	*current;
 	t_token	*next;
-	int		cmd_count;
 
 	nodes = NULL;
 	current = tokens;
-	cmd_count = count_pipe(tokens);
 	fill_commands(&nodes, tokens);
 	while (current)
 	{
-		cmd_count++;
 		next = current->next_token;
 		free(current->data);
 		free(current);

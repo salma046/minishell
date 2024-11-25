@@ -32,7 +32,7 @@ void	ft_echo(t_token *data)
 			tmp_tokens = tmp_tokens->next_token->next_token;
 			if (tmp_tokens == NULL)
 				return ;
-			ft_print(data);
+			ft_print(tmp_tokens);
 		}
 		else
 		{

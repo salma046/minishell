@@ -2,37 +2,39 @@
 
 char	*ft_strncpy(char *dst, const char *src, size_t len)
 {
-    size_t i;
+	size_t	i;
 
-    i = 0;
-    while (i < len && src[i] != '\0')
-    {
-        dst[i] = src[i];
-        i++;
-    }
-    while (i < len)
-    {
-        dst[i] = '\0';
-        i++;
-    }
-    return (dst);
+	i = 0;
+	while (i < len && src[i] != '\0')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	while (i < len)
+	{
+		dst[i] = '\0';
+		i++;
+	}
+	return (dst);
 }
 
 int	is_space(char *line)
 {
 	if (*line == ' ' || *line == '\t' || *line == '\n')
-        return (1);
-    return (0);
+		return (1);
+	return (0);
 }
 
-char *get_word(char *str, int i)
+char	*get_word(char *str, int i)
 {
-	int j = 0;
-	char *word;
+	int		j;
+	char	*word;
+
+	j = 0;
 	word = (char *)malloc(i + 1);
-    if (!word)
+	if (!word)
 	{
-        return (NULL);
+		return (NULL);
 	}
 	while (j < i)
 	{
@@ -42,7 +44,6 @@ char *get_word(char *str, int i)
 	word[j] = '\0';
 	return (word);
 }
-
 
 void	ft_lstadd_back_token(t_token **lst, t_token *new)
 {
@@ -63,4 +64,3 @@ void	ft_lstadd_back_token(t_token **lst, t_token *new)
 	arrs->next_token = new;
 	new->prev_token = arrs;
 }
-

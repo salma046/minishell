@@ -2,7 +2,7 @@
 
 int	ft_cd(t_token *data)
 {
-	t_token *tmp_tokens;
+	t_token	*tmp_tokens;
 
 	tmp_tokens = data;
 	while (tmp_tokens)
@@ -17,8 +17,8 @@ int	ft_cd(t_token *data)
 		if (!ft_strcmp(tmp_tokens->data, "cd") && tmp_tokens->data)
 		{
 			printf("This is the path of cd:%s\n", getenv("HOME"));
-			if (tmp_tokens->next_token && chdir(tmp_tokens->next_token->data) ==
-				-1)
+			if (tmp_tokens->next_token && chdir(tmp_tokens->next_token->data)
+				== -1)
 				perror("\033[32m ERROR\033[0m");
 			else
 				printf("DONE ✅\n");
