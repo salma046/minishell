@@ -8,9 +8,12 @@ void	ft_env(t_minishell data)
 	while (tmp)
 	{
 		// tmp->test = data.tokens->next_token->data;
-		printf("%s", tmp->key);
-		printf("%c", tmp->equal);
-		printf("%s\n", tmp->value);
+		if (tmp->value != NULL)
+		{
+			printf("%s", tmp->key);
+			printf("%c", tmp->equal);
+			printf("%s\n", tmp->value);
+		}
 		tmp = tmp->next;
 	}
 }

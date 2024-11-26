@@ -38,6 +38,7 @@ void key_without_equal(t_token *tokens, t_env *envir, int active)
 	    new_export->key = ft_strdup(temp_tokens->data);
 	    new_export->value = NULL;
     	new_export->equal = '=';
+		new_export->test = 1;
 	    new_export->next = NULL;
 
 	    if (head == NULL)

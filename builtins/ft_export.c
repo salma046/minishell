@@ -78,10 +78,6 @@ void key_with_equal(t_token *tokens, t_env *envir)
     new_export->value = put_quot2_value(ft_strdup(splitVar + 1));
     new_export->equal = '=';
 	new_export->next = NULL;
-    // if (check_key(new_export->key, envir) == 1)
-    // {
-    //     removeNode(&envir, new_export->key);
-    // }
 	if (head == NULL)
 	    envir = new_export;
 	else
@@ -89,14 +85,14 @@ void key_with_equal(t_token *tokens, t_env *envir)
 	head = new_export;
 }
  
-void ft_add_to_export_arg(t_token *tokens, t_env *envir)
+void ft_add_to_export_arg(t_token *tokens, t_env *expo_envir, t_env *env_envir)
 {
     t_token *current_token;
     char    *token_data;
     char    *splitVar;
     int     i;
     
-    if (!tokens || !tokens->next_token || !envir)
+    if (!tokens || !tokens->next_token || !expo_envir)
         return;
     current_token = tokens->next_token;
     while (current_token != NULL && current_token->data_type == WORD)
@@ -135,75 +131,20 @@ void ft_add_to_export_arg(t_token *tokens, t_env *envir)
             continue;
         splitVar = ft_strchr(token_data, '=');
         if (!splitVar)
-            key_without_equal(current_token, envir, 0);
+            key_without_equal(current_token, expo_envir, 0);
         else
         {
-            if (check_key( ft_strndup(current_token->data, splitVar - current_token->data), envir) == 1)
+            if (check_key( ft_strndup(current_token->data, splitVar - current_token->data), expo_envir) == 1)
             {
-                removeNode(&envir, ft_strndup(current_token->data, splitVar - current_token->data));
+                removeNode(&expo_envir, ft_strndup(current_token->data, splitVar - current_token->data));
+                removeNode(&env_envir, ft_strndup(current_token->data, splitVar - current_token->data));
             }
-            key_with_equal(current_token, envir);
+            key_with_equal(current_token, expo_envir);
         }
         current_token = current_token->next_token;
     }
 }
 
-char    *rm_quot2_value(char *str)
-{
-    char    *result;
-    int     i;
-    int     j;
-
-    i = 1;
-    j = 0;
-    if (!ft_strcmp(str, ""))
-    {
-        free(str);
-        return (ft_strdup(""));
-    }
-    result = malloc(sizeof(char) * ft_strlen(str) - 1);
-    if (!result)
-        return NULL;
-    while (str[i + 1])
-    {
-        result[j++] = str[i++];
-    }
-    result[j] = '\0';
-    free(str);
-    return (result);
-}
-
-void    add_struc_2_env(t_env *new_env, t_env *head)
-{
-	t_env *new_head = NULL;
-    new_head = head;
-
-	while (new_head && new_head->next != NULL) {
-        new_head = new_head->next;
-    }
-    new_env->value = rm_quot2_value(new_env->value);
-    if (new_head == NULL)
-	        head = new_env;
-	    else
-	        new_head->next = new_env;
-	    new_head = new_env;
-}
-
-void    search_check_add_env(t_env *expo_envir, t_env *env_envir)
-{
-    t_env *to_check;
-
-    to_check = expo_envir;
-    while (to_check)
-    {
-        if (check_key(to_check->key, env_envir) != 1)
-        {
-            add_struc_2_env(to_check, env_envir);
-        }
-        to_check = to_check->next;
-    }
-    
-}
 
 void    ft_export(t_token *tokens, t_env *expo_envir, t_env *env_envir)  
 {
@@ -214,8 +155,8 @@ void    ft_export(t_token *tokens, t_env *expo_envir, t_env *env_envir)
         return;
 	
     active = 1;
-    if ((tokens->next_token == NULL && tokens->data)) 
-    {
+	if ((tokens->next_token == NULL && tokens->data)) 
+	{
 		if (tokens->prev_token && !ft_strcmp(tokens->prev_token->data, "export"))
 			return ;
         ft_env_export_once(tokens, expo_envir, active);
@@ -223,8 +164,12 @@ void    ft_export(t_token *tokens, t_env *expo_envir, t_env *env_envir)
     else
     {
         active = 0;
-        ft_add_to_export_arg(tokens, expo_envir);
+        ft_add_to_export_arg(tokens, expo_envir, env_envir);
 		printf("\n---2---\n");
     }
-    // search_check_add_env(expo_envir, env_envir); ///// debugging all this function the concept seems to be correct
+    search_check_add_env(expo_envir, env_envir); ///// debugging all this function the concept seems to be correct
 }
+
+// 3-del from the first
+//1-check found or not found 
+// to test with export yt=e p= e hg=qw 

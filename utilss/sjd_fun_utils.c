@@ -40,7 +40,6 @@ void	*mk_env(char **envirement)/// check in the main file main function that the
 	while (envirement[i] != NULL)
 	{
 		cmd_env = (t_env *)malloc(sizeof(t_env));
-		cmd_env->test = "TERM_SESSION_ID";
 		if (!cmd_env)
 			exit(1);
 		equal_env = ft_strchr(envirement[i], '=');

@@ -21,7 +21,7 @@
 typedef struct s_env
 {
 	char			*value;
-	char			*test;
+	int				test;///the solution in make a flag to now when add to env_envir and not 
 	char			*key;
 	char			equal;
 	struct s_env	*next;
@@ -157,6 +157,7 @@ void				ft_env_export_once(t_token *data, t_env *envir, int active);
 int					check_key(char *str, t_env *envir);
 void				key_without_equal(t_token *tokens, t_env *envir, int active);
 void				removeNode(t_env** head, char *keyToRemove);
+void				search_check_add_env(t_env *expo_envir, t_env *env_envir);
 // void				ft_env_export_once(t_token *token, int active);
 // void			ft_add_to_export_arg(t_token *token);
 
