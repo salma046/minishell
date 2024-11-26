@@ -14,7 +14,8 @@ int		check_key(char *str, t_env *envir)
 	}
 	return (0);
 }
-void key_without_equal(t_token *tokens, t_env *envir, int active) {
+void key_without_equal(t_token *tokens, t_env *envir, int active)
+{
 	
 	t_env *head = NULL;
 	t_token *temp_tokens;
@@ -28,7 +29,7 @@ void key_without_equal(t_token *tokens, t_env *envir, int active) {
 	while (head && head->next != NULL) {
         head = head->next;
     }
-	while (temp_tokens && check_key(temp_tokens->data, envir) == 0)
+	if (check_key(temp_tokens->data, envir) == 0)
 	{
 	    t_env *new_export = (t_env *)malloc(sizeof(t_env));
 	    if (!new_export)
@@ -36,6 +37,7 @@ void key_without_equal(t_token *tokens, t_env *envir, int active) {
 
 	    new_export->key = ft_strdup(temp_tokens->data);
 	    new_export->value = NULL;
+    	new_export->equal = '=';
 	    new_export->next = NULL;
 
 	    if (head == NULL)
@@ -43,8 +45,6 @@ void key_without_equal(t_token *tokens, t_env *envir, int active) {
 	    else
 	        head->next = new_export;
 	    head = new_export;
-
-	    temp_tokens = temp_tokens->next_token; 
 	}
 }
 

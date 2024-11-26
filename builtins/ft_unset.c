@@ -1,11 +1,12 @@
 #include "../minishell.h"
 
-void removeNode(t_env** head, char *valueToRemove) {
+void removeNode(t_env** head, char *keyToRemove) {
 	t_env*	current = *head;
 	t_env*	prev = NULL;
 
-	while (current != NULL) {
-		if (!ft_strcmp(valueToRemove, current->key))
+	while (current != NULL)
+	{
+		if (!ft_strcmp(keyToRemove, current->key))
 		{
 			if (prev == NULL)
 				*head = current->next;

@@ -15,7 +15,7 @@ int main3(t_minishell data)
 			ft_env(data);
 		if (!ft_strcmp(temp_tokens->data , "unset") && temp_tokens->data)
 			ft_unset(NULL,  data);
-		check_command(temp_tokens, data.export_env);
+		check_command(temp_tokens, data.export_env, data.envir);
 		// ft_execute(&data);
 		temp_tokens = temp_tokens->next_token;
 	}
