@@ -66,7 +66,8 @@ int has_doubled_special_chars(char *token)
 //2: check if after the "=" sign there is a word;
 //3: if no word found;
 
-void key_with_equal(t_token *tokens, t_env *envir) {
+void key_with_equal(t_env *expo, t_env *envir)
+{
 	
 	t_env *head = NULL;
 	t_token *temp_tokens;
@@ -75,7 +76,7 @@ void key_with_equal(t_token *tokens, t_env *envir) {
 
 	temp_tokens = tokens;
 	head = envir;
-    a = check_key("d", envir);
+    a = check_key(expo->key, envir);///////////////////
     printf("the current token is: %s\n", tokens->data);
     
 	while (head && head->next != NULL) {
@@ -103,11 +104,10 @@ void key_with_equal(t_token *tokens, t_env *envir) {
  
 void ft_add_to_export_arg(t_token *tokens, t_env *envir)
 {
+    t_env   *expo;
     t_token *current_token;
     char    *token_data;
     char    *splitVar;
-    // size_t  len;
-    // char    *new_env_str;
     int     i;
     
     if (!tokens || !tokens->next_token || !envir)
@@ -153,22 +153,28 @@ void ft_add_to_export_arg(t_token *tokens, t_env *envir)
         {
             printf("hellllo world\n");
             key_without_equal(current_token, envir, 0);
-            current_token = current_token->next_token;
-            continue;
         }
         else
         {
-            t_env *expo;
-            // printf("\033[1;35mthis is expo: %s\033[0m", splitVar);
+            splitVar = ft_strchr(token_data, '=');
+            expo = malloc(sizeof(t_env));
+            if (!expo) {
+                perror("malloc");
+                return ;
+            }
+            if (!splitVar) {
+                printf("Error: '=' not found in token_data.\n");
+                free(expo);
+                return ;
+            }
             expo->key = ft_strndup(token_data, splitVar - token_data);
             expo->value = ft_strdup(splitVar + 1);
-            printf("the key is: %s\nthe value is: %s\n", expo->key, expo->value);
+            printf("the key is: %s\nthe value is: -%s-\n", expo->key, expo->value);
+            key_with_equal(expo, envir);
+            free(expo->key);
+            free(expo->value);
+            free(expo);
         }
-        // else
-        // {
-        //     printf("not helllo woorld\n");
-        //     key_with_equal(current_token, envir);
-        // }
         // int check_result = ft_check(envir, expo->key, expo->value);
         
         // if (check_result == 0)
