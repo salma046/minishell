@@ -26,11 +26,6 @@ int has_doubled_special_chars(char *token)
     return 0;  
 }
 
-//  3 steps if there is a value to the export key
-//1: check if it is already on the lest ==> delete it
-//2: check if after the "=" sign there is a word;
-//3: if no word found;
-
 char    *put_quot2_value(char *str)
 {
     char    *result;
@@ -76,7 +71,6 @@ void key_with_equal(t_token *tokens, t_env *envir)
     }
     new_export->key = ft_strndup(temp_tokens->data, splitVar - temp_tokens->data);
     new_export->value = put_quot2_value(ft_strdup(splitVar + 1));
-    new_export->equal = '=';
 	new_export->next = NULL;
 	if (head == NULL)
 	    envir = new_export;

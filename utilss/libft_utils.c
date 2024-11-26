@@ -38,7 +38,7 @@ char	*get_word(char *str, int i)
 	}
 	while (j < i)
 	{
-		word[j] = str[j]; 
+		word[j] = str[j];
 		j++;
 	}
 	word[j] = '\0';

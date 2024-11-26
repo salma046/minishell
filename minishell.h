@@ -21,19 +21,10 @@
 typedef struct s_env
 {
 	char			*value;
-	int				test;///the solution in make a flag to now when add to env_envir and not 
 	char			*key;
-	char			equal;
 	struct s_env	*next;
 }					t_env;
 
-typedef struct s_senv
-{
-	char			*svalue;
-	char			*skey;
-	char			sequal;
-	struct s_senv	*next;
-}					t_senv;
 /// Sajida
 
 typedef enum e_token_type
@@ -158,6 +149,8 @@ int					check_key(char *str, t_env *envir);
 void				key_without_equal(t_token *tokens, t_env *envir, int active);
 void				removeNode(t_env** head, char *keyToRemove);
 void				search_check_add_env(t_env *expo_envir, t_env *env_envir);
+char				*put_quot2_value(char *str);
+char				*rm_quot2_value(char *str);
 // void				ft_env_export_once(t_token *token, int active);
 // void			ft_add_to_export_arg(t_token *token);
 
