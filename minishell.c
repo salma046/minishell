@@ -33,7 +33,7 @@ int	main(int ac, char *av[], char **env)
 	(void)av;
 	g_minishell.envirement = env;
 	g_minishell.envir = mk_env(g_minishell.envirement);
-	g_minishell.export_env = mk_env(g_minishell.envirement);
+	g_minishell.export_env = mk_env_4expo(g_minishell.envirement);
 
 	while (1)
 	{

@@ -151,6 +151,7 @@ void				removeNode(t_env** head, char *keyToRemove);
 void				search_check_add_env(t_env *expo_envir, t_env *env_envir);
 char				*put_quot2_value(char *str);
 char				*rm_quot2_value(char *str);
+void				*mk_env_4expo(char **envir);
 // void				ft_env_export_once(t_token *token, int active);
 // void			ft_add_to_export_arg(t_token *token);
 
