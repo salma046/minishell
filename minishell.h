@@ -150,13 +150,14 @@ void				ft_env(t_minishell data);
 void				ft_exit(t_token *data);
 void				ft_unset(t_env *env_list, t_minishell data);
 t_env				*ft_env_unset(t_minishell data);
-void    			ft_export(t_token *tokens, char **env)  ;
+void    			ft_export(t_token *tokens, t_env *envir) ;
+
 // void				ft_env_export_once(t_token *token, int active);
 // void			ft_add_to_export_arg(t_token *token);
 
 
 // executr commands:
-void				ft_execute(t_minishell *data);
+void				ft_execute(t_token *data, char **env);
 
 // redirectios:
 int					ft_output(t_token *tokens);

@@ -1,29 +1,52 @@
 #include "../minishell.h"
-
-void	sort_env(t_senv *node)
+// export alone
+void	sort_env(t_env *envir)
 {
-	t_senv	*next_node;
+    printf("aaa");
+	t_env	*new_env;
 	char	*tmp_key;
 	char	*tmp_value;
 
-	if (node == NULL || node->next == NULL)
+	if (envir == NULL || envir->next == NULL)
 		return ;
-	next_node = node->next;
-	while (next_node)
+    (void)envir;
+	new_env = envir->next;
+	while (new_env)
 	{
-		if (ft_strcmp(node->skey, next_node->skey) > 0)
+		if (ft_strcmp(envir->key, new_env->key) > 0)
 		{
-			tmp_key = node->skey;
-			node->skey = next_node->skey;
-			next_node->skey = tmp_key;
-			tmp_value = node->svalue;
-			node->svalue = next_node->svalue;
-			next_node->svalue = tmp_value;
+			tmp_key = envir->key;
+			envir->key = new_env->key;
+			new_env->key = tmp_key;
+			tmp_value = envir->value;
+			envir->value = new_env->value;
+			new_env->value = tmp_value;
 		}
-		next_node = next_node->next;
+		new_env = new_env->next;
 	}
-	sort_env(node->next);
+	sort_env(envir->next);
 }
+void	ft_env_export_once(t_token *data, t_env *envir, int active)
+{
+	(void)data;
+	t_env	*head;
+	t_env	*current;
+
+	head = envir;
+
+	if (active == 1)
+		sort_env(head);
+	current = head;
+
+	while (current)
+	{
+		if (active == 1)
+			printf("declare -x %s=%s\n", current->key, current->value);
+		current = current->next;
+	}
+}
+// export alone
+
 int is_special_char(char c)
 {
         return (c >= 33 && c <= 47) ||  
@@ -51,163 +74,104 @@ int has_doubled_special_chars(char *token)
 }
 
 
-int ft_check(char **env, char *key, char *value)
+int ft_check(t_env *envir, char *key, char *value)
 {
-    int i = 0;
     size_t key_len;
+	t_env *tmp_env;
     
-    if (!env || !key || !value)
+	tmp_env = envir;
+    key_len = ft_strlen(key);
+    if (!envir || !key || !value)
         return 0;
     
-    key_len = ft_strlen(key);
-    
-    while (env[i] != NULL)
+    while (tmp_env)
     {
-        if (ft_strncmp(env[i], key, key_len) == 0 && env[i][key_len] == '=')
+        if (ft_strncmp(tmp_env->key, key, key_len) == 0 && tmp_env->key[key_len] == '=')
         {
-            free(env[i]);
+            free(tmp_env->key);
             size_t new_len = key_len + ft_strlen(value) + 2;  
-            env[i] = malloc(new_len);
-            if (!env[i])
+            tmp_env->key = malloc(new_len);
+            if (!tmp_env->key)
             {
                 perror("malloc");
                 return -1;  
             }
             
-            ft_strlcpy(env[i], key, new_len);
-            ft_strlcat(env[i], "=", new_len);
-            ft_strlcat(env[i], value, new_len);
+            ft_strlcpy(tmp_env->key, key, new_len);
+            ft_strlcat(&tmp_env->equal, "=", new_len);
+            ft_strlcat(tmp_env->value, value, new_len);
             return 1;  
         }
-        i++;
+        tmp_env = tmp_env->next;
     }
     
     return 0; 
 }
 
-void	ft_env_export_once(t_token *data, char **env, int active)
-{
-	(void)data;
-	t_senv	*head;
-	t_senv	*last_node;
-	int		i;
-	t_senv	*cmd_env;
-	char	*equal_env;
-	t_senv	*current;
 
-	head = NULL;
-	last_node = NULL;
-	i = 0;
-	while (env[i] != NULL)
-	{
-		cmd_env = (t_senv *)malloc(sizeof(t_senv));
-		if (!cmd_env)
-			exit(1);
-		equal_env = strchr(env[i], '=');
-		if (equal_env != NULL)
-		{
-			cmd_env->skey = strndup(env[i], equal_env- env[i]);
-			cmd_env->svalue = strndup(equal_env + 1, strlen(env[i]+ 1));
-			cmd_env->sequal = '=';
-			cmd_env->next = NULL;
-		}
-		if (last_node == NULL)
-			head = cmd_env;
-		else
-			last_node->next = cmd_env;
-		last_node = cmd_env;
-		i++;
-	}
+// void	ft_adding_in_export_once(t_env *head, int active)
+// {
+// 	// printf("\033[36mthis is the head->key: %s\033[0m\n", head->key);
+// 	// printf("\033[36mthis is the head->value: %s\033[0m\n", head->value);
+// 	// printf("\033[36mthis is the active: %d\033[0m", active);
+// 	t_env *current = head;
 
-	if (active == 1)
-		sort_env(head);
-	current = head;
+// 	while (current) 
+// 	{
+// 		if (current->value)
+// 			printf("declare -x %s=\"%s\"\n", current->key, current->value);
+// 		else if (active == 1 || active == 0)
+// 			printf("\033[1;35mdeclare -x %s\033[0m\n", current->key);
+// 		current = current->next;
+// 	}
+// }
 
-	while (current)
-	{
-		if (active == 1)
-			printf("declare -x %s=%s\n", current->skey, current->svalue);
-		current = current->next;
-	}
-}
-
-void	ft_adding_in_export_once(t_senv *head, int active)
-{
-	t_senv *current = head;
-
-	while (current) 
-	{
-		if (current->svalue)
-			printf("declare -x %s=\"%s\"\n", current->skey, current->svalue);
-		else if (active == 1 || active == 0)
-			printf("\033[1;35mdeclare -x %s\033[0m\n", current->skey);
-		current = current->next;
-	}
-}
-void key_without_equal(t_token *data, char **env, int active) {
-    t_senv *head = NULL;
-    t_senv *last_node = NULL;
-
-    int i = 0;
+void key_without_equal(t_token *data, t_env *envir, int active) {
+    t_env *last_node = envir;
+	t_token *temp_tokens = data;
     (void)active;
-    while (env[i] != NULL) {
-        t_senv *new_node = (t_senv *)malloc(sizeof(t_senv));
-        if (!new_node)
-            exit(1);
 
-        char *key_value = env[i];
-        new_node->skey = ft_strdup(key_value); 
-        new_node->svalue = NULL;              
-        new_node->next = NULL;
-
-        if (last_node == NULL)
-            head = new_node;
-        else
-            last_node->next = new_node;
-        last_node = new_node;
-        i++;
+    // Find the last node of the existing envir list
+    while (last_node && last_node->next != NULL) {
+        last_node = last_node->next;
     }
-   
-    while (data && data->next_token) {
-        t_senv *new_export = (t_senv *)malloc(sizeof(t_senv));
+
+    // Process the tokens and add new t_env nodes
+    while (temp_tokens && temp_tokens->next_token) {
+        t_env *new_export = (t_env *)malloc(sizeof(t_env));
         if (!new_export)
             exit(1);
 
-        new_export->skey = ft_strdup(data->next_token->data);
-        new_export->svalue = NULL;
-        new_export->next = NULL;
+        // Allocate and copy the key
+        new_export->key = ft_strdup(temp_tokens->next_token->data);
+        new_export->value = NULL; // Set value to NULL as per your logic
+        new_export->next = NULL; // Initialize next to NULL
 
-        if (last_node == NULL)
-            head = new_export;
-        else
-            last_node->next = new_export;
-        last_node = new_export;
+        // Append the new node to the list
+        if (last_node == NULL) {
+            // If envir is empty, this becomes the first node
+            envir = new_export;
+        } else {
+            last_node->next = new_export; // Attach to the end of the list
+        }
+        last_node = new_export; // Update the last_node pointer
 
-        data = data->next_token; 
-    }
-    ft_adding_in_export_once(head, active);
-   
-    while (head) {
-        t_senv *tmp = head;
-        head = head->next;
-        free(tmp->skey);
-        free(tmp->svalue);
-        free(tmp);
+        temp_tokens = temp_tokens->next_token; // Move to the next token
     }
 }
 
  
-void ft_add_to_export_arg(t_token *tokens, char **env)
+void ft_add_to_export_arg(t_token *tokens, t_env *envir)
 {
     t_token *current_token;
     t_env   *expo;
     char    *token_data;
     char    *splitVar;
-    size_t  len;
-    char    *new_env_str;
+    // size_t  len;
+    // char    *new_env_str;
     int     i;
     
-    if (!tokens || !tokens->next_token || !env)
+    if (!tokens || !tokens->next_token || !envir)
         return;
     
     current_token = tokens->next_token;
@@ -257,12 +221,20 @@ void ft_add_to_export_arg(t_token *tokens, char **env)
         splitVar = ft_strchr(token_data, '=');
         if (!splitVar)
         {
-           key_without_equal(tokens, env, 0);
+           key_without_equal(tokens, envir, 0);
+		   t_env *hi = envir;
+		   while (hi)
+		   {
+				printf("the key is: %s\n", hi->key);
+				hi = hi->next;
+		   }
         //    printf("%s", splitVar);
             free(expo);
             current_token = current_token->next_token;
             continue;
         }
+		// t_env *hello = envir;
+		// while(hello)
         printf("\033[1;35mthis is expo: %s\033[0m", splitVar);
         expo->key = ft_strndup(token_data, splitVar - token_data);
         expo->value = ft_strdup(splitVar + 1);
@@ -276,32 +248,33 @@ void ft_add_to_export_arg(t_token *tokens, char **env)
             continue;
         }
         
-        int check_result = ft_check(env, expo->key, expo->value);
+        // int check_result = ft_check(envir, expo->key, expo->value);
         
-        if (check_result == 0)
-        {
-            i = 0;
-            while (env[i] != NULL)
-                i++;
+        // if (check_result == 0)
+        // {
+		// 	t_env *tmp_env = envir;
+        //     i = 0;
+        //     while (tmp_env != NULL)
+        //         tmp_env = tmp_env->next;
             
-            len = ft_strlen(expo->key) + ft_strlen(expo->value) + 2;
-            new_env_str = malloc(len);
-            if (!new_env_str)
-            {
-                free(expo->key);
-                free(expo->value);
-                free(expo);
-                current_token = current_token->next_token;
-                continue;
-            }
+        //     len = ft_strlen(expo->key) + ft_strlen(expo->value) + 2;
+        //     new_env_str = malloc(len);
+        //     if (!new_env_str)
+        //     {
+        //         free(expo->key);
+        //         free(expo->value);
+        //         free(expo);
+        //         current_token = current_token->next_token;
+        //         continue;
+        //     }
             
-            ft_strlcpy(new_env_str, expo->key, len);
-            ft_strlcat(new_env_str, "=", len);
-            ft_strlcat(new_env_str, expo->value, len);
+        //     ft_strlcpy(new_env_str, expo->key, len);
+        //     ft_strlcat(new_env_str, "=", len);
+        //     ft_strlcat(new_env_str, expo->value, len);
             
-            env[i] = new_env_str;
-            env[i + 1] = NULL;
-        }
+        //     envir[i] = new_env_str;
+        //     envir[i + 1] = NULL;
+        // }
         
         free(expo->key);
         free(expo->value);
@@ -311,23 +284,24 @@ void ft_add_to_export_arg(t_token *tokens, char **env)
     }
 }
 
-void    ft_export(t_token *tokens, char **env)  
+void    ft_export(t_token *tokens, t_env *envir)  
 {
     int active = 0;
 	
-    if (!tokens || !env) 
+    if (!tokens || !envir) 
         return;
 	
     active = 1;
     if ((tokens->next_token == NULL && tokens->data)) 
     {
-        ft_env_export_once(tokens, env, active);
+        ft_env_export_once(tokens, envir, active);
     }
     else
     {
         active = 0;
-        ft_add_to_export_arg(tokens, env);
-        ft_env_export_once(tokens, env, active);
+        // ft_add_to_export_arg(tokens, envir);
+        // ft_env_export_once(tokens, envir, active);
+		printf("\n---2---\n");
     }
-    
+    return ;
 }
