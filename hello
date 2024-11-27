@@ -1,0 +1,27 @@
+// to save a function here 
+
+
+char	**remk_env()
+{
+	int		i;
+	char	**envirement;
+	char	*join_one;
+	char	*join_two;
+	t_env	*tmp_env;
+
+	i = 0;
+	tmp_env = g_minishell.envir;
+	while(tmp_env)
+	{
+		join_one = ft_strjoin(tmp_env->key, '=');
+		join_two = ft_strjoin(join_one, tmp_env->value);
+		envirement[i] = join_two;
+		free(join_one);
+		free(join_two);
+		i++;
+		tmp_env = tmp_env->next;
+	}
+	envirement[i] = NULL;
+	return (envirement);
+}
+

@@ -1,9 +1,12 @@
 #include "../minishell.h"
 
-void removeNode(t_env** head, char *keyToRemove) {
-	t_env*	current = *head;
-	t_env*	prev = NULL;
+void	removeNode(t_env **head, char *keyToRemove)
+{
+	t_env	*current;
+	t_env	*prev;
 
+	current = *head;
+	prev = NULL;
 	while (current != NULL)
 	{
 		if (!ft_strcmp(keyToRemove, current->key))
@@ -13,7 +16,7 @@ void removeNode(t_env** head, char *keyToRemove) {
 			else
 				prev->next = current->next;
 			free(current);
-			return;
+			return ;
 		}
 		prev = current;
 		current = current->next;
@@ -86,7 +89,6 @@ t_env	*ft_env_unset_for_export(t_minishell data)
 	}
 	return (tmp);
 }
-
 
 void	ft_unset(t_env *env_list, t_minishell data)
 {

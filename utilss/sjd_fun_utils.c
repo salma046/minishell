@@ -25,29 +25,38 @@ void	ft_sigint(int x)
 		write(1, "~$^C \n~$", 8);
 }
 
+t_env	*make_new_expor(char *envir)
+{
+	t_env	*cmd_env;
+	char	*equal_env;
+
+	cmd_env = (t_env *)malloc(sizeof(t_env));
+	if (!cmd_env)
+		exit(1);
+	equal_env = ft_strchr(envir, '=');
+	if (equal_env != NULL)
+	{
+		cmd_env->key = ft_strndup(envir, equal_env - envir);
+		cmd_env->value = put_quot2_value(ft_strndup(equal_env + 1,
+					ft_strlen(envir + 1)));
+		cmd_env->next = NULL;
+	}
+	return (cmd_env);
+}
+
 void	*mk_env_4expo(char **envir)
 {
 	int		i;
 	t_env	*head;
 	t_env	*last_node;
 	t_env	*cmd_env;
-	char	*equal_env;
 
 	i = 0;
 	head = NULL;
 	last_node = NULL;
 	while (envir[i] != NULL)
 	{
-		cmd_env = (t_env *)malloc(sizeof(t_env));
-		if (!cmd_env)
-			exit(1);
-		equal_env = ft_strchr(envir[i], '=');
-		if (equal_env != NULL)
-		{
-			cmd_env->key = ft_strndup(envir[i], equal_env - envir[i]);
-			cmd_env->value = put_quot2_value(ft_strndup(equal_env + 1, ft_strlen(envir[i] + 1)));
-			cmd_env->next = NULL;
-		}
+		cmd_env = make_new_expor(envir[i]);
 		if (last_node == NULL)
 			head = cmd_env;
 		else
@@ -58,29 +67,37 @@ void	*mk_env_4expo(char **envir)
 	return (head);
 }
 
-void	*mk_env(char **envir)
+t_env	*make_new_node(char *envir)
+{
+	t_env	*cmd_env;
+	char	*equal_env;
+
+	cmd_env = (t_env *)malloc(sizeof(t_env));
+	if (!cmd_env)
+		exit(1);
+	equal_env = ft_strchr(envir, '=');
+	if (equal_env != NULL)
+	{
+		cmd_env->key = ft_strndup(envir, equal_env - envir);
+		cmd_env->value = ft_strndup(equal_env + 1, ft_strlen(envir + 1));
+		cmd_env->next = NULL;
+	}
+	return (cmd_env);
+}
+
+t_env	*mk_env(char **envir)
 {
 	int		i;
 	t_env	*head;
 	t_env	*last_node;
 	t_env	*cmd_env;
-	char	*equal_env;
 
 	i = 0;
 	head = NULL;
 	last_node = NULL;
 	while (envir[i] != NULL)
 	{
-		cmd_env = (t_env *)malloc(sizeof(t_env));
-		if (!cmd_env)
-			exit(1);
-		equal_env = ft_strchr(envir[i], '=');
-		if (equal_env != NULL)
-		{
-			cmd_env->key = ft_strndup(envir[i], equal_env - envir[i]);
-			cmd_env->value = ft_strndup(equal_env + 1, ft_strlen(envir[i] + 1));
-			cmd_env->next = NULL;
-		}
+		cmd_env = make_new_node(envir[i]);
 		if (last_node == NULL)
 			head = cmd_env;
 		else

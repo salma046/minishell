@@ -14,5 +14,5 @@ void	check_command(t_token *data, t_env *expo_envir, t_env *env_envir)
 	if (!ft_strcmp(temp_tokens->data, "exit") && temp_tokens->data)
 		ft_exit(temp_tokens);
 	if (!ft_strcmp(temp_tokens->data, "export") && temp_tokens->data)
-		ft_export(temp_tokens,  expo_envir, env_envir);
+		ft_export(temp_tokens, expo_envir, env_envir);
 }
