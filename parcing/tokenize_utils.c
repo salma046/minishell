@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenize_utils.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 09:53:42 by salaoui           #+#    #+#             */
-/*   Updated: 2024/11/24 09:53:43 by salaoui          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../minishell.h"
 
 void	token_new_sep(enum e_token_type token_t, t_token **tokens_list)
@@ -58,6 +46,7 @@ void	token_new_word(char *word, enum e_token_type token_t,
 	}
 	else
 		new_word = word;
+	new_token->prev_token = NULL;
 	new_token->data = new_word;
 	new_token->data_type = token_t;
 	new_token->next_token = NULL;
@@ -97,7 +86,7 @@ int	ft_put_word_token(char **line, enum e_token_type token_t,
 	{
 		if (**line == '&')
 		{
-			printf("syntax error\n");
+			printf("syntkax error\n");
 			return (0);
 		}
 		if (**line == '"' || **line == '\'')

@@ -1,51 +1,4 @@
 #include "../minishell.h"
-// export alone
-void	sort_env(t_env *envir)
-{
-    printf("aaa");
-	t_env	*new_env;
-	char	*tmp_key;
-	char	*tmp_value;
-
-	if (envir == NULL || envir->next == NULL)
-		return ;
-    (void)envir;
-	new_env = envir->next;
-	while (new_env)
-	{
-		if (ft_strcmp(envir->key, new_env->key) > 0)
-		{
-			tmp_key = envir->key;
-			envir->key = new_env->key;
-			new_env->key = tmp_key;
-			tmp_value = envir->value;
-			envir->value = new_env->value;
-			new_env->value = tmp_value;
-		}
-		new_env = new_env->next;
-	}
-	sort_env(envir->next);
-}
-void	ft_env_export_once(t_token *data, t_env *envir, int active)
-{
-	(void)data;
-	t_env	*head;
-	t_env	*current;
-
-	head = envir;
-
-	if (active == 1)
-		sort_env(head);
-	current = head;
-
-	while (current)
-	{
-		if (active == 1)
-			printf("declare -x %s=%s\n", current->key, current->value);
-		current = current->next;
-	}
-}
-// export alone
 
 int is_special_char(char c)
 {
@@ -73,112 +26,72 @@ int has_doubled_special_chars(char *token)
     return 0;  
 }
 
-
-int ft_check(t_env *envir, char *key, char *value)
+char    *put_quot2_value(char *str)
 {
-    size_t key_len;
-	t_env *tmp_env;
-    
-	tmp_env = envir;
-    key_len = ft_strlen(key);
-    if (!envir || !key || !value)
-        return 0;
-    
-    while (tmp_env)
-    {
-        if (ft_strncmp(tmp_env->key, key, key_len) == 0 && tmp_env->key[key_len] == '=')
-        {
-            free(tmp_env->key);
-            size_t new_len = key_len + ft_strlen(value) + 2;  
-            tmp_env->key = malloc(new_len);
-            if (!tmp_env->key)
-            {
-                perror("malloc");
-                return -1;  
-            }
-            
-            ft_strlcpy(tmp_env->key, key, new_len);
-            ft_strlcat(&tmp_env->equal, "=", new_len);
-            ft_strlcat(tmp_env->value, value, new_len);
-            return 1;  
-        }
-        tmp_env = tmp_env->next;
-    }
-    
-    return 0; 
+    char    *result;
+    int     i;
+    int     j;
+
+    i = 0;
+    j = 0;
+    result = malloc(sizeof(char) * ft_strlen(str) + 3);
+    if (!result)
+        return NULL;
+    result[j++] = '"';
+    while (str[i])
+        result[j++] = str[i++];
+    result[j] = '"';
+    result[++j] = '\0';
+    free(str);
+    return (result);
 }
 
+void key_with_equal(t_token *tokens, t_env *envir)
+{
+	t_env   *head = NULL;
+	t_token *temp_tokens;
+    t_env   *new_export;
+    char    *splitVar;
 
-// void	ft_adding_in_export_once(t_env *head, int active)
-// {
-// 	// printf("\033[36mthis is the head->key: %s\033[0m\n", head->key);
-// 	// printf("\033[36mthis is the head->value: %s\033[0m\n", head->value);
-// 	// printf("\033[36mthis is the active: %d\033[0m", active);
-// 	t_env *current = head;
-
-// 	while (current) 
-// 	{
-// 		if (current->value)
-// 			printf("declare -x %s=\"%s\"\n", current->key, current->value);
-// 		else if (active == 1 || active == 0)
-// 			printf("\033[1;35mdeclare -x %s\033[0m\n", current->key);
-// 		current = current->next;
-// 	}
-// }
-
-void key_without_equal(t_token *data, t_env *envir, int active) {
-    t_env *last_node = envir;
-	t_token *temp_tokens = data;
-    (void)active;
-
-    // Find the last node of the existing envir list
-    while (last_node && last_node->next != NULL) {
-        last_node = last_node->next;
+	head = envir;
+	while (head && head->next != NULL) {
+        head = head->next;
     }
-
-    // Process the tokens and add new t_env nodes
-    while (temp_tokens && temp_tokens->next_token) {
-        t_env *new_export = (t_env *)malloc(sizeof(t_env));
-        if (!new_export)
-            exit(1);
-
-        // Allocate and copy the key
-        new_export->key = ft_strdup(temp_tokens->next_token->data);
-        new_export->value = NULL; // Set value to NULL as per your logic
-        new_export->next = NULL; // Initialize next to NULL
-
-        // Append the new node to the list
-        if (last_node == NULL) {
-            // If envir is empty, this becomes the first node
-            envir = new_export;
-        } else {
-            last_node->next = new_export; // Attach to the end of the list
-        }
-        last_node = new_export; // Update the last_node pointer
-
-        temp_tokens = temp_tokens->next_token; // Move to the next token
+	temp_tokens = tokens;
+    splitVar = ft_strchr(temp_tokens->data, '=');
+    new_export = malloc(sizeof(t_env));
+    if (!new_export) {
+        perror("malloc");
+        return ;
     }
+    if (!splitVar) {
+        printf("Error: '=' not found in token_data.\n");
+        free(new_export);
+        return ;
+    }
+    new_export->key = ft_strndup(temp_tokens->data, splitVar - temp_tokens->data);
+    new_export->value = put_quot2_value(ft_strdup(splitVar + 1));
+	new_export->next = NULL;
+	if (head == NULL)
+	    envir = new_export;
+	else
+	    head->next = new_export;
+	head = new_export;
 }
-
  
-void ft_add_to_export_arg(t_token *tokens, t_env *envir)
+void ft_add_to_export_arg(t_token *tokens, t_env *expo_envir, t_env *env_envir)
 {
     t_token *current_token;
-    t_env   *expo;
     char    *token_data;
     char    *splitVar;
-    // size_t  len;
-    // char    *new_env_str;
     int     i;
     
-    if (!tokens || !tokens->next_token || !envir)
+    if (!tokens || !tokens->next_token || !expo_envir)
         return;
-    
     current_token = tokens->next_token;
-    while (current_token != NULL)
+    while (current_token != NULL && current_token->data_type == WORD)
     {
         token_data = current_token->data;
-        
         if (!token_data)
         {
             current_token = current_token->next_token;
@@ -210,98 +123,47 @@ void ft_add_to_export_arg(t_token *tokens, t_env *envir)
 
         if (token_data[i] != '\0' && token_data[i] != '=')
             continue;
-        
-        expo = malloc(sizeof(t_env));
-        if (!expo)
-        {
-            perror("malloc");
-            return;
-        }
-        
         splitVar = ft_strchr(token_data, '=');
         if (!splitVar)
+            key_without_equal(current_token, expo_envir, 0);
+        else
         {
-           key_without_equal(tokens, envir, 0);
-		   t_env *hi = envir;
-		   while (hi)
-		   {
-				printf("the key is: %s\n", hi->key);
-				hi = hi->next;
-		   }
-        //    printf("%s", splitVar);
-            free(expo);
-            current_token = current_token->next_token;
-            continue;
+            if (check_key( ft_strndup(current_token->data, splitVar - current_token->data), expo_envir) == 1)
+            {
+                removeNode(&expo_envir, ft_strndup(current_token->data, splitVar - current_token->data));
+                removeNode(&env_envir, ft_strndup(current_token->data, splitVar - current_token->data));
+            }
+            key_with_equal(current_token, expo_envir);
         }
-		// t_env *hello = envir;
-		// while(hello)
-        printf("\033[1;35mthis is expo: %s\033[0m", splitVar);
-        expo->key = ft_strndup(token_data, splitVar - token_data);
-        expo->value = ft_strdup(splitVar + 1);
-        
-        if (!expo->key || !expo->value)
-        {
-            free(expo->key);
-            free(expo->value);
-            free(expo);
-            current_token = current_token->next_token;
-            continue;
-        }
-        
-        // int check_result = ft_check(envir, expo->key, expo->value);
-        
-        // if (check_result == 0)
-        // {
-		// 	t_env *tmp_env = envir;
-        //     i = 0;
-        //     while (tmp_env != NULL)
-        //         tmp_env = tmp_env->next;
-            
-        //     len = ft_strlen(expo->key) + ft_strlen(expo->value) + 2;
-        //     new_env_str = malloc(len);
-        //     if (!new_env_str)
-        //     {
-        //         free(expo->key);
-        //         free(expo->value);
-        //         free(expo);
-        //         current_token = current_token->next_token;
-        //         continue;
-        //     }
-            
-        //     ft_strlcpy(new_env_str, expo->key, len);
-        //     ft_strlcat(new_env_str, "=", len);
-        //     ft_strlcat(new_env_str, expo->value, len);
-            
-        //     envir[i] = new_env_str;
-        //     envir[i + 1] = NULL;
-        // }
-        
-        free(expo->key);
-        free(expo->value);
-        free(expo);
-        
         current_token = current_token->next_token;
     }
 }
 
-void    ft_export(t_token *tokens, t_env *envir)  
+
+void    ft_export(t_token *tokens, t_env *expo_envir, t_env *env_envir)  
 {
     int active = 0;
-	
-    if (!tokens || !envir) 
+
+    (void) env_envir;
+    if (!tokens || !expo_envir) 
         return;
 	
     active = 1;
-    if ((tokens->next_token == NULL && tokens->data)) 
-    {
-        ft_env_export_once(tokens, envir, active);
+	if ((tokens->next_token == NULL && tokens->data)) 
+	{
+		if (tokens->prev_token && !ft_strcmp(tokens->prev_token->data, "export"))
+			return ;
+        ft_env_export_once(tokens, expo_envir, active);
     }
     else
     {
         active = 0;
-        // ft_add_to_export_arg(tokens, envir);
-        // ft_env_export_once(tokens, envir, active);
+        ft_add_to_export_arg(tokens, expo_envir, env_envir);
 		printf("\n---2---\n");
     }
-    return ;
+    search_check_add_env(expo_envir, env_envir); ///// debugging all this function the concept seems to be correct
 }
+
+// 3-del from the first
+//1-check found or not found 
+// to test with export yt=e p= e hg=qw 
