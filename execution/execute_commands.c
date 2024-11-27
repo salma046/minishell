@@ -1,70 +1,109 @@
-// #include "minishell.h"
-
-
-
-// void ft_execute(t_minishell *data)
-// {
-// 	t_node *node = data->nodes;
-// 	if (!node || !node->cmd[0] || !node->cmd)
-// 	{
-// 		printf("ERROR: arguments");
-// 		exit(EXIT_FAILURE);
-// 	}
-
-// 	pid_t pid = fork();
-
-// 	if (pid == -1)
-// 	{
-// 		perror("ERROR IN FORk()");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	else if (pid == 0)
-// 	{
-// 		if (execve(node->cmd[0], node->cmd, data->envirement) == -1)
-// 		{
-// 			perror("execve FAILER");
-// 			exit(EXIT_FAILURE);
-// 		}
-// 	}
-// 	else { // Parent process
-//         int status;
-//         // Wait for the child process to complete
-//         if (waitpid(pid, &status, 0) == -1) {
-//             perror("Error waiting for child process");
-//         }
-//     }
-// }
 #include "../minishell.h"
 
-void ft_execute(t_minishell *data)
-{
-    // Access the first command node
-    t_node *node = data->nodes;
+char    *find_command_path(char *command, char **env){
 
-    // Check that node and cmd are not NULL before execution
-    // if (!node || !node->cmd || !node->cmd[0]) {
-    //     fprintf(stderr, "Error: Command not found or empty.\n");
-    //     return;
-    // }
+    char *path_env = NULL;
+    char full_path[1024];
+    int i = 0, j = 0, k = 0;
 
-    // Fork the process
+    while (env[i] != NULL) {
+        if (strncmp(env[i], "PATH=", 5) == 0) {
+            path_env = env[i] + 5; 
+        }
+        i++;
+    }
+
+    if (!path_env) {
+        errno = ENOENT;
+        perror("PATH not found");
+        return NULL;
+    }
+
+    i = 0;
+    while (path_env[i] != '\0') {
+        memset(full_path, 0, sizeof(full_path));
+        k = 0;
+
+        while (path_env[i] != ':' && path_env[i] != '\0') {
+            full_path[k++] = path_env[i++];
+        }
+
+        full_path[k++] = '/';
+        j = 0;
+        while (command[j] != '\0') {
+            full_path[k++] = command[j++];
+        }
+        full_path[k] = '\0';
+
+        if (access(full_path, X_OK) == 0) {
+            return strdup(full_path);
+        }
+
+        if (path_env[i] == ':')
+            i++;
+    }
+
+    errno = ENOENT;
+    perror("Command not found");
+    return NULL;
+}
+
+void ft_execute(t_token *data, char **env)
+{ char *command_path;
+    char **args;
+    int arg_count = 0;
+    t_token *current = data;
+
+    while (current != NULL) {
+        arg_count++;
+        current = current->next_token;
+    }
+    printf("arg");
+    args = malloc((arg_count + 1) * sizeof(char *));
+    if (!args) {
+        perror("malloc");
+        exit(1);
+    }
+
+    current = data;
+    for (int i = 0; i < arg_count; i++) {
+        args[i] = current->data;
+        current = current->next_token;
+    }
+    args[arg_count] = NULL;
+
+    command_path = find_command_path(args[0], env);
+    if (!command_path) {
+        free(args);
+        exit(1);
+    }
+
     pid_t pid = fork();
     if (pid == -1) {
-        perror("ERROR IN FORK()");
-        exit(EXIT_FAILURE);
+        perror("Fork");
+        free(command_path);
+        free(args);
+        exit(1);
     }
-    else if (pid == 0) { // Child process
-        // Execute the command
-        if (execve(node->cmd[0], node->cmd, data->envirement) == -1) {
-            perror("execve FAILURE");
-            exit(EXIT_FAILURE); // Exit if execve fails
+    else if (pid == 0)
+    {
+        if (execve(command_path, args, env) == -1)
+        {
+            perror("execve");
+            free(command_path);
+            free(args);
+            exit(1);
         }
-    }
-    else { // Parent process
+    } else
+    {
         int status;
-        // Wait for the child process to complete
-        if (waitpid(pid, &status, 0) == -1) {
-            perror("Error waiting for child process");
+        waitpid(pid, &status, 0);
+        
+        if (status >> 8 != 0) {
+            perror("Command execution failed");
         }
     }
+
+    free(command_path);
+    free(args);
 }
