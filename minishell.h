@@ -157,7 +157,7 @@ void				*mk_env_4expo(char **envir);
 
 
 // executr commands:
-void				ft_execute(t_minishell *data);
+void 		ft_execute(t_token *data, char **env);
 
 // redirectios:
 int					ft_output(t_token *tokens);

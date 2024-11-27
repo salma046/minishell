@@ -2,7 +2,7 @@
 
 t_minishell	g_minishell;
 
-int main3(t_minishell data)
+int main3(t_minishell data, char **env)
 {
 	t_token	*temp_tokens;
 
@@ -15,7 +15,7 @@ int main3(t_minishell data)
 		if (!ft_strcmp(temp_tokens->data , "unset") && temp_tokens->data)
 			ft_unset(NULL,  data);
 		check_command(temp_tokens, data.export_env, data.envir);
-		// ft_execute(&data);
+		ft_execute(temp_tokens, env);
 		temp_tokens = temp_tokens->next_token;
 	}
 	return (0);
@@ -56,7 +56,7 @@ int	main(int ac, char *av[], char **env)
 		// if (unlink("/tmp/heredoc.txt") == -1)
 		// 	dprintf(2, "error deleting the file\n");
 
-		main3(g_minishell); //execution starts here;;;;
+		main3(g_minishell, g_minishell.envirement); //execution starts here;;;;
 
 
 		g_minishell.nodes = mk_nodes(g_minishell.tokens);
