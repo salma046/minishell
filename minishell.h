@@ -71,7 +71,7 @@ typedef struct s_minishell
 	t_node			*nodes;
 }					t_minishell;
 
-extern t_minishell	minishell;
+extern t_minishell	g_minishell;
 
 char				*get_word(char *str, int i);
 char				*get_env_var(char *str, int i);
@@ -127,7 +127,7 @@ t_node				*allocate_for_node(t_token *temp_tokens);
 
 //  🥳 EXECUTION PART:
 
-void	*mk_env(char **envirement);
+t_env	*mk_env(char **envirement);
 
 // functionts utils:
 int					ft_strcmp(char *s1, char *s2);

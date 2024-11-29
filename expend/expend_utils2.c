@@ -6,11 +6,13 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:46:11 by salaoui           #+#    #+#             */
-/*   Updated: 2024/11/22 14:36:02 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/11/27 20:59:24 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+// t_minishell	g_minishell;
 
 int	count_lenth2(char *str, int *i)
 {
@@ -74,6 +76,37 @@ void	skip_if_isalnum(char *tokens_word, int *i)
 		(*i)++;
 }
 
+int	count_env(t_env *envir)
+{
+	int		count;
+	t_env	*tmp;
+
+	tmp = envir;
+	count = 0;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		count++;
+	}
+	return (count);
+}
+
+char	*ft_getenv(char *key, t_env *envir)
+{
+	t_env *tmp;
+
+	tmp = envir;
+	while(tmp)
+	{
+		if (!strcmp(key, tmp->key))
+		{
+			return (tmp->value);
+		}
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
 char	*get_env_var(char *str, int i)
 {
 	char	*env_var;
@@ -94,7 +127,7 @@ char	*get_env_var(char *str, int i)
 	while (j < i)
 		env_var[temp++] = str[j++];
 	env_var[temp] = '\0';
-	env_value = getenv(env_var);
+	env_value = ft_getenv(env_var, g_minishell.envir);
 	free(env_var);
 	if (env_value)
 		return (env_value);

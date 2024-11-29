@@ -58,7 +58,11 @@ char *command_path;
         arg_count++;
         current = current->next_token;
     }
+<<<<<<< HEAD
     // printf("arg: %d\n", arg_count);
+=======
+    printf("arg\n");
+>>>>>>> 30cf1fb22a97d29b76c60af761ba1ef37d987ca5
     args = malloc((arg_count + 1) * sizeof(char *));
     if (!args) {
         perror("malloc");

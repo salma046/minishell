@@ -4,6 +4,7 @@
 void	ft_env(t_minishell data)
 {
 	t_env	*tmp;
+
 	tmp = data.envir;
 	while (tmp)
 	{
