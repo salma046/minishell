@@ -1,5 +1,27 @@
 #include "../minishell.h"
 
+
+int ft_check_building(t_token *token)
+{
+    if (!token || !token->data)
+        return (0);
+
+    if (!ft_strcmp(token->data, "echo"))
+        return (1);
+    if (!ft_strcmp(token->data, "cd"))
+        return (1);
+    if (!ft_strcmp(token->data, "pwd"))
+        return (1);
+    if (!ft_strcmp(token->data, "exit"))
+        return (1);
+    if (!ft_strcmp(token->data, "export"))
+        return (1);
+    if (!ft_strcmp(token->data, "unset"))
+        return (1);
+	if (!ft_strcmp(token->data, "env"))
+        return (1);
+    return (0);
+}
 void	check_command(t_token *data, t_env *expo_envir, t_env *env_envir)
 {
 	t_token	*temp_tokens;

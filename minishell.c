@@ -1,30 +1,7 @@
 #include "minishell.h"
 
 t_minishell	g_minishell;
-int ft_check_building(t_token *token)
-{
-    if (!token || !token->data)
-        return (0);
 
-<<<<<<< HEAD
-    if (!ft_strcmp(token->data, "echo"))
-        return (1);
-    if (!ft_strcmp(token->data, "cd"))
-        return (1);
-    if (!ft_strcmp(token->data, "pwd"))
-        return (1);
-    if (!ft_strcmp(token->data, "exit"))
-        return (1);
-    if (!ft_strcmp(token->data, "export"))
-        return (1);
-    if (!ft_strcmp(token->data, "unset"))
-        return (1);
-	if (!ft_strcmp(token->data, "env"))
-        return (1);
-    return (0);
-}
-=======
->>>>>>> 30cf1fb22a97d29b76c60af761ba1ef37d987ca5
 int main3(t_minishell data, char **env)
 {
 	(void)env;
@@ -50,7 +27,6 @@ int main3(t_minishell data, char **env)
         temp_tokens = temp_tokens->next_token;
     }
     return (0);
-	return (0);
 
 }
 int	main(int ac, char *av[], char **env)
