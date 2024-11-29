@@ -139,6 +139,7 @@ int					ft_cd(t_token *data);
 void				ft_pwd(t_token *data);
 void				check_command(t_token *data,
 						t_env *expo_envir, t_env *env_envir);
+int 				ft_check_building(t_token *token);
 void				ft_env(t_minishell data);
 void				ft_exit(t_token *data);
 void				ft_unset(t_env *env_list, t_minishell data);

@@ -1,27 +1,55 @@
 #include "minishell.h"
 
 t_minishell	g_minishell;
+int ft_check_building(t_token *token)
+{
+    if (!token || !token->data)
+        return (0);
 
-
+    if (!ft_strcmp(token->data, "echo"))
+        return (1);
+    if (!ft_strcmp(token->data, "cd"))
+        return (1);
+    if (!ft_strcmp(token->data, "pwd"))
+        return (1);
+    if (!ft_strcmp(token->data, "exit"))
+        return (1);
+    if (!ft_strcmp(token->data, "export"))
+        return (1);
+    if (!ft_strcmp(token->data, "unset"))
+        return (1);
+	if (!ft_strcmp(token->data, "env"))
+        return (1);
+    return (0);
+}
 int main3(t_minishell data, char **env)
 {
-	t_token	*temp_tokens;
+	(void)env;
+    t_token *temp_tokens;
 
-	temp_tokens = data.tokens;
-	
-	while (temp_tokens)
-	{
-		if (!ft_strcmp(temp_tokens->data, "env") && temp_tokens->data)
-			ft_env(data);
-		if (!ft_strcmp(temp_tokens->data , "unset") && temp_tokens->data)
+    temp_tokens = data.tokens;
+    
+    while (temp_tokens)
+    {
+        if (ft_check_building(temp_tokens))
+        {
+			if (!ft_strcmp(temp_tokens->data, "env") && temp_tokens->data)
+				ft_env(data);
+			if (!ft_strcmp(temp_tokens->data , "unset") && temp_tokens->data)
 			ft_unset(NULL,  data);
-		check_command(temp_tokens, data.export_env, data.envir);
-		ft_execute(temp_tokens, env);
-		temp_tokens = temp_tokens->next_token;
-	}
-	return (0);
-}
+            check_command(temp_tokens, data.export_env, data.envir);
+        }
+        else
+        {
+            ft_execute(temp_tokens, env);
+        }
 
+        temp_tokens = temp_tokens->next_token;
+    }
+    return (0);
+	return (0);
+
+}
 int	main(int ac, char *av[], char **env)
 {
 	// t_node	*tmp_node;
