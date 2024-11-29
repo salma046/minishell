@@ -1,27 +1,55 @@
 // to save a function here 
 
-
-char	**remk_env()
+void	handle_invalid_token(t_token *token)
 {
-	int		i;
-	char	**envirement;
-	char	*join_one;
-	char	*join_two;
-	t_env	*tmp_env;
-
-	i = 0;
-	tmp_env = g_minishell.envir;
-	while(tmp_env)
-	{
-		join_one = ft_strjoin(tmp_env->key, '=');
-		join_two = ft_strjoin(join_one, tmp_env->value);
-		envirement[i] = join_two;
-		free(join_one);
-		free(join_two);
-		i++;
-		tmp_env = tmp_env->next;
-	}
-	envirement[i] = NULL;
-	return (envirement);
+	printf("bash: export: `%s': not a valid identifier\n", token->data);
 }
 
+int	validate_token(char *token_data)
+{
+	int i = 0;
+
+	while (token_data[i] != '\0' && token_data[i] != '=')
+	{
+		if (is_special_char(token_data[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	process_key(char *token_data, t_token *current_token, t_env *expo_envir, t_env *env_envir)
+{
+	char *split_var = ft_strchr(token_data, '=');
+	char *key;
+
+	if (!split_var)
+		key_without_equal(current_token, expo_envir, 0);
+	else
+	{
+		key = ft_strndup(token_data, split_var - token_data);
+		if (check_key(key, expo_envir))
+		{
+			removeNode(&expo_envir, key);
+			removeNode(&env_envir, key);
+		}
+		key_with_equal(current_token, expo_envir);
+	}
+}
+
+void	ft_add_to_export_arg(t_token *tokens, t_env *expo_envir, t_env *env_envir)
+{
+	t_token	*current_token;
+
+	if (!tokens || !tokens->next_token || !expo_envir)
+		return ;
+	current_token = tokens->next_token;
+	while (current_token && current_token->data_type == WORD)
+	{
+		if (!current_token->data || not_valid(current_token->data))
+			handle_invalid_token(current_token);
+		else if (validate_token(current_token->data))
+			process_key(current_token->data, current_token, expo_envir, env_envir);
+		current_token = current_token->next_token;
+	}
+}

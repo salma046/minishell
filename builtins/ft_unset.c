@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void	removeNode(t_env **head, char *keyToRemove)
+void	remove_node(t_env **head, char *keyToRemove)
 {
 	t_env	*current;
 	t_env	*prev;
@@ -38,27 +38,16 @@ t_env	*ft_env_unset(t_minishell data)
 	{
 		test = temp_tokens->data;
 		tmp = data.envir;
-		printf("the test word is: %s\n", test);
 		while (tmp)
 		{
 			if (tmp->next != NULL && !ft_strcmp(test, tmp->next->key))
 			{
-				removeNode(&data.envir, test);
+				remove_node(&data.envir, test);
 			}
 			tmp = tmp->next;
 		}
 		temp_tokens = temp_tokens->next_token;
 	}
-	// to_checkk = data.envir;
-	// while (to_checkk)
-	// {
-	// 	to_checkk->test = temp_tokens->next_token->data;
-	// 	// printf("\nJust to check that test is LESS ->: %s\n", tmp->test);
-	// 	printf("kkkkkkkkk:%s", to_checkk->key);
-	// 	printf("<%c>", to_checkk->equal);
-	// 	printf("-->%s\n", to_checkk->value);
-	// 	to_checkk = to_checkk->next;
-	// }
 	return (tmp);
 }
 
@@ -81,7 +70,7 @@ t_env	*ft_env_unset_for_export(t_minishell data)
 		{
 			if (tmp->next != NULL && !ft_strcmp(test, tmp->next->key))
 			{
-				removeNode(&data.export_env, test);
+				remove_node(&data.export_env, test);
 			}
 			tmp = tmp->next;
 		}

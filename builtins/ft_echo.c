@@ -27,7 +27,7 @@ void	ft_echo(t_token *data)
 			write(1, "\n", 1);
 			return ;
 		}
-		if (!ft_strncmp(tmp_tokens->next_token->data, "-n", 2))
+		if (!ft_strcmp(tmp_tokens->next_token->data, "-n"))
 		{
 			tmp_tokens = tmp_tokens->next_token->next_token;
 			if (tmp_tokens == NULL)

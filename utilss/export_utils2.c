@@ -10,7 +10,7 @@ char	*rm_quot2_value(char *str)
 	i = 1;
 	j = 0;
 	str_len = ft_strlen(str);
-	if (str_len == 2)
+	if (str_len < 2)
 	{
 		free(str);
 		return (ft_strdup(""));
@@ -18,7 +18,7 @@ char	*rm_quot2_value(char *str)
 	result = malloc(sizeof(char) * str_len - 1);
 	if (!result)
 		return (NULL);
-	strncpy(result, str + 1, str_len - 2);
+	ft_strncpy(result, str + 1, str_len - 2);
 	result[str_len - 2] = '\0';
 	free(str);
 	return (result);

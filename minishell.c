@@ -10,12 +10,13 @@ int main3(t_minishell data, char **env)
 	
 	while (temp_tokens)
 	{
+		(void)env;
 		if (!ft_strcmp(temp_tokens->data, "env") && temp_tokens->data)
 			ft_env(data);
 		if (!ft_strcmp(temp_tokens->data , "unset") && temp_tokens->data)
 			ft_unset(NULL,  data);
 		check_command(temp_tokens, data.export_env, data.envir);
-		ft_execute(temp_tokens, env);
+		// ft_execute(temp_tokens, env);
 		temp_tokens = temp_tokens->next_token;
 	}
 	return (0);
@@ -40,11 +41,13 @@ int	main(int ac, char *av[], char **env)
 		if (!g_minishell.command)
 		{
 			printf("Quiting minishell!\n");
-			// free structs
+			// free structs // the only things needded to be free are mk_env && mk_env_4expo
+			rl_clear_history();
 			exit(1);
 		}
-		add_history(g_minishell.command);
+		add_history(g_minishell.command);		
 		g_minishell.tokens = ft_tokenize(g_minishell);
+		free(g_minishell.command);
 		if (!g_minishell.tokens)
 			continue ;
 		g_minishell.tokens = rm_qotes(g_minishell.tokens);
@@ -53,8 +56,6 @@ int	main(int ac, char *av[], char **env)
 			continue ;
 		if (ft_check_redirections(&g_minishell, g_minishell.tokens) < 0)
 			continue ;
-		// if (unlink("/tmp/heredoc.txt") == -1)
-		// 	dprintf(2, "error deleting the file\n");
 
 		main3(g_minishell, g_minishell.envirement); //execution starts here;;;;
 

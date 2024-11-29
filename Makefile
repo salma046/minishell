@@ -22,7 +22,7 @@ OBJ = $(SRC:.c=.o)
 
 # Flags:
 CC = cc
-CFLAGS = -Wall -Wextra -Werror # -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 # Library:
 NAME = minishell

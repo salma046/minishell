@@ -147,11 +147,12 @@ void				ft_export(t_token *tokens, t_env *expo_envir, t_env *env_envir);
 void				ft_env_export_once(t_token *data, t_env *envir, int active);
 int					check_key(char *str, t_env *envir);
 void				key_without_equal(t_token *tokens, t_env *envir, int active);
-void				removeNode(t_env** head, char *keyToRemove);
+void				remove_node(t_env** head, char *keyToRemove);
 void				search_check_add_env(t_env *expo_envir, t_env *env_envir);
 char				*put_quot2_value(char *str);
 char				*rm_quot2_value(char *str);
 void				*mk_env_4expo(char **envir);
+char				*ft_strncpy(char *dst, const char *src, size_t len);
 // void				ft_env_export_once(t_token *token, int active);
 // void			ft_add_to_export_arg(t_token *token);
 
