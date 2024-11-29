@@ -138,7 +138,6 @@ t_env				*ft_env_unset(t_minishell data);
 int					check_key(char *str, t_env *envir);
 int 				ft_check_building(t_token *token);
 int					ft_cd(t_token *data);
-int 				ft_check_building(t_token *token);
 char				*put_quot2_value(char *str);
 char				*rm_quot2_value(char *str);
 void				ft_pwd(t_token *data);

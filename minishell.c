@@ -19,13 +19,15 @@ int main3(t_minishell data, char **env)
 			ft_unset(NULL,  data);
             check_command(temp_tokens, data.export_env, data.envir);
         }
-        else
-        {
-            ft_execute(temp_tokens, env);
-        }
+        // else
+        // {
+		// 	printf("");
+        // }
 
         temp_tokens = temp_tokens->next_token;
     }
+	if (!&ft_check_building)
+        ft_execute(temp_tokens, env);
     return (0);
 
 }
