@@ -26,6 +26,7 @@ int main3(t_minishell data, char **env)
     return (0);
 
 }
+
 int	main(int ac, char *av[], char **env)
 {
 	// t_node	*tmp_node;
@@ -45,7 +46,8 @@ int	main(int ac, char *av[], char **env)
 		if (!g_minishell.command)
 		{
 			printf("Quiting minishell!\n");
-			// free structs // the only things needded to be free are mk_env && mk_env_4expo
+			free_env_list(g_minishell.envir);
+			free_env_list(g_minishell.export_env);
 			rl_clear_history();
 			exit(1);
 		}

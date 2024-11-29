@@ -124,7 +124,7 @@ t_token				*rm_qotes(t_token *tokens);
 t_token				*parsing(t_minishell g_minishell);
 t_node				*mk_nodes(t_token *tokens);
 t_node				*allocate_for_node(t_token *temp_tokens);
-
+void				free_env_list(t_env *head);
 //  🥳 EXECUTION PART:
 
 t_env	*mk_env(char **envirement);
