@@ -4,24 +4,28 @@ t_minishell	g_minishell;
 
 int main3(t_minishell data, char **env)
 {
-	t_token	*temp_tokens;
+    t_token *temp_tokens;
 
-	temp_tokens = data.tokens;
-	
-	while (temp_tokens)
-	{
-		(void)env;
-		if (!ft_strcmp(temp_tokens->data, "env") && temp_tokens->data)
-			ft_env(data);
-		if (!ft_strcmp(temp_tokens->data , "unset") && temp_tokens->data)
-			ft_unset(NULL,  data);
-		check_command(temp_tokens, data.export_env, data.envir);
-		// ft_execute(temp_tokens, env);
-		temp_tokens = temp_tokens->next_token;
-	}
-	return (0);
+    temp_tokens = data.tokens;
+    
+    while (temp_tokens)
+    {
+        if (ft_check_building(temp_tokens))
+        {
+			if (!ft_strcmp(temp_tokens->data, "env") && temp_tokens->data)
+				ft_env(data);
+			if (!ft_strcmp(temp_tokens->data , "unset") && temp_tokens->data)
+				ft_unset(NULL,  data);
+            check_command(temp_tokens, data.export_env, data.envir);
+        }
+
+        temp_tokens = temp_tokens->next_token;
+    }
+	if (!&ft_check_building)
+        ft_execute(temp_tokens, env);
+    return (0);
+
 }
-
 int	main(int ac, char *av[], char **env)
 {
 	// t_node	*tmp_node;

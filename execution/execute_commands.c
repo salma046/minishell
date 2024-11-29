@@ -18,7 +18,6 @@ char    *find_command_path(char *command, char **env){
         perror("PATH not found");
         return NULL;
     }
-
     i = 0;
     while (path_env[i] != '\0') {
         memset(full_path, 0, sizeof(full_path));
@@ -42,15 +41,16 @@ char    *find_command_path(char *command, char **env){
         if (path_env[i] == ':')
             i++;
     }
-
     errno = ENOENT;
     perror("Command not found");
     return NULL;
 }
 
 void ft_execute(t_token *data, char **env)
-{ char *command_path;
-    char **args;
+{
+char *command_path;
+
+  char **args;
     int arg_count = 0;
     t_token *current = data;
 
@@ -58,7 +58,7 @@ void ft_execute(t_token *data, char **env)
         arg_count++;
         current = current->next_token;
     }
-    printf("arg\n");
+
     args = malloc((arg_count + 1) * sizeof(char *));
     if (!args) {
         perror("malloc");
@@ -66,9 +66,12 @@ void ft_execute(t_token *data, char **env)
     }
 
     current = data;
-    for (int i = 0; i < arg_count; i++) {
+    int i = 0;
+    while(i < arg_count)
+    {
         args[i] = current->data;
         current = current->next_token;
+        i++;
     }
     args[arg_count] = NULL;
 
@@ -77,7 +80,7 @@ void ft_execute(t_token *data, char **env)
         free(args);
         exit(1);
     }
-
+    printf("command_path:%s", command_path);
     pid_t pid = fork();
     if (pid == -1) {
         perror("Fork");
@@ -87,13 +90,16 @@ void ft_execute(t_token *data, char **env)
     }
     else if (pid == 0)
     {
+        printf("\033[1;35m======\033[0m");
         if (execve(command_path, args, env) == -1)
         {
             perror("execve");
             free(command_path);
             free(args);
             exit(1);
+            printf("\033[1;35m======\033[0m");
         }
+
     } else
     {
         int status;
@@ -103,7 +109,6 @@ void ft_execute(t_token *data, char **env)
             perror("Command execution failed");
         }
     }
-
     free(command_path);
     free(args);
 }
