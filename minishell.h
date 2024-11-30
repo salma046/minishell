@@ -124,7 +124,7 @@ t_token				*rm_qotes(t_token *tokens);
 t_token				*parsing(t_minishell g_minishell);
 t_node				*mk_nodes(t_token *tokens);
 t_node				*allocate_for_node(t_token *temp_tokens);
-
+void				free_env_list(t_env *head);
 //  🥳 EXECUTION PART:
 
 t_env	*mk_env(char **envirement);
@@ -150,9 +150,10 @@ void				ft_unset(t_env *env_list, t_minishell data);
 void				ft_export(t_token *tokens, t_env *expo_envir, t_env *env_envir);
 void				ft_env_export_once(t_token *data, t_env *envir, int active);
 void				key_without_equal(t_token *tokens, t_env *envir, int active);
-void				removeNode(t_env** head, char *keyToRemove);
+void				remove_node(t_env** head, char *keyToRemove);
 void				search_check_add_env(t_env *expo_envir, t_env *env_envir);
 void				*mk_env_4expo(char **envir);
+char				*ft_strncpy(char *dst, const char *src, size_t len);
 // void				ft_env_export_once(t_token *token, int active);
 // void			ft_add_to_export_arg(t_token *token);
 
