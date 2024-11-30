@@ -2,14 +2,13 @@
 
 char    *find_command_path(char *command, char **env){
 
-    printf("\033[0;31mcommand:%s\033[0m\n", command);
-    printf("\033[0;31menv:%s\033[0m\n", env[1]);
-   
+        printf("\033[0;31mcommand:%s\033[0m\n", command);
         char *path_env = NULL;
         char full_path[1024];
         int i = 0, j = 0, k = 0;
 
-        while (env[i] != NULL) {
+        while (env[i] != NULL) 
+        {
             if (strncmp(env[i], "PATH=", 5) == 0) {
                 path_env = env[i] + 5; 
             }
@@ -22,33 +21,32 @@ char    *find_command_path(char *command, char **env){
             return NULL;
         }
         i = 0;
-        while (path_env[i] != '\0') {
-            memset(full_path, 0, sizeof(full_path));
+        while (path_env[i] != '\0') 
+        {
+            ft_memset(full_path, 0, sizeof(full_path));
             k = 0;
 
             while (path_env[i] != ':' && path_env[i] != '\0') {
                 full_path[k++] = path_env[i++];
             }
-
+            // printf("full_path:%s\n", full_path);
             full_path[k++] = '/';
+            // printf("full_path:%s\n", full_path);
             j = 0;
+            printf("\033[0;33mcommand:%s\033[0m", command);
             while (command[j] != '\0') {
                 full_path[k++] = command[j++];
             }
+            printf("====>full_path:%s\n", full_path);
             full_path[k] = '\0';
 
             if (access(full_path, X_OK) == 0) {
-                return strdup(full_path);
-            }
-            if (access(full_path, F_OK) == 0) {
-                printf("------------------------>it is not exist");
-                continue;
+                return ft_strdup(full_path);
             }
             if (path_env[i] == ':')
                 i++;
         }
         errno = ENOENT;
-        printf("Command not found");
     return NULL;
 }
 
@@ -81,7 +79,7 @@ int ft_execute(t_token *data, char **env) {
 
     command_path = find_command_path(args[0], env);
     if (!command_path) {
-        fprintf(stderr, "%s: command not found\n", args[0]);
+        printf("%s: command not found\n", args[0]);
         free(args);
         return 127;  
     }

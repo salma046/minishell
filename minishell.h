@@ -170,5 +170,7 @@ int					main_heredoc(t_token *tokens);
 int					ft_heredoc(t_token *tokens);
 int					start_heredoc(int fd, char *limiter);
 int					ft_start_heredoc(int fd, char *limiter);
+// error:
+void	ft_error(char *msg);
 
 #endif
