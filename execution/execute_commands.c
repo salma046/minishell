@@ -2,55 +2,59 @@
 
 char    *find_command_path(char *command, char **env){
 
-    char *path_env = NULL;
-    char full_path[1024];
-    int i = 0, j = 0, k = 0;
+    printf("\033[0;31mcommand:%s\033[0m\n", command);
+    printf("\033[0;31menv:%s\033[0m\n", env[1]);
+   
+        char *path_env = NULL;
+        char full_path[1024];
+        int i = 0, j = 0, k = 0;
 
-    while (env[i] != NULL) {
-        if (strncmp(env[i], "PATH=", 5) == 0) {
-            path_env = env[i] + 5; 
-        }
-        i++;
-    }
-
-    if (!path_env) {
-        errno = ENOENT;
-        perror("PATH not found");
-        return NULL;
-    }
-    i = 0;
-    while (path_env[i] != '\0') {
-        memset(full_path, 0, sizeof(full_path));
-        k = 0;
-
-        while (path_env[i] != ':' && path_env[i] != '\0') {
-            full_path[k++] = path_env[i++];
-        }
-
-        full_path[k++] = '/';
-        j = 0;
-        while (command[j] != '\0') {
-            full_path[k++] = command[j++];
-        }
-        full_path[k] = '\0';
-
-        if (access(full_path, X_OK) == 0) {
-            return strdup(full_path);
-        }
-
-        if (path_env[i] == ':')
+        while (env[i] != NULL) {
+            if (strncmp(env[i], "PATH=", 5) == 0) {
+                path_env = env[i] + 5; 
+            }
             i++;
-    }
-    errno = ENOENT;
-    perror("Command not found");
+        }
+
+        if (!path_env) {
+            errno = ENOENT;
+            perror("PATH not found");
+            return NULL;
+        }
+        i = 0;
+        while (path_env[i] != '\0') {
+            memset(full_path, 0, sizeof(full_path));
+            k = 0;
+
+            while (path_env[i] != ':' && path_env[i] != '\0') {
+                full_path[k++] = path_env[i++];
+            }
+
+            full_path[k++] = '/';
+            j = 0;
+            while (command[j] != '\0') {
+                full_path[k++] = command[j++];
+            }
+            full_path[k] = '\0';
+
+            if (access(full_path, X_OK) == 0) {
+                return strdup(full_path);
+            }
+            if (access(full_path, F_OK) == 0) {
+                printf("------------------------>it is not exist");
+                continue;
+            }
+            if (path_env[i] == ':')
+                i++;
+        }
+        errno = ENOENT;
+        printf("Command not found");
     return NULL;
 }
 
-void ft_execute(t_token *data, char **env)
-{
-char *command_path;
-
-  char **args;
+int ft_execute(t_token *data, char **env) {
+    char *command_path;
+    char **args;
     int arg_count = 0;
     t_token *current = data;
 
@@ -62,45 +66,42 @@ char *command_path;
     args = malloc((arg_count + 1) * sizeof(char *));
     if (!args) {
         perror("malloc");
-        exit(1);
+        return -1;  
     }
 
     current = data;
     int i = 0;
-    while(i < arg_count)
-    {
+    while(i < arg_count) {
         args[i] = current->data;
         current = current->next_token;
+
         i++;
     }
     args[arg_count] = NULL;
 
     command_path = find_command_path(args[0], env);
     if (!command_path) {
+        fprintf(stderr, "%s: command not found\n", args[0]);
         free(args);
-        exit(1);
+        return 127;  
     }
-    printf("command_path:%s", command_path);
+
     pid_t pid = fork();
     if (pid == -1) {
         perror("Fork");
         free(command_path);
         free(args);
-        exit(1);
+        return -1;
     }
-    else if (pid == 0)
-    {
-        printf("\033[1;35m======\033[0m");
-        if (execve(command_path, args, env) == -1)
-        {
+    else if (pid == 0) {
+        if (execve(command_path, args, env) == -1) {
             perror("execve");
             free(command_path);
             free(args);
             exit(1);
-            printf("\033[1;35m======\033[0m");
         }
-
-    } else
+    } 
+    else
     {
         int status;
         waitpid(pid, &status, 0);
@@ -109,6 +110,5 @@ char *command_path;
             perror("Command execution failed");
         }
     }
-    free(command_path);
-    free(args);
+    return 0;
 }

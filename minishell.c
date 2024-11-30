@@ -16,18 +16,21 @@ int main3(t_minishell data, char **env)
 			if (!ft_strcmp(temp_tokens->data, "env") && temp_tokens->data)
 				ft_env(data);
 			if (!ft_strcmp(temp_tokens->data , "unset") && temp_tokens->data)
-			ft_unset(NULL,  data);
+				ft_unset(NULL,  data);
             check_command(temp_tokens, data.export_env, data.envir);
         }
-        // else
-        // {
-		// 	printf("");
-        // }
+        else
+        {
+			// printf("");
+			printf("\033[32m-->in:%s\033[0\n", temp_tokens->data);
+            int retu = ft_execute(temp_tokens, env);
+			if (retu == 127)
+				printf("");
+        }
+		printf("\033[36m-->out:%s\033[0m\n", temp_tokens->data);
 
         temp_tokens = temp_tokens->next_token;
     }
-	if (!&ft_check_building)
-        ft_execute(temp_tokens, env);
     return (0);
 
 }
