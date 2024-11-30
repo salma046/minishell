@@ -18,19 +18,15 @@ int main3(t_minishell data, char **env)
 				ft_unset(NULL,  data);
             check_command(temp_tokens, data.export_env, data.envir);
         }
-<<<<<<< HEAD
         else
         {
 			// printf("");
 			printf("\033[32m-->in:%s\033[0\n", temp_tokens->data);
             int retu = ft_execute(temp_tokens, env);
 			if (retu == 127)
-				printf("");
+				return 1;
         }
 		printf("\033[36m-->out:%s\033[0m\n", temp_tokens->data);
-=======
->>>>>>> e54a025e586bf24951df177a405f4f8a89e42d25
-
         temp_tokens = temp_tokens->next_token;
     }
     return (0);
@@ -58,7 +54,7 @@ int	main(int ac, char *av[], char **env)
 			printf("Quiting minishell!\n");
 			free_env_list(g_minishell.envir);
 			free_env_list(g_minishell.export_env);
-			rl_clear_history();
+			clear_history(); /// Sojod: bdelt hadi hitax tle3 liya error f terminal hh gaiya ft_clear_history not founded
 			exit(1);
 		}
 		add_history(g_minishell.command);		
