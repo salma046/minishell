@@ -190,6 +190,6 @@ void	ft_export(t_token *tokens, t_env *expo_envir, t_env *env_envir)
 		printf("\n---2---\n");
 	}
 	search_check_add_env(expo_envir, env_envir);
-	while (g_minishell.tokens && g_minishell.tokens->data_type == WORD)
-		g_minishell.tokens = g_minishell.tokens->next_token;
+	// while (g_minishell.tokens && g_minishell.tokens->data_type == WORD)
+	// 	g_minishell.tokens = g_minishell.tokens->next_token;
 }

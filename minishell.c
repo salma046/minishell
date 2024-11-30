@@ -33,12 +33,15 @@ int main3(t_minishell data, char **env)
 
 }
 
+void handle_sigint(int sig)
+{
+	(void)sig;
+	printf("\n\033[1;35m Minishell~$ \033[0m");
+}
+
 int	main(int ac, char *av[], char **env)
 {
-	// t_node	*tmp_node;
-	// int		i;
-	// int		j;
-
+	signal(SIGINT, handle_sigint);
 	if (ac > 2)
 		return (1);
 	(void)av;
@@ -54,7 +57,7 @@ int	main(int ac, char *av[], char **env)
 			printf("Quiting minishell!\n");
 			free_env_list(g_minishell.envir);
 			free_env_list(g_minishell.export_env);
-			clear_history(); /// Sojod: bdelt hadi hitax tle3 liya error f terminal hh gaiya ft_clear_history not founded
+			clear_history();
 			exit(1);
 		}
 		add_history(g_minishell.command);		
@@ -69,8 +72,7 @@ int	main(int ac, char *av[], char **env)
 		if (ft_check_redirections(&g_minishell, g_minishell.tokens) < 0)
 			continue ;
 
-		main3(g_minishell, g_minishell.envirement); //execution starts here;;;;
-
+		main3(g_minishell, g_minishell.envirement);
 
 		g_minishell.nodes = mk_nodes(g_minishell.tokens);
 		// tmp_node = g_minishell.nodes;
