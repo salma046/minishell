@@ -159,7 +159,7 @@ char				*ft_strncpy(char *dst, const char *src, size_t len);
 
 
 // executr commands:
-int 		ft_execute(t_token *data, char **env);
+int ft_execute(t_token *data, char **env);
 
 // redirectios:
 int					ft_output(t_token *tokens);
