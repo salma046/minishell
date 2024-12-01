@@ -9,6 +9,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+#include "get_next_line/get_next_line.h"
 
 //--->Sajida: new header Declarations
 # include "libft/libft.h"
@@ -63,6 +64,8 @@ typedef struct s_node
 
 typedef struct s_minishell
 {
+	int				in_file;
+	int				out_file;
 	char			**envirement;
 	char			*command;
 	t_env			*envir;

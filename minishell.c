@@ -84,6 +84,8 @@ int	main(int ac, char *av[], char **env)
 		return (1);
 	(void)av;
 	g_minishell.envirement = env;
+	g_minishell.in_file = open("/tmp/in_file", O_WRONLY | O_CREAT | O_APPEND, 0644);
+	g_minishell.out_file = open("/tmp/out_file", O_WRONLY | O_CREAT | O_APPEND, 0644);
 	g_minishell.envir = mk_env(g_minishell.envirement);
 	g_minishell.export_env = mk_env_4expo(g_minishell.envirement);
 
