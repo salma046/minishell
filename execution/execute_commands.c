@@ -16,7 +16,7 @@ char    *find_command_path(char *command, char **env){
         }
         if (!path_env) {
             errno = ENOENT;
-            // perror("PATH not found");
+            perror("PATH not found");
             return NULL;
         }
         i = 0;
