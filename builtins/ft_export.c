@@ -134,6 +134,20 @@ int	search_special_char(char *token_data)
 	return (0);
 }
 
+int	check_all_tokens(t_token *tokens)
+{
+	t_token *tmp;
+
+	tmp = tokens;
+	while (tmp)
+	{
+		if (search_special_char(tmp->data) == 1)
+			return (1);
+		tmp = tmp->next_token;
+	}
+	return (0);
+}
+
 void	ft_add_to_export_arg(t_token *tokens, t_env *expo_envir,
 		t_env *env_envir)
 {
@@ -143,6 +157,8 @@ void	ft_add_to_export_arg(t_token *tokens, t_env *expo_envir,
 	if (!tokens || !tokens->next_token || !expo_envir)
 		return ;
 	current_token = tokens->next_token;
+	if (check_all_tokens(current_token) == 1)
+		return ;
 	while (current_token != NULL && current_token->data_type == WORD)
 	{
 		token_data = current_token->data;
@@ -155,11 +171,6 @@ void	ft_add_to_export_arg(t_token *tokens, t_env *expo_envir,
 		{
 			printf("bash: export: %s': not a valid identifier\n", token_data);
 			return ;
-		}
-		if (search_special_char(token_data) == 1)
-		{
-			current_token = current_token->next_token;
-			break ;
 		}
 		process_key(current_token->data, current_token, expo_envir, env_envir);
 		current_token = current_token->next_token;

@@ -17,7 +17,7 @@ char    *find_command_path(char *command, char **env){
 
         if (!path_env) {
             errno = ENOENT;
-            perror("PATH not found");
+            // perror("PATH not found");
             return NULL;
         }
         i = 0;
@@ -33,11 +33,11 @@ char    *find_command_path(char *command, char **env){
             full_path[k++] = '/';
             // printf("full_path:%s\n", full_path);
             j = 0;
-            printf("\033[0;33mcommand:%s\033[0m", command);
+            // printf("\033[0;33mcommand:%s\033[0m", command);
             while (command[j] != '\0') {
                 full_path[k++] = command[j++];
             }
-            printf("====>full_path:%s\n", full_path);
+            // printf("====>full_path:%s\n", full_path);
             full_path[k] = '\0';
 
             if (access(full_path, X_OK) == 0) {
