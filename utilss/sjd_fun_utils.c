@@ -107,3 +107,44 @@ t_env	*mk_env(char **envir)
 	}
 	return (head);
 }
+
+
+char **mk_tenv_char(t_env *envir)
+{
+    t_env *tmp;
+    char **arr;
+    int i;
+    int size = 0;
+
+    tmp = envir;
+    while (tmp)
+    {
+        size++;
+        tmp = tmp->next;
+    }
+    arr = malloc((size + 1) * sizeof(char *));
+    if (!arr)
+        return NULL;
+    tmp = envir;
+    i = 0;
+    while (tmp)
+    {
+        char *first_part = ft_strjoin(tmp->key, "=");
+        if (!first_part)
+        {
+            free(arr);
+            return NULL;
+        }
+        char *second_part = ft_strjoin(first_part, tmp->value);
+        free(first_part);
+        if (!second_part)
+        {
+            free(arr);
+            return NULL;
+        }
+        arr[i++] = second_part;
+        tmp = tmp->next;
+    }
+    arr[i] = NULL;
+    return arr;
+}

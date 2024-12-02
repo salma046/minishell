@@ -48,6 +48,7 @@ char    *find_command_path(char *command, char **env){
 }
 
 int ft_execute(t_token *data, char **env) {
+
     char *command_path;
     char **args;
     int arg_count = 0;

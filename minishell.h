@@ -135,6 +135,7 @@ t_env	*mk_env(char **envirement);
 // functionts utils:
 int					ft_strcmp(char *s1, char *s2);
 void				ft_sigint(int x);
+char 				**mk_tenv_char(t_env *envir);
 
 // commands:
 t_env				*ft_env_unset(t_minishell data);
@@ -175,5 +176,8 @@ int					start_heredoc(int fd, char *limiter);
 int					ft_start_heredoc(int fd, char *limiter);
 // error:
 void	ft_error(char *msg);
+// PIPE:
+int execute_piped_commands(t_node *nodes, char **env);
+
 
 #endif

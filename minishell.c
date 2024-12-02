@@ -1,46 +1,24 @@
 #include "minishell.h"
 
 t_minishell	g_minishell;
-
-char **mk_tenv_char(t_env *envir)
-{
-    t_env *tmp;
-    char **arr;
-    int i;
-    int size = 0;
-
-    tmp = envir;
-    while (tmp)
-    {
-        size++;
-        tmp = tmp->next;
-    }
-    arr = malloc((size + 1) * sizeof(char *));
-    if (!arr)
-        return NULL;
-    tmp = envir;
-    i = 0;
-    while (tmp)
-    {
-        char *first_part = ft_strjoin(tmp->key, "=");
-        if (!first_part)
-        {
-            free(arr);
-            return NULL;
-        }
-        char *second_part = ft_strjoin(first_part, tmp->value);
-        free(first_part);
-        if (!second_part)
-        {
-            free(arr);
-            return NULL;
-        }
-        arr[i++] = second_part;
-        tmp = tmp->next;
-    }
-    arr[i] = NULL;
-    return arr;
-}
+// int ft_exe(t_token *ttk)
+// {
+// 	t_env *ennv;
+// 	t_token *temp_tokens;
+// 	int i = 0;
+// 	temp_tokens = ttk;
+// 	while (temp_tokens)
+// 	{
+// 		temp_tokens->envirement = mk_tenv_char(envir);
+//         int retu = ft_execute(temp_tokens, temp_tokens->envirement);
+// 		if (retu == 127)
+// 			return 1;
+// 		printf("->%d  =  %s", i, temp_tokens->data);
+// 		temp_tokens = temp_tokens->next_token;
+// 		i++;
+// 	}
+// 	return 0;
+// }
 
 
 int main3(t_minishell data)
@@ -48,21 +26,19 @@ int main3(t_minishell data)
     t_token *temp_tokens;
 
     temp_tokens = data.tokens;
-    
+   
     if (ft_check_building(temp_tokens))
     {
 		if (!ft_strcmp(temp_tokens->data, "env") && temp_tokens->data)
 			ft_env(data);
 		if (!ft_strcmp(temp_tokens->data , "unset") && temp_tokens->data)
 			ft_unset(NULL,  data);
-        check_command(temp_tokens, data.export_env, data.envir);
+       check_command(temp_tokens, data.export_env, data.envir);
     }
     else
     {
-		// printf("");
-		printf("\033[32m-->in:%s\033[0\n", temp_tokens->data);
-		data.envirement = mk_tenv_char(data.envir);
-        int retu = ft_execute(temp_tokens, data.envirement);
+		// ft_exe(temp_tokens);
+		int retu = ft_execute(temp_tokens, temp_tokens->envirement);
 		if (retu == 127)
 			return 1;
     }
@@ -76,9 +52,20 @@ void handle_sigint(int sig)
 	(void)sig;
 	printf("\n\033[1;35m Minishell~$ \033[0m");
 }
+int has_pipe(t_token *tokens) {
+    while (tokens) {
+        if (tokens->data_type == PIPE) {
+            return 1; 
+        }
+        tokens = tokens->next_token;
+    }
+    return 0; 
+}
 
 int	main(int ac, char *av[], char **env)
 {
+	t_node *tmp_node; // SOJod
+	// int i = 0, j = 0;
 	signal(SIGINT, handle_sigint);
 	if (ac > 2)
 		return (1);
@@ -111,8 +98,22 @@ int	main(int ac, char *av[], char **env)
 			continue ;
 		if (ft_check_redirections(&g_minishell, g_minishell.tokens) < 0)
 			continue ;
+		tmp_node = g_minishell.nodes;
+		
+		// if (has_pipe(g_minishell.tokens)) 
+    	// 	execute_piped_commands(g_minishell.nodes, g_minishell.envirement);
+		// else 
+    		// ft_execute(g_minishell.tokens, g_minishell.envirement);
 
 		main3(g_minishell);
+		// if (has_pipe(g_minishell.tokens)) 
+		// {
+		// 	printf("Pipe detected in command!\n");
+		// 	execute_piped_commands(tmp_node, env);
+		// 	// continue;
+		// }
+		
+
 
 		g_minishell.nodes = mk_nodes(g_minishell.tokens);
 		// tmp_node = g_minishell.nodes;
@@ -127,14 +128,20 @@ int	main(int ac, char *av[], char **env)
 		// 		i, j, tmp_node->cmd[j]);
 		// 		j++;
 		// 	}
-		// 	while(tmp_node->redir)
-		// 	{
-		// 		printf("the redir file name is: %s\n",
-		// 			tmp_node->redir->file);
-		// 		printf("the redir type is: %d\n",
-		// 			tmp_node->redir->red_type);
-		// 		tmp_node->redir = tmp_node->redir->next;
-		// 	}
+			// if (has_pipe(g_minishell.tokens)) 
+			// {
+			// 	printf("Pipe detected in command!\n");
+			// 	// execute_piped_commands(g_minishell.tokens, env);
+			// 	// continue;
+			// }
+			// while(tmp_node->redir)
+			// {
+			// 	printf("the redir file name is: %s\n",
+			// 		tmp_node->redir->file);
+			// 	printf("the redir type is: %d\n",
+			// 		tmp_node->redir->red_type);
+			// 	tmp_node->redir = tmp_node->redir->next;
+			// }
 		//  	printf("----------------------------------------------------------\n");
 		// 	tmp_node = tmp_node->next_node;
 		// 	i++;

@@ -16,13 +16,13 @@ SRC = parcing/parsing.c parcing/handle_quotes.c parcing/nodes.c parcing/nodes_ut
       redirections/ft_redirections.c expend/expend_utils3.c utilss/libft_utils.c \
       utilss/sjd_fun_utils.c execution/execute_commands.c expend/expend_utils2.c \
       minishell.c expend/expend_utils4.c expend/expend_utils5.c free/free_nodes.c \
-	  utilss/ft_export_utils.c utilss/export_utils2.c print_error.c
+	  utilss/ft_export_utils.c utilss/export_utils2.c print_error.c pipe2.c
 
 OBJ = $(SRC:.c=.o)
 
 # Flags:
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 
 # Library:
 NAME = minishell
