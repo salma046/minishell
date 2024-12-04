@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 14:59:29 by salaoui           #+#    #+#             */
-/*   Updated: 2024/11/29 13:15:52 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/12/04 02:41:37 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,40 @@ void	fill_commands(t_node **node_list, t_token *tokens)
 	}
 }
 
+// t_node	*mk_nodes(t_token *tokens)
+// {
+// 	t_node	*nodes;
+// 	t_token	*current;
+// 	t_token	*next;
+
+// 	nodes = NULL;
+// 	current = tokens;
+// 	fill_commands(&nodes, tokens);
+// 	while (current)
+// 	{
+// 		next = current->next_token;
+// 		free(current->data);
+// 		free(current);
+// 		current = next;
+// 	}
+// 	return (nodes);
+// }
+
 t_node	*mk_nodes(t_token *tokens)
 {
-	t_node	*nodes;
-	t_token	*current;
-	t_token	*next;
+    t_node    *nodes;
+    // t_token    *curre1nt;
+    // t_token    *next;
 
-	nodes = NULL;
-	current = tokens;
-	fill_commands(&nodes, tokens);
-	while (current)
-	{
-		next = current->next_token;
-		free(current->data);
-		free(current);
-		current = next;
-	}
-	return (nodes);
+    nodes = NULL;
+    // current = tokens;
+    fill_commands(&nodes, tokens);
+    // while (current)
+    // {
+    //     next = current->next_token;
+    //     free(current->data);
+    //     free(current);
+    //     current = next;
+    // }
+    return (nodes);
 }

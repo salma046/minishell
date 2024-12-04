@@ -62,6 +62,7 @@ char    *find_command_path_pipe(char *command, char **env){
         errno = ENOENT;
     return NULL;
 }
+
 int execute_piped_commands(t_node *nodes, char **env) {
     int pipefd[2];
     int prev_pipe = -1;
