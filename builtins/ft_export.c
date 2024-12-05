@@ -180,12 +180,12 @@ void	ft_add_to_export_arg(t_node *nodes, t_env *expo_envir,
 	}
 }
 
-void	ft_export(t_minishell data, t_env *expo_envir, t_env *env_envir)
+void	ft_export(t_minishell *data, t_env *expo_envir, t_env *env_envir)
 {
 	int	active;
 	t_node *tmp_nodes;
 
-	tmp_nodes = data.nodes;
+	tmp_nodes = data->nodes;
 	if (!tmp_nodes->cmd[0] || !expo_envir)
 		return ;
 	active = 1;

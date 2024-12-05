@@ -1,11 +1,11 @@
 #include "../minishell.h"
 
-void	ft_exit(t_minishell data)
+void	ft_exit(t_minishell *data)
 {
 	t_token	*tmp_tokens;
 	int		exit_status;
 
-	tmp_tokens = data.tokens;
+	tmp_tokens = data->tokens;
 	exit_status = 0;
 	if (tmp_tokens->next_token)
 	{
