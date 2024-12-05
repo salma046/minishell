@@ -9,6 +9,31 @@ int	ft_open_red_files(t_minishell data)
 	return (0);
 }
 
+int copy_fd_content(int src_fd, int dest_fd)
+{
+    char buffer[BUFFER_SIZE];
+    ssize_t bytes_read, bytes_written;
+
+    // Read from source and write to destination in chunks
+    while ((bytes_read = read(src_fd, buffer, BUFFER_SIZE)) > 0)
+    {
+        bytes_written = write(dest_fd, buffer, bytes_read);
+        if (bytes_written != bytes_read)
+        {
+            perror("write");
+            return -1;
+        }
+    }
+
+    if (bytes_read == -1)
+    {
+        perror("read");
+        return -1;
+    }
+
+    return 0;
+}
+
 int main3(t_minishell data)
 {
     t_node *temp_nodes = data.nodes;
@@ -54,12 +79,21 @@ int main3(t_minishell data)
                     // Redirect input from file.
                     dup2(temp_nodes->in_file, STDIN_FILENO);
                 }
+				if (temp_nodes->redir->red_type == HER_DOC)
+                {
+                    int src_fd = open("/tmp/heredoc.txt", O_RDONLY);
+                    if (copy_fd_content(src_fd, temp_nodes->in_file) == 0)
+                        printf("File copied successfully!\n");
+                    dup2(temp_nodes->in_file, STDIN_FILENO);
+                    close(src_fd);
+                }
             }
-            dup2(in_fd, STDIN_FILENO);
+			close(pipe_fd[0]);
+            // dup2(in_fd, STDIN_FILENO);
             if (temp_nodes->next_node)
                 dup2(pipe_fd[1], STDOUT_FILENO);
 
-            close(pipe_fd[0]); // Close unused read end in the child.
+            // close(pipe_fd[0]); // Close unused read end in the child.
             close(pipe_fd[1]);
 
             if (ft_check_builtins(temp_nodes->cmd[0]) == 1)
@@ -84,22 +118,20 @@ int main3(t_minishell data)
         else // Parent process
         {
             waitpid(pid, NULL, 0);
-            close(pipe_fd[1]);
-            in_fd = pipe_fd[0];
+			if (data.count_pips > 1)
+            {
+				close(pipe_fd[1]);
+            	in_fd = pipe_fd[0];
+			}
+			// else
+			// 	close(in_fd);
         }
 
         temp_nodes = temp_nodes->next_node;
-		}
+	}
     return 0;
 }
 
-
-
-void handle_sigint(int sig)
-{
-	(void)sig;
-	printf("\n\033[1;35m Minishell~$ \033[0m");
-}
 
 int	main(int ac, char *av[], char **env)
 {
@@ -130,9 +162,9 @@ int	main(int ac, char *av[], char **env)
 			continue ;
 		g_minishell.tokens = rm_qotes(g_minishell.tokens);
 		g_minishell.tokens = parsing(g_minishell);
+		g_minishell.nodes = mk_nodes(g_minishell.tokens);
 		if (main_heredoc(g_minishell.tokens) < 0)
 			continue ;
-		g_minishell.nodes = mk_nodes(g_minishell.tokens);
 		g_minishell.count_pips = count_pipe(g_minishell.nodes);
 		// g_minishell.files = mksome_files(g_minishell.count_pips);
 		main3(g_minishell);
