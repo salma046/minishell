@@ -104,7 +104,7 @@ void handle_sigint(int sig)
 int	main(int ac, char *av[], char **env)
 {
 	signal(SIGINT, handle_sigint);
-	if (ac > 2)
+	if (ac >= 2)
 		return (1);
 	(void)av;
 	g_minishell.envirement = env;
