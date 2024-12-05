@@ -14,36 +14,40 @@ void	ft_print(t_token *tokens)
 	}
 }
 
-void ft_echo(t_token *data)
+void	ft_check_n_flag(t_token **tmp_tokens, int *flag)
 {
-    t_token *tmp_tokens;
-    int flag = 0;
+	*flag = 0;
+	while (*tmp_tokens && (*tmp_tokens)->next_token
+		&& !ft_strcmp((*tmp_tokens)->next_token->data, "-n"))
+	{
+		*flag = 1;
+		*tmp_tokens = (*tmp_tokens)->next_token;
+	}
+}
 
-    tmp_tokens = data;
-    printf("         -> \033[0;31m Ana f echo\033[0m <-\n");
+void	ft_echo(t_token *data)
+{
+	t_token *tmp_tokens;
+	int flag;
 
-    if (tmp_tokens->data)
-    {
-        if (tmp_tokens->next_token == NULL)
-        {
-            write(1, "\n", 1);
-            return;
-        }
+	tmp_tokens = data;
+	if (!tmp_tokens->data)
+		return ;
 
-        while (tmp_tokens->next_token && 
-               !ft_strcmp(tmp_tokens->next_token->data, "-n"))
-        {
-            flag = 1;
-            tmp_tokens = tmp_tokens->next_token;
-        }
-        if (tmp_tokens->next_token)
-            tmp_tokens = tmp_tokens->next_token;
-        else
-            return;
+	if (tmp_tokens->next_token == NULL)
+	{
+		write(1, "\n", 1);
+		return ;
+	}
 
-        ft_print(tmp_tokens);
+	ft_check_n_flag(&tmp_tokens, &flag);
 
-        if (!flag)
-            write(1, "\n", 1);
-    }
+	if (tmp_tokens->next_token)
+		tmp_tokens = tmp_tokens->next_token;
+	else
+		return ;
+
+	ft_print(tmp_tokens);
+	if (!flag)
+		write(1, "\n", 1);
 }

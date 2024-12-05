@@ -69,26 +69,26 @@ int	has_pipe(t_token *tokens)
 	}
 	return (0);
 }
-void	ft_checkk(t_node *tmp_node)
-{
-	t_node	*tmp;
+// void	ft_checkk(t_node *tmp_node)
+// {
+// 	t_node	*tmp;
 
-	tmp = tmp_node;
-	int i, j;
-	while (tmp)
-	{
-		j = 0;
-		i = 0;
-		printf("----------------------------------------------------------\n");
-		while (tmp->cmd[j])
-		{
-			printf("the node \033[32m%d\033[0m cmds n* %d is :\033[32m
-				%s\033[0m\n", i, j, tmp->cmd[j]);
-			j++;
-		}
-		tmp = tmp->next_node;
-	}
-}
+// 	tmp = tmp_node;
+// 	int i, j;
+// 	while (tmp)
+// 	{
+// 		j = 0;
+// 		i = 0;
+// 		printf("----------------------------------------------------------\n");
+// 		while (tmp->cmd[j])
+// 		{
+// 			printf("the node \033[32m%d\033[0m cmds n* %d is :\033[32m
+// 				%s\033[0m\n", i, j, tmp->cmd[j]);
+// 			j++;
+// 		}
+// 		tmp = tmp->next_node;
+// 	}
+// }
 
 int	main(int ac, char *av[], char **env)
 {
@@ -170,7 +170,7 @@ int	main(int ac, char *av[], char **env)
 		// 	while(tmp_node->cmd[j])
 		// 	{
 		// 		printf("the node \033[32m%d\033[0m cmds n* %d is :\033[32m
-					%s\033[0m\n",
+					// %s\033[0m\n",
 		// 		i, j, tmp_node->cmd[j]);
 		// 		j++;
 		// 	}
