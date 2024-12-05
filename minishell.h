@@ -188,4 +188,6 @@ void				ft_error(char *msg);
 // leaks 💦:
 void				free_env_array(char **arr);
 
+// ctrl (sig)
+void handle_sigint(int sig);
 #endif

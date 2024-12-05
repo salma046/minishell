@@ -1,5 +1,26 @@
 #include "../minishell.h"
 
+int	is_space(char *line)
+{
+	if (*line == ' ' || *line == '\t' || *line == '\n')
+		return (1);
+	return (0);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	if (!s1)
+	{
+		return (-1);
+	}
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
+}
+
 char	*ft_strncpy(char *dst, const char *src, size_t len)
 {
 	size_t	i;
@@ -16,13 +37,6 @@ char	*ft_strncpy(char *dst, const char *src, size_t len)
 		i++;
 	}
 	return (dst);
-}
-
-int	is_space(char *line)
-{
-	if (*line == ' ' || *line == '\t' || *line == '\n')
-		return (1);
-	return (0);
 }
 
 char	*get_word(char *str, int i)
@@ -64,3 +78,4 @@ void	ft_lstadd_back_token(t_token **lst, t_token *new)
 	arrs->next_token = new;
 	new->prev_token = arrs;
 }
+

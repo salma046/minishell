@@ -99,4 +99,3 @@ void	ft_env_export_once(t_node *nodes, t_env *envir, int active)
 		current = current->next;
 	}
 }
-// export alone
