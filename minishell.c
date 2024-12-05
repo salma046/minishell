@@ -94,65 +94,29 @@ int main3(t_minishell data)
 }
 
 
-<<<<<<< HEAD
-=======
-
-void handle_sigint(int sig)
-{
-	(void)sig;
-	printf("\n\033[1;35m Minishell~$ \033[0m");
-}
->>>>>>> 82a0421e6e3c0d411b4c5771f944202864328ce8
 
 int	main(int ac, char *av[], char **env)
 {
 	signal(SIGINT, handle_sigint);
+	if (ac >= 2)
+		return (1);
 	(void)av;
-	if (ac == 1)
-	{
-<<<<<<< HEAD
-		g_minishell.envirement = env;
-		g_minishell.envir = mk_env(g_minishell.envirement);
-		g_minishell.export_env = mk_env_4expo(g_minishell.envirement);
+	g_minishell.envirement = env;
+	g_minishell.envir = mk_env(g_minishell.envirement);
+	g_minishell.export_env = mk_env_4expo(g_minishell.envirement);
 
-		while (1)
-=======
+	while (1)
+	{
 		g_minishell.command = readline("Minishell~$ ");
 		if (!g_minishell.command)
->>>>>>> 82a0421e6e3c0d411b4c5771f944202864328ce8
 		{
-			g_minishell.command = readline("\033[1;35mMinishell~$ \033[0m");
-			if (!g_minishell.command)
-			{
-				printf("exit!\n");
-				free_env_list(g_minishell.envir);
-				free_env_list(g_minishell.export_env);
-				free(g_minishell.command);
-				clear_history();
-				exit(1);
-			}
-			add_history(g_minishell.command);	
-			g_minishell.tokens = ft_tokenize(g_minishell);
+			printf("exit!\n");
+			free_env_list(g_minishell.envir);
+			free_env_list(g_minishell.export_env);
 			free(g_minishell.command);
-			if (!g_minishell.tokens)
-				continue ;
-			g_minishell.tokens = rm_qotes(g_minishell.tokens);
-			g_minishell.tokens = parsing(g_minishell);
-			if (main_heredoc(g_minishell.tokens) < 0)
-				continue ;
-			g_minishell.nodes = mk_nodes(g_minishell.tokens);
-			g_minishell.count_pips = count_pipe(g_minishell.nodes);
-			g_minishell.files = mksome_files(g_minishell.count_pips);
-			main3(g_minishell);
-			free_node_list(g_minishell.nodes);
+			clear_history();
+			exit(1);
 		}
-<<<<<<< HEAD
-	}
-	else 
-	{
-		printf("args error\n");
-		return 0;
-=======
 		add_history(g_minishell.command);	
 		g_minishell.tokens = ft_tokenize(g_minishell);
 		free(g_minishell.command);
@@ -167,6 +131,5 @@ int	main(int ac, char *av[], char **env)
 		// g_minishell.files = mksome_files(g_minishell.count_pips);
 		main3(g_minishell);
 		free_node_list(g_minishell.nodes);
->>>>>>> 82a0421e6e3c0d411b4c5771f944202864328ce8
 	}
 }
