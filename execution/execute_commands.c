@@ -93,6 +93,7 @@ int ft_execute(t_minishell data, t_node *nodes, char **env)
     }
     else if (pid == 0) {
         dup2(nodes->in_file, 0);
+        close(nodes->in_file);
 	    dup2(nodes->out_file, 1);
 	    free_fds(data);
         if (execve(command_path, args, env) == -1) {

@@ -1,10 +1,10 @@
 #include "../minishell.h"
 
-int	ft_cd(t_minishell data)
+int	ft_cd(t_minishell *data)
 {
 	t_token	*tmp_tokens;
 
-	tmp_tokens = data.tokens;
+	tmp_tokens = data->tokens;
 	while (tmp_tokens)
 	{
 		if (!ft_strcmp(tmp_tokens->data, "cd")

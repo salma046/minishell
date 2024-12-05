@@ -2,57 +2,98 @@
 
 t_minishell	g_minishell;
 
-
-int	prepar_for_execution(t_minishell data)
+int	ft_open_red_files(t_minishell data)
 {
-	// if (mksome_files(data.count_pips, data) < 0)
-	// 	return (-2);
-	if (assign_files(data, data.nodes) < 0)
-		return (-1);
-	if (ft_check_redirections(data.nodes) < 0) // just open files fhad lmrhala and do nothing.;
+	if (ft_check_redirections(data.nodes) < 0)
 		return (-1);
 	return (0);
 }
 
 int main3(t_minishell data)
 {
-    t_token *temp_tokens;
-	t_node 	*temp_nodes;
+    t_node *temp_nodes = data.nodes;
+    int pipe_fd[2];
+    int in_fd = 0;
+    pid_t pid;
 
-	temp_nodes = data.nodes;
-	data.count_pips = count_pipe(temp_nodes);
-    temp_tokens = data.tokens;
-	prepar_for_execution(data);
-	while(temp_nodes)
-	{
-		// printf("hello worlddddd\n");
-		// printf("the cmd[0] is  : %s\n", temp_nodes->cmd[0]);
-		if (temp_nodes->cmd[0] == NULL)
-		{
-			temp_nodes = temp_nodes->next_node;
-			continue ;
-		}
-		if (ft_check_builtins(temp_nodes->cmd[0]) == 1)
-			check_command(data, temp_nodes);
-		else
-		{
-			// printf("the cmd[0] is not a buil: %s\n", data.nodes->cmd[0]);
-			data.envirement = mk_tenv_char(data.envir);
-			printf("hi cmd-------:%s\n", temp_nodes->cmd[0]);
-			int retu = ft_execute(data, temp_nodes, data.envirement);
-			if (retu == 127)
-			{
-				free_env_array(data.envirement);
-				return 1;
-			}
-			free_env_array(data.envirement);
-		}
-		temp_nodes = temp_nodes->next_node;
-	}
-	// free_fds(data);
-    return (0);
+	// if (prepar_for_execution(data))
+    while (temp_nodes)
+    {
+        if (temp_nodes->cmd[0] == NULL)
+        {
+            temp_nodes = temp_nodes->next_node;
+            continue;
+        }
 
+        if (temp_nodes->next_node)
+            pipe(pipe_fd);
+
+        pid = fork();
+        if (pid == 0) // Child process
+        {
+            // Handle input redirection.
+            if (temp_nodes->redir && ft_check_redirections(temp_nodes) == -1)
+                exit(EXIT_FAILURE);
+
+            dup2(in_fd, STDIN_FILENO); // Redirect input.
+
+            // Handle output redirection.
+            if (temp_nodes->next_node)
+                dup2(pipe_fd[1], STDOUT_FILENO); // Redirect output to pipe.
+
+            // Handle output redirection to file if specified.
+            if (temp_nodes->redir && ft_check_redirections(temp_nodes) == 0)
+            {
+                if (temp_nodes->redir->red_type == OUT_REDIR || temp_nodes->redir->red_type == APPEND)
+                {
+                    // Redirect to file.
+                    dup2(temp_nodes->out_file, STDOUT_FILENO);
+                }
+                if (temp_nodes->redir->red_type == INP_REDIR)
+                {
+                    // Redirect input from file.
+                    dup2(temp_nodes->in_file, STDIN_FILENO);
+                }
+            }
+            dup2(in_fd, STDIN_FILENO);
+            if (temp_nodes->next_node)
+                dup2(pipe_fd[1], STDOUT_FILENO);
+
+            close(pipe_fd[0]); // Close unused read end in the child.
+            close(pipe_fd[1]);
+
+            if (ft_check_builtins(temp_nodes->cmd[0]) == 1)
+            {
+                check_command(&data, temp_nodes);
+                exit(EXIT_SUCCESS);
+            }
+            else
+            {
+				printf("hi from not builtins!!!\n");
+                char *command_path = find_command_path(temp_nodes->cmd[0], data.envirement);
+                if (!command_path)
+                {
+                    fprintf(stderr, "%s: command not found\n", temp_nodes->cmd[0]);
+                    exit(127);
+                }
+                execve(command_path, temp_nodes->cmd, data.envirement);
+                perror("execve");
+                exit(127);
+            }
+        }
+        else // Parent process
+        {
+            waitpid(pid, NULL, 0);
+            close(pipe_fd[1]);
+            in_fd = pipe_fd[0];
+        }
+
+        temp_nodes = temp_nodes->next_node;
+		}
+    return 0;
 }
+
+
 
 void handle_sigint(int sig)
 {
@@ -72,7 +113,7 @@ int	main(int ac, char *av[], char **env)
 
 	while (1)
 	{
-		g_minishell.command = readline("\033[1;35m Minishell~$ \033[0m");
+		g_minishell.command = readline("Minishell~$ ");
 		if (!g_minishell.command)
 		{
 			printf("exit!\n");
@@ -93,7 +134,7 @@ int	main(int ac, char *av[], char **env)
 			continue ;
 		g_minishell.nodes = mk_nodes(g_minishell.tokens);
 		g_minishell.count_pips = count_pipe(g_minishell.nodes);
-		g_minishell.files = mksome_files(g_minishell.count_pips);
+		// g_minishell.files = mksome_files(g_minishell.count_pips);
 		main3(g_minishell);
 		free_node_list(g_minishell.nodes);
 	}

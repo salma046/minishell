@@ -1,11 +1,11 @@
 #include "../minishell.h"
 
 // I called the function normaly of env.
-void	ft_env(t_node *node, t_minishell data)
+void	ft_env(t_node *node, t_minishell **data)
 {
 	t_env	*tmp;
 
-	tmp = data.envir;
+	tmp = (*data)->envir;
 	while (tmp)
 	{
 		if (tmp->value != NULL)

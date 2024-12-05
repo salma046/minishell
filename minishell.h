@@ -139,23 +139,23 @@ char				*ft_strncpy(char *dst, const char *src, size_t len);
 int					ft_strcmp(char *s1, char *s2);
 
 // building 🏗️:
-int					ft_cd(t_minishell data);
+int					ft_cd(t_minishell *data);
 void				ft_pwd(t_node *node);
 void				ft_echo(t_node *node);
-void				ft_env(t_node *node, t_minishell data);
-void				ft_exit(t_minishell data);
-void				ft_unset(t_minishell data);
-void				ft_export(t_minishell data, t_env *expo_envir, t_env *env_envir);
+void				ft_env(t_node *node, t_minishell **data);
+void				ft_exit(t_minishell *data);
+void				ft_unset(t_minishell *data);
+void				ft_export(t_minishell *data, t_env *expo_envir, t_env *env_envir);
 
 
 // commands 🗣️:
 t_env				*mk_env(char **envirement);
-t_env				*ft_env_unset(t_minishell data);
+t_env				*ft_env_unset(t_minishell *data);
 int					check_key(char *str, t_env *envir);
 int					ft_check_builtins(char *command);
 char				*put_quot2_value(char *str);
 char				*rm_quot2_value(char *str);
-void				check_command(t_minishell data, t_node *node);
+void				check_command(t_minishell *data, t_node *node);
 void				ft_env_export_once(t_node *nodes, t_env *envir, int active);
 void				key_without_equal(char *data, t_env *envir);
 void				remove_node(t_env** head, char *keyToRemove);
@@ -167,7 +167,7 @@ int					assign_files(t_minishell data, t_node *nodes);
 // void				ft_env_export_once(t_token *token, int active);
 // void			ft_add_to_export_arg(t_token *token);
 
-
+char    *find_command_path(char *command, char **env);
 // execute commands 🚀:
 int ft_execute(t_minishell data, t_node *nodes, char **env);
 
