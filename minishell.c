@@ -20,6 +20,11 @@ int main3(t_minishell data)
 		else
 			pipe(pipe_fd);
         pid = fork();
+        if (pid == -1)
+        {
+            perror("fork");
+            return 1;
+        }
         if (pid == 0) 
         {
             if (temp_nodes->redir && ft_check_redirections(temp_nodes) == -1)
@@ -54,7 +59,7 @@ int main3(t_minishell data)
                 char *command_path = find_command_path(temp_nodes->cmd[0], data.envirement);
                 if (!command_path)
                 {
-                    fprintf(stderr, "%s: command not found\n", temp_nodes->cmd[0]);
+                    printf("%s: command not found\n", temp_nodes->cmd[0]);
                     exit(127);
                 }
                 execve(command_path, temp_nodes->cmd, data.envirement);
@@ -138,8 +143,10 @@ int	main(int ac, char *av[], char **env)
 			continue ;
 		g_minishell.nodes = mk_nodes(g_minishell.tokens);
 		g_minishell.count_pips = count_pipe(g_minishell.nodes);
-		main3(g_minishell);
+		int x = main3(g_minishell);
+        printf("this is x:%d", x);
 		// fre_the_tokens(g_minishell.tokens);
 		free_node_list(g_minishell.nodes);
 	}
+    return 0;
 }

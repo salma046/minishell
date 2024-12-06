@@ -66,7 +66,7 @@ typedef struct s_minishell
 	char			**envirement;
 	char			*command;
 	int				count_pips;
-	int				exit_status;
+	int				g_exit_status;
 	int				**files;
 	t_env			*envir;
 	t_env			*export_env;
