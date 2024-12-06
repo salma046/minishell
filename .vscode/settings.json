@@ -1,0 +1,14 @@
+{
+<<<<<<< HEAD
+    "files.associations": {
+        "minishell.h": "c",
+        "libft.h": "c",
+        "check_diff1": "cpp"
+    }
+=======
+	"files.associations": {
+		"__node_handle": "c",
+		"libft.h": "c"
+	}
+>>>>>>> 48b44921936deef6e2c463d378cb4449e3fed8eb
+}
