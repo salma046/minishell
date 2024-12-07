@@ -41,7 +41,8 @@ typedef struct s_token
 	token_type		data_type;
 	struct s_token	*next_token;
 	struct s_token	*prev_token;
-	char			**envirement;    
+	char			**envirement;  
+
 }					t_token;
 
 typedef struct s_redir
@@ -66,7 +67,7 @@ typedef struct s_minishell
 	char			**envirement;
 	char			*command;
 	int				count_pips;
-	int				g_exit_status;
+	int				g_exit_status;  
 	int				**files;
 	t_env			*envir;
 	t_env			*export_env;
@@ -141,11 +142,15 @@ int					ft_strcmp(char *s1, char *s2);
 // building 🏗️:
 int					ft_cd(t_minishell *data);
 void				ft_pwd(t_node *node);
-void				ft_echo(t_node *node);
+void ft_echo(t_node *node, t_minishell *data);
 void				ft_env(t_node *node, t_minishell **data);
 void				ft_exit(t_minishell *data);
 void				ft_unset(t_minishell *data);
 void				ft_export(t_minishell *data, t_env *expo_envir, t_env *env_envir);
+
+// $?
+// void execute_echo(t_node **cmd_opr) ;
+// char *resolve_variable(t_minishell *data) ;
 
 
 // commands 🗣️:

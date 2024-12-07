@@ -37,6 +37,8 @@ t_node	*allocate_for_node(t_token *temp_tokens)
 	if (!node)
 		return (NULL);
 	node->cmd = malloc(sizeof(char *) * (cmd_count(temp_tokens) + 1));
+	// if (!node->cmd)
+	// 	return (NULL);
 	return (node);
 }
 

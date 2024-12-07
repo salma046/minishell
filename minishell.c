@@ -9,7 +9,8 @@ int main3(t_minishell data)
     int in_fd = dup(STDIN_FILENO);
     pid_t pid;
 
-
+	if (!strcmp(g_minishell.nodes->cmd[0], "ooo"))
+			exit (0);
     while (temp_nodes)
     {
         if (temp_nodes->cmd[0] == NULL)
@@ -92,6 +93,7 @@ int main3(t_minishell data)
 		}
 		i++;
 	}
+	// exit();
     return 0;
 }
 
@@ -143,10 +145,10 @@ int	main(int ac, char *av[], char **env)
 			continue ;
 		g_minishell.nodes = mk_nodes(g_minishell.tokens);
 		g_minishell.count_pips = count_pipe(g_minishell.nodes);
-		int x = main3(g_minishell);
-        printf("this is x:%d", x);
-		// fre_the_tokens(g_minishell.tokens);
-		free_node_list(g_minishell.nodes);
+		
+		main3(g_minishell);
+		// // fre_the_tokens(g_minishell.tokens);
+		// free_node_list(g_minishell.nodes);
 	}
     return 0;
 }

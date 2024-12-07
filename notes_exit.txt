@@ -1,0 +1,30 @@
+Hello saluma stp chiki m3ak data->g_exit_status kay3awed itinisaliza l 0 makayb9ax saved 
+rah printit g_exit_status kola mra f 
+ while (temp_nodes)
+    {
+      --------------> printf("%d\n", data->g_exit_status) <----------------
+        if (temp_nodes->cmd[0] == NULL)
+        {
+            temp_nodes = temp_nodes->next_node;
+            continue;
+        }
+		else
+			pipe(pipe_fd);
+        pid = fork();
+        if (pid == -1)
+        {
+            perror("fork");
+            return 1;
+    }
+
+here is the problem why maytbritnax f hnaya :
+
+void ft_echo(t_node *node, t_minishell *data)
+{
+   
+    if (!ft_strcmp(node->cmd[1], "$?"))
+    {
+        printf("sojod");
+        printf("%d\n", data->g_exit_status);
+    }
+}
