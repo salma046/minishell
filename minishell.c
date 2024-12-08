@@ -7,14 +7,16 @@ int main3(t_minishell data) {
     int in_fd = dup(STDIN_FILENO);
     pid_t pid;
 
-	// hadi rir dyal single command hitax radi i5sna nsipariwhoum 
+    // Check if there's only one command
     if (temp_nodes != NULL && temp_nodes->next_node == NULL) {
+        // Handle single command execution
         if (ft_check_builtins(temp_nodes->cmd[0]) == 1) {
             if (check_command(&data, temp_nodes) == 1)
                 printf("Executing built-in command: %s\n", temp_nodes->cmd[0]);
-            return 0; 
+            return 0; // Exit after executing built-in
         }
 
+        // Fork and execute the command
         pid = fork();
         if (pid == -1) {
             perror("fork");
@@ -22,7 +24,12 @@ int main3(t_minishell data) {
         }
         if (pid == 0) {
             // Handle redirections if any
-         
+            if (temp_nodes->redir && ft_check_redirections(temp_nodes) == -1)
+                exit(EXIT_FAILURE);
+            // Handle output redirection
+            if (temp_nodes->redir && ft_check_redirections(temp_nodes) == 0) {
+                // Implement redirection handling here
+            }
 
             char *command_path = find_command_path(temp_nodes->cmd[0], data.envirement);
             if (!command_path) {
@@ -34,11 +41,12 @@ int main3(t_minishell data) {
             perror("execve");
             exit(127);
         }
-        waitpid(pid, NULL, 0); // had l waitpid kaytsna l command hta t executa lina
-        return 0;
+        // Wait for the child process to finish
+        waitpid(pid, NULL, 0);
+        return 0; // Exit after executing single command
     }
 
-    //hna radi  nHandliw multiple commands with pipes
+    // Handle multiple commands with pipes
     while (temp_nodes) {
         if (temp_nodes->cmd[0] == NULL) {
             temp_nodes = temp_nodes->next_node;
@@ -46,7 +54,7 @@ int main3(t_minishell data) {
         }
 
         if (temp_nodes->next_node) {
-            pipe(pipe_fd); // Hna kancriyiw new pip ila kant xihaja next to it (next node != NULL)
+            pipe(pipe_fd); // Create a pipe if there's a next command
         }
 
         pid = fork();
@@ -55,28 +63,30 @@ int main3(t_minishell data) {
             return 1;
         }
 
-        if (pid == 0) { 
-            // if (temp_nodes->redir && ft_check_redirections(temp_nodes) == -1) {
-            //     exit(EXIT_FAILURE);
-            // }
+        if (pid == 0) { // Child process
+            if (temp_nodes->redir && ft_check_redirections(temp_nodes) == -1) {
+                exit(EXIT_FAILURE);
+            }
 
-            // // Handle input/output redirection
-            // if (temp_nodes->redir) {
-            //     // Implement redirection handling here
-            // }
+            // Handle input/output redirection
+            if (temp_nodes->redir) {
+                // Implement redirection handling here
+            }
 
-            // if (temp_nodes->next_node) {
-            //     dup2(pipe_fd[1], STDOUT_FILENO); // Redirect output to pipe
-            // }
-            // if (temp_nodes->prev_node) {
-            //     dup2(in_fd, STDIN_FILENO); // Redirect input from previous command
-            // }
+            if (temp_nodes->next_node) {
+                dup2(pipe_fd[1], STDOUT_FILENO); // Redirect output to pipe
+            }
+            if (temp_nodes->prev_node) {
+                dup2(in_fd, STDIN_FILENO); // Redirect input from previous command
+            }
 
+            // Check for built-in commands
             if (ft_check_builtins(temp_nodes->cmd[0]) == 1) {
-               check_command(&data, temp_nodes); 
+               check_command(&data, temp_nodes); // Implement this function
                 exit(0);
             }
 
+            // Execute external command
             char *command_path = find_command_path(temp_nodes->cmd[0], data.envirement);
             if (!command_path) {
                 printf("%s: command not found\n", temp_nodes->cmd[0]);
@@ -86,29 +96,25 @@ int main3(t_minishell data) {
             free(command_path);
             perror("execve");
             exit(127);
-        } else { 
+        } else { // Parent process
             if (temp_nodes->next_node) {
-                close(pipe_fd[1]); 
+                close(pipe_fd[1]); // Close write end of the pipe
             }
             if (temp_nodes->prev_node) {
-                close(in_fd); 
+                close(in_fd); // Close previous input
             }
-            in_fd = pipe_fd[0]; 
-		}
+            in_fd = pipe_fd[0]; // Save read end for the next command
+        }
 
         temp_nodes = temp_nodes->next_node;
     }
 
     dup2(in_fd, 0);
     close(in_fd);
-    int i;
-
-	i = 0;
+    
     // Wait for all child processes to finish
-    while (i < data.count_pips)
-	{
+    for (int i = 0; i < data.count_pips; i++) {
         wait(NULL);
-		i++;
     }
 
     return 0;
