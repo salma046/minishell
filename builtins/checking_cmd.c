@@ -59,28 +59,32 @@ void	execute_the_builtin(t_minishell *data, t_node *nodes, char **cmd)
 	}
 }
 
-void	check_command(t_minishell *data, t_node *node)
+int	check_command(t_minishell *data, t_node *node)
 {
 	int	pid;
 
 	// printf("hi from builtins!!\n");
-
+	
 	if (data->count_pips == 1)
+	{
 		execute_the_builtin(data, node, node->cmd);
+		printf("no PIPE\n");
+		return 1;
+	}
 	else if (data->count_pips > 1)
 	{
 		pid = fork();
 		if (pid == -1)
 		{
 			perror("Fork");
-			return ;
+			return -1;
 		}
 		else if (pid == 0)
 		{
 			execute_the_builtin(data, node, node->cmd);
 			exit(0); //Child proccess;;; // save the return exit status to be put on the $?
 		}
+		return 0;
 	}
-	// and then in the end save the exit staus here 
-	// execute_the_builtin; // Already done
+	return 0;
 }

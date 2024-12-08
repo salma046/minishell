@@ -160,7 +160,7 @@ int					check_key(char *str, t_env *envir);
 int					ft_check_builtins(char *command);
 char				*put_quot2_value(char *str);
 char				*rm_quot2_value(char *str);
-void				check_command(t_minishell *data, t_node *node);
+int					check_command(t_minishell *data, t_node *node);
 void				ft_env_export_once(t_node *nodes, t_env *envir, int active);
 void				key_without_equal(char *data, t_env *envir);
 void				remove_node(t_env** head, char *keyToRemove);

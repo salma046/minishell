@@ -4,7 +4,7 @@ int is_numeric(const char *str) {
     if (!str || !*str)
         return 0;
     for (int i = 0; str[i]; i++) {
-        if (!isdigit(str[i]) && !(i == 0 && (str[i] == '-' || str[i] == '+')))
+        if (!ft_isdigit(str[i]) && !(i == 0 && (str[i] == '-' || str[i] == '+')))
             return 0;
     }
     return 1;

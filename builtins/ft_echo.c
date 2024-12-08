@@ -56,6 +56,7 @@ void ft_echo(t_node *node, t_minishell *data)
     if (!ft_strcmp(node->cmd[1], "$?"))
     {
         printf("sojod");
+        data->g_exit_status = 2;
         printf("%d\n", data->g_exit_status);
     }
     else 
