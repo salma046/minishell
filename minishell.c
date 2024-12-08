@@ -9,7 +9,10 @@ int main3(t_minishell data)
     int in_fd = dup(STDIN_FILENO);
     pid_t pid;
 
-
+	if (temp_nodes->redir && ft_check_redirections(temp_nodes) == -1)
+    {
+		return (-1);
+	}
     while (temp_nodes)
     {
         if (temp_nodes->cmd[0] == NULL)
@@ -22,8 +25,6 @@ int main3(t_minishell data)
         pid = fork();
         if (pid == 0) 
         {
-            if (temp_nodes->redir && ft_check_redirections(temp_nodes) == -1)
-                exit(EXIT_FAILURE);
             if (temp_nodes->next_node)
 			{
                 dup2(pipe_fd[1], STDOUT_FILENO); // Redirect output to pipe.
@@ -31,7 +32,9 @@ int main3(t_minishell data)
 				close(pipe_fd[0]);
 				close(in_fd);
 			}
-            if (temp_nodes->redir && ft_check_redirections(temp_nodes) == 0)
+			if (temp_nodes->redir == NULL)
+				dprintf(2, "it is null and cmd is : %s\n", temp_nodes->redir->file);
+            if (temp_nodes->redir)
             {
                 if (temp_nodes->redir->red_type == OUT_REDIR || temp_nodes->redir->red_type == APPEND)
                 {

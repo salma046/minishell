@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 14:59:24 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/03 23:00:07 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/12/07 22:26:46 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ t_node	*allocate_for_node(t_token *temp_tokens)
 	if (!node)
 		return (NULL);
 	node->cmd = malloc(sizeof(char *) * (cmd_count(temp_tokens) + 1));
+	if (!node->cmd)
+		return (NULL);
 	return (node);
 }
 
@@ -71,6 +73,5 @@ int	count_pipe(t_node *nodes)
 		count++;
 		temp_node = temp_node->next_node;
 	}
-	// count++;
 	return (count);
 }
