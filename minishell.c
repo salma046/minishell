@@ -8,8 +8,10 @@ int main3(t_minishell data) {
     pid_t pid;
 
     	// hadi rir dyal single command hitax radi i5sna nsipariwhoum 
-    if (temp_nodes != NULL && temp_nodes->next_node == NULL) {
-        if (ft_check_builtins(temp_nodes->cmd[0]) == 1) {
+    if (temp_nodes != NULL && temp_nodes->next_node == NULL) 
+    {
+        if (ft_check_builtins(temp_nodes->cmd[0]) == 1) 
+        {
             if (check_command(&data, temp_nodes) == 1)
                 printf("Executing built-in command: %s\n", temp_nodes->cmd[0]);
             return 0; 
@@ -91,7 +93,8 @@ int main3(t_minishell data) {
             perror("execve");
             exit(127);
         } 
-        else { 
+        else 
+        { 
             if (temp_nodes->next_node) {
                 close(pipe_fd[1]); 
             }
@@ -111,7 +114,6 @@ int main3(t_minishell data) {
         wait(NULL);
         i++;
     }
-
     return 0;
 }
 
