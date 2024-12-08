@@ -22,16 +22,16 @@ void ft_exit(t_minishell *data) {
     }
     if (tmp_node->cmd[2])
     {
-        printf("bash: exit: %s: too many args\n", tmp_node->cmd[1]); // checking the output dyal bash 
+        // printf("bash: exit: %s: too many args\n", tmp_node->cmd[1]); // checking the output dyal bash 
         data->g_exit_status  = 2;
-        printf("\033[36mexit status:%d\033[0m\n", data->g_exit_status);
+        // printf("\033[36mexit status:%d\033[0m\n", data->g_exit_status);
         exit(data->g_exit_status);
     }
     if (tmp_node->cmd[1]) {
         if (is_numeric(tmp_node->cmd[1])) {
-            printf("before:%d\n", data->g_exit_status);
+            // printf("before:%d\n", data->g_exit_status);
             data->g_exit_status = atoi(tmp_node->cmd[1]) % 256; 
-            printf("aftere:%d\n", data->g_exit_status);
+            // printf("aftere:%d\n", data->g_exit_status);
 
         } 
         else 
