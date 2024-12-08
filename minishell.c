@@ -5,6 +5,7 @@ t_minishell	g_minishell;
 int main3(t_minishell data)
 {
     t_node *temp_nodes = data.nodes;
+	// In this line we have to check the command and build alone:
 	if (check_command(&data, temp_nodes) == 1 && temp_nodes->next_node == NULL && temp_nodes != NULL)
 	{
 		printf(" \033[0;31m hna marasox iw9e3 walo \033[0m\n");
@@ -24,6 +25,12 @@ int main3(t_minishell data)
 			}
 			else
 				pipe(pipe_fd);
+			if (ft_check_builtins(temp_nodes->cmd[0]) == 1)
+			{
+				if (check_command(&data, temp_nodes) == 0)
+					printf("Lda5erl");
+			}
+				
 			pid = fork();
 			
 			if (pid == -1)
@@ -56,13 +63,8 @@ int main3(t_minishell data)
 					}
 				}
 			// 5as hna bzaff d cmds:
-				if (ft_check_builtins(temp_nodes->cmd[0]) == 1)
-				{
-					if (check_command(&data, temp_nodes) == 0)
-						printf("Lda5erl");
-				}
 				
-				else{
+				
 					char *command_path = find_command_path(temp_nodes->cmd[0], data.envirement);
 					if (!command_path)
 					{
@@ -73,7 +75,7 @@ int main3(t_minishell data)
 					free(command_path);
 					perror("execve");
 					exit(127);
-				}
+				
 			}
 			temp_nodes = temp_nodes->next_node;
 			dup2(pipe_fd[0],STDIN_FILENO);
