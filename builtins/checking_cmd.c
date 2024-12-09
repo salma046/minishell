@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checking_cmd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 23:51:30 by saait-si          #+#    #+#             */
+/*   Updated: 2024/12/09 23:52:38 by saait-si         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	ft_check_builtins(char *command)
@@ -20,38 +32,24 @@ int	ft_check_builtins(char *command)
 		return (1);
 	return (0);
 }
+
 void	execute_the_builtin(t_minishell *data, t_node *nodes, char **cmd)
 {
 	if (!ft_strcmp(cmd[0], "env"))
-	{
 		ft_env(nodes, &data);
-	}
-	if (!ft_strcmp(cmd[0] , "unset"))
-	{
+	if (!ft_strcmp(cmd[0], "unset"))
 		ft_unset(data);
-	}
 	if (!ft_strcmp(cmd[0], "echo"))
-	{
 		ft_echo(nodes);
-	}
 	if (!ft_strcmp(cmd[0], "cd"))
-	{
 		ft_cd(data);
-	}
 	if (!ft_strcmp(cmd[0], "pwd"))
-	{
 		ft_pwd(nodes);
-	}
 	if (!ft_strcmp(cmd[0], "exit"))
-	{
 		ft_exit(data);
-	}
 	if (!ft_strcmp(cmd[0], "export"))
-	{
 		ft_export(data, data->export_env, data->envir);
-	}
 }
-
 
 void	check_command(t_minishell *data, t_node *node)
 {
@@ -70,9 +68,7 @@ void	check_command(t_minishell *data, t_node *node)
 		else if (pid == 0)
 		{
 			execute_the_builtin(data, node, node->cmd);
-			exit(0); //Child proccess;;; // save the return exit status to be put on the $?
+			exit(0);
 		}
 	}
-	// and then in the end save the exit staus here 
-	// execute_the_builtin; // Already done
 }

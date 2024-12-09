@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/10 00:01:46 by saait-si          #+#    #+#             */
+/*   Updated: 2024/12/10 00:01:47 by saait-si         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-// I called the function normaly of env.
 void	ft_env(t_node *node, t_minishell **data)
 {
 	t_env	*tmp;
@@ -14,9 +25,6 @@ void	ft_env(t_node *node, t_minishell **data)
 			write(node->out_file, "=", 1);
 			write(node->out_file, tmp->value, ft_strlen(tmp->value));
 			write(node->out_file, "\n", 1);
-			// printf("%s", tmp->key);
-			// printf("%c", '=');
-			// printf("%s\n", tmp->value);
 		}
 		tmp = tmp->next;
 	}
