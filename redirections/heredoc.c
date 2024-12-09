@@ -49,8 +49,7 @@ int	ft_heredoc(t_token *tokens)
 	int		fd;
 
 	file = "/tmp/heredoc.txt";
-	if (unlink(file) == -1)
-		dprintf(2, "no file found 2be del\n");
+	unlink(file);
 	fd = open(file, O_RDWR | O_CREAT | O_TRUNC | O_EXCL, 0644);
 	if (fd < 0)
 		return (-1);

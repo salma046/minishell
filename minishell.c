@@ -11,6 +11,8 @@ int execution_main(t_minishell data)
 
 	if (data.count_pips == 1)
 	{
+		if (!strcmp(data.nodes->cmd[0], "exit"))
+			ft_exit(&data);
 		pid = fork();
 		if (pid == 0)
 		{
@@ -159,11 +161,15 @@ void fre_the_tokens(t_token *tokens)
 	}
 }
 
-// void	export_the_status()
+void	handle_quit(int sig)
+{
+	(void)sig;
+}
 
 int	main(int ac, char *av[], char **env)
 {
 	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_quit);
 	if (ac >= 2)
 		return (1);
 	(void)av;
@@ -171,6 +177,8 @@ int	main(int ac, char *av[], char **env)
 	g_minishell.envirement = env;
 	g_minishell.envir = mk_env(g_minishell.envirement);
 	g_minishell.export_env = mk_env_4expo(g_minishell.envirement);
+	g_minishell.exit_status = 0;
+	// init the exit status to 0
 	// export_the_status();
 
 	while (1)
@@ -185,6 +193,8 @@ int	main(int ac, char *av[], char **env)
 			clear_history();
 			exit(1);
 		}
+		if (g_minishell.command[0] == '\0')
+			continue;
 		add_history(g_minishell.command);	
 		g_minishell.tokens = ft_tokenize(g_minishell);
 		free(g_minishell.command);
