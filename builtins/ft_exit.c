@@ -1,11 +1,16 @@
 #include "../minishell.h"
 
 int is_numeric(const char *str) {
+    int i ;
+
+    i = 0;
     if (!str || !*str)
         return 0;
-    for (int i = 0; str[i]; i++) {
+    while(str[i])
+    {
         if (!ft_isdigit(str[i]) && !(i == 0 && (str[i] == '-' || str[i] == '+')))
             return 0;
+        i++;
     }
     return 1;
 }
@@ -13,35 +18,42 @@ int is_numeric(const char *str) {
 
 void ft_exit(t_minishell *data)
 {
-	printf("hiiiiiii\n");
+	printf("---\033[1;35m Ana f exit \033[0m\n---");
 	t_node	*tmp_node;
 	tmp_node = data->nodes;
       if (!tmp_node || !tmp_node->cmd) {
         printf("exit\n");
         exit(0);
     }
-    if (tmp_node->cmd[2])
-    {
-        printf("bash: exit: %s: too many args\n", tmp_node->cmd[1]); // checking the output dyal bash 
-        data->exit_status  = 2;
-        // printf("\033[36mexit status:%d\033[0m\n", data->exit_status);
-        // exit(data->exit_status);
+    int i = 0;
+    while (tmp_node->cmd[i]) {
+        i++;
+    }
+
+    if (i > 2) {
+        if (!is_numeric(tmp_node->cmd[1]))
+        {
+            printf("bash: exit: %s: numeric argument required\n", tmp_node->cmd[1]);
+            exit(data->exit_status);
+        }
+        data->exit_status = 2;
+        return;  
     }
     if (tmp_node->cmd[1])
 	{
         if (is_numeric(tmp_node->cmd[1])) {
         
-            // printf("before:%d\n", data->exit_status);
-            data->exit_status = atoi(tmp_node->cmd[1]) % 256; 
-            // printf("aftere:%d\n", data->exit_status);
-
+            printf("before:%d\n", data->exit_status);
+            data->exit_status = ft_atoi(tmp_node->cmd[1]) % 256; 
+            printf("aftere:%d\n", data->exit_status);
         } 
-        else 
+        else
         {
-            printf("bash: exit: %s: just numeric argument required\n", tmp_node->cmd[1]);
+            printf("bash: exit: %s: numeric argument required\n", tmp_node->cmd[1]);
             data->exit_status  = 2;
+            exit(data->exit_status);
         }
     }
-    exit(data->exit_status);
-            printf("fiin:%d\n", data->exit_status);
+    // exit(data->exit_status);
+        // printf("fiin:%d\n", data->exit_status);
 }

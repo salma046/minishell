@@ -12,7 +12,10 @@ int execution_main(t_minishell data)
 	if (data.count_pips == 1)
 	{
 		if (!strcmp(data.nodes->cmd[0], "exit"))
+		{
+			printf("up0");
 			ft_exit(&data);
+		}
 		pid = fork();
 		if (pid == 0)
 		{
@@ -33,6 +36,7 @@ int execution_main(t_minishell data)
 			}
 			if (ft_check_builtins(temp_nodes->cmd[0]) == 1)
 			{
+				printf("up1");
 				check_command(&data, temp_nodes);
 				exit(EXIT_SUCCESS);
 			}
@@ -101,6 +105,7 @@ int execution_main(t_minishell data)
 				}
 				if (ft_check_builtins(temp_nodes->cmd[0]) == 1)
 				{
+					printf("down");
 					check_command(&data, temp_nodes);
 					exit(EXIT_SUCCESS);
 				}
