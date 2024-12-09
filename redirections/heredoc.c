@@ -34,7 +34,7 @@ int	start_heredoc(int fd, char *limiter)
 	return (0);
 }
 
-void	new_file(t_token *token, char *filename)
+void	change_value(t_token *token, char *filename)
 {
 	token->data = NULL;
 	token->data_type = INP_REDIR;
@@ -60,7 +60,7 @@ int	ft_heredoc(t_token *tokens)
 		if (start_heredoc(fd, limiter) < 0)
 			return (close(fd), -1);
 		else
-			return (close(fd), new_file(tokens, file), 1);
+			return (close(fd), change_value(tokens, file), 1);
 	}
 	else
 		return (close(fd), -1);
