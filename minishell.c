@@ -16,6 +16,11 @@ int execution_main(t_minishell data)
 			ft_exit(&data);
 			return 0;
 		}
+		if (!strcmp(data.nodes->cmd[0], "cd"))
+		{
+			ft_cd(&data);
+			return 0;
+		}
 		pid = fork();
 		if (pid == 0)
 		{

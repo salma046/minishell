@@ -1,78 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 21:56:34 by saait-si          #+#    #+#             */
+/*   Updated: 2024/12/09 23:21:35 by saait-si         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-// int	ft_cd(t_minishell *data)
-// {
-// 	// t_token	*tmp_node;
-// 	t_node *node;
-// 	node  = data->nodes;
-// 	int i = 0;
-// 	while(node)
-// 	{
-// 		printf("%s", node->cmd[i]);
-// 		i++;
-// 		// node = node->next_node;
-// 	// }
-	// tmp_tokens = data->tokens;
-	// while (tmp_tokens)
-	// {
-	// 	if (!ft_strcmp(tmp_tokens->data, "cd")
-	// 		&& tmp_tokens->next_token == NULL)
-	// 	{
-	// 		if (chdir(getenv("HOME")) == -1)
-	// 			perror("cd");
-	// 		printf("Home path:  \033[0;31m%s\033[0m\n", getenv("HOME"));
-	// 	}
-	// 	if (!ft_strcmp(tmp_tokens->data, "cd") && tmp_tokens->data)
-	// 	{
-	// 		printf("This is the path of cd:%s\n", getenv("HOME"));
-	// 		if (tmp_tokens->next_token && chdir(tmp_tokens->next_token->data)
-	// 			== -1)
-	// 			perror("\033[32m ERROR\033[0m");
-	// 		else
-	// 			printf("DONE ✅\n");
-	// 	}
-	// 	tmp_tokens = tmp_tokens->next_token;
-	// }
-	// return (0);
-// }
+int ft_cd_home(char *str)
+{
+    char *home_path;
+	
+    home_path = getenv("HOME");
+    if (!home_path)
+    {
+        printf( "bash: cd:%s HOME not set\n", str);
+        return (1);
+    }
+    if (chdir(home_path) == -1)
+    {
+        perror("cd");
+        return (1);
+    }
+    return (0);
+}
+
+int ft_cd_path(char *path)
+{
+    if (chdir(path) == -1)
+    {
+        perror("cd");
+        return (1);
+    }
+    return (0);
+}
+
 int ft_cd(t_minishell *data)
 {
-    t_node *tmp_node = data->nodes; 
-    int i = 0;
+    t_node *tmp_node;
+    int i;
 
-    while (tmp_node) 
+    tmp_node = data->nodes;
+    while (tmp_node)
     {
-        i = 0; 
-        while (tmp_node->cmd && tmp_node->cmd[i]) 
+        i = 0;
+        while (tmp_node->cmd && tmp_node->cmd[i])
         {
-            if (!ft_strcmp(tmp_node->cmd[i], "cd"))
+			
+            if (ft_strcmp(tmp_node->cmd[i], "cd") == 0)
             {
-                if (!tmp_node->cmd[i + 1]) 
-                {
-                    char *home_path = getenv("HOME");
-                    if (!home_path)
-                    {
-                        write(tmp_node->out_file, "cd: HOME not set\n", 17);
-                        return (1);
-                    }
-                    if (chdir(home_path) == -1)
-                    {
-                        perror("cd");
-                        return (1);
-                    }
-                    printf("Changed to HOME: %s\n", home_path);
-                }
-                else 
-                {
-                    if (chdir(tmp_node->cmd[i + 1]) == -1)
-                    {
-                        perror("cd");
-                        return (1);
-                    }
-                    printf("Changed to: %s\n", tmp_node->cmd[i + 1]);
-					// printf("%d")
-                }
-                return (0); 
+                if (!tmp_node->cmd[i + 1])
+                    return (ft_cd_home(tmp_node->cmd[i]));
+                return (ft_cd_path(tmp_node->cmd[i + 1]));
             }
             i++;
         }
@@ -80,8 +64,3 @@ int ft_cd(t_minishell *data)
     }
     return (0);
 }
-
-
-
-
-

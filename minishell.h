@@ -172,7 +172,8 @@ int					assign_files(t_minishell data, t_node *nodes);
 
 char    *find_command_path(char *command, char **env);
 // execute commands 🚀:
-int ft_execute(t_minishell data, t_node *nodes, char **env);
+int 				ft_execute(t_minishell data, t_node *nodes, char **env);
+void				execute_the_builtin(t_minishell *data, t_node *nodes, char **cmd);
 
 // redirectios 🔁:
 int					ft_input(char *file_name, t_node *node);
