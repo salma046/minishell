@@ -6,17 +6,18 @@ int is_numeric(const char *str) {
     i = 0;
     if (!str || !*str)
         return 0;
-    if (str[i] == '-')
-    {
-        printf("nega");
-        exit (0);
-    }
+   
     while(str[i])
     {
         if (!ft_isdigit(str[i]) && !(i == 0 && (str[i] == '-' || str[i] == '+')))
         {
             printf("hello");
             return 0;
+        }
+        if (str[i] == '-')
+        {
+            printf("nega");
+            exit (0);
         }
         i++;
     }
