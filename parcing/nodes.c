@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 14:59:29 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/08 15:52:17 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/12/10 01:39:45 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	fill_node(t_token *temp_tokens, t_node **node_list)
 	{
 		if (tokens->data_type != PIPE && tokens->data_type != WORD)
 		{
-			fill_redi(tokens->data_type, tokens->next_token->data, &redir, temp_tokens->next_token->is_ambiguous);
+			fill_redi(tokens->data_type, tokens->next_token->data, &redir,
+				temp_tokens->next_token->is_ambiguous);
 			tokens = tokens->next_token;
 		}
 		else
@@ -93,16 +94,17 @@ void	fill_commands(t_node **node_list, t_token *tokens)
 t_node	*mk_nodes(t_token *tokens)
 {
 	t_node	*nodes;
+
 	// t_token	*current;
 	// t_token	*next;
-
 	nodes = NULL;
 	// current = tokens;
 	// t_token *tmmp = tokens;
 	// while (tmmp)
 	// {
 	// 	printf(("***********\n"));
-	// 	printf("the token is : %s and ambigu is: %d\n", tmmp->data, tmmp->is_ambiguous);
+	// 	printf("the token is : %s and ambigu is: %d\n", tmmp->data,
+	// tmmp->is_ambiguous);
 	// 	printf(("***********\n"));
 	// 	tmmp = tmmp->next_token;
 	// }

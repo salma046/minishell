@@ -12,7 +12,7 @@ void	token_new_sep(enum e_token_type token_t, t_token **tokens_list)
 	new_token->next_token = NULL;
 	ft_lstadd_back_token(tokens_list, new_token);
 }
-//sojod
+// sojod
 void	ft_put_token(char **line, enum e_token_type token_t,
 		t_token **tokens_list)
 {
@@ -50,7 +50,7 @@ char	*remp_exit(char *word)
 	{
 		if (word[i] == '$' && word[i + 1] == '?')
 		{
-			while(exit_w[k])
+			while (exit_w[k])
 				new_word[j++] = exit_w[k++];
 			i += 2;
 		}
@@ -65,13 +65,13 @@ char	*remp_exit(char *word)
 
 char	*remplace_exit_value(char *word)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (word[i])
 	{
 		if (word[i] == '$' && word[i + 1] == '?')
-			return(remp_exit(word));
+			return (remp_exit(word));
 		i++;
 	}
 	return (word);
@@ -106,7 +106,7 @@ void	token_new_word(char *word, enum e_token_type token_t,
 
 int	find_quote(char c, char **line, int *i)
 {
-	char quote;
+	char	quote;
 
 	(*line)++;
 	(*i)++;
@@ -124,15 +124,17 @@ int	find_quote(char c, char **line, int *i)
 int	ft_put_word_token(char **line, enum e_token_type token_t,
 		t_token **tokens_list, int heredoc)
 {
-	(void)token_t;
 	char	*word;
 	char	*new_word;
 	char	quote;
 	int		i;
 
+	(void)token_t;
 	word = *line;
 	i = 0;
-	while (**line != '\0' && ft_strncmp(*line, ">", 1) != 0 && ft_strncmp(*line, "<", 1) != 0 && ft_strncmp(*line, "|", 1) != 0 && is_space(*line) == 0)
+	while (**line != '\0' && ft_strncmp(*line, ">", 1) != 0 && ft_strncmp(*line,
+			"<", 1) != 0 && ft_strncmp(*line, "|", 1) != 0
+		&& is_space(*line) == 0)
 	{
 		if (**line == '&')
 		{

@@ -21,6 +21,7 @@ int execution_main(t_minishell data)
 			ft_cd(&data);
 			return 0;
 		}
+		
 		pid = fork();
 		if (pid == 0)
 		{
@@ -52,6 +53,14 @@ int execution_main(t_minishell data)
 					fprintf(stderr, "%s: command not found\n", temp_nodes->cmd[0]);
 					exit(127);
 				}
+
+				if (access(command_path, X_OK) != 0)
+				{
+					fprintf(stderr, "%s: permission denied or file not executable\n", command_path);
+					free(command_path);
+					exit(126);
+				}
+
 				execve(command_path, temp_nodes->cmd, data.envirement);
 				free(command_path);
 				perror("execve");

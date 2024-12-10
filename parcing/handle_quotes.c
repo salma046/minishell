@@ -78,8 +78,8 @@ t_token	*rm_qotes(t_token *tokens)
 		{
 			n_quotes = count_quotes(temp_tokens->data, &len);
 			if (n_quotes)
-				temp_tokens->data = remplac_str(temp_tokens->data,
-						len, n_quotes);
+				temp_tokens->data = remplac_str(temp_tokens->data, len,
+						n_quotes);
 		}
 		temp_tokens = temp_tokens->next_token;
 	}
