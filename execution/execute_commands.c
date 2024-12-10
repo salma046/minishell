@@ -55,7 +55,7 @@ char *find_command_path(char *command, char **env)
             i++;
     }
     errno = ENOENT;
-    printf("No executable found for: %s\n", command);
+    fprintf(stderr, "No executable found for: %s\n", command);
     return NULL;
 }
 
@@ -96,7 +96,7 @@ int ft_execute(t_minishell data, t_node *nodes, char **env)
 		// write(nodes->out_file, args[0], ft_strlen(args[0]));
 		// write(nodes->out_file, ": command not found", ft_strlen(": command not found"));
         // write(nodes->out_file, "\n", 1);
-		printf("%s: command not found\n", args[0]);
+		fprintf(stderr, "%s: command not found\n", args[0]);
         return 127;
     }
 

@@ -70,6 +70,7 @@ typedef struct s_minishell
 	int				count_pips;
 	int				exit_status;
 	int				**files;
+	pid_t			g_pid;
 	t_env			*envir;
 	t_env			*export_env;
 	t_token			*tokens;
@@ -122,7 +123,7 @@ void				ft_redi_add_back(t_redir **redirections,
 void				fill_redi(enum e_token_type token_t, char *red_file,
 						t_redir **redirections, int is_true);
 void				token_new_edi_word(char *word, enum e_token_type token_t,
-						t_token **tokens_list);
+						t_token **tokens_list, int i);
 void				ft_put_token(char **line, enum e_token_type token_t,
 						t_token **tokens_list);
 void				token_new_word(char *word, enum e_token_type token_t,
@@ -145,10 +146,10 @@ int					ft_strcmp(char *s1, char *s2);
 int					ft_cd(t_minishell *data);
 void				ft_pwd(t_node *node);
 void				ft_echo(t_node *node);
-void				ft_env(t_node *node, t_minishell **data);
+void				ft_env(char **cmds, t_minishell *data);
 void				ft_exit(t_minishell *data);
 void				ft_unset(t_minishell *data);
-void				ft_export(t_minishell *data, t_env *expo_envir, t_env *env_envir);
+int					ft_export(t_minishell *data, t_env *expo_envir, t_env *env_envir);
 
 
 // commands 🗣️:
@@ -158,8 +159,8 @@ int					check_key(char *str, t_env *envir);
 int					ft_check_builtins(char *command);
 char				*put_quot2_value(char *str);
 char				*rm_quot2_value(char *str);
-void				check_command(t_minishell *data, t_node *node);
-void				ft_env_export_once(t_node *nodes, t_env *envir, int active);
+int					check_command(t_minishell *data, t_node *node);
+int					ft_env_export_once(t_node *nodes, t_env *envir, int active);
 void				key_without_equal(char *data, t_env *envir);
 void				remove_node(t_env** head, char *keyToRemove);
 void				search_check_add_env(t_env *expo_envir, t_env *env_envir);
@@ -172,8 +173,7 @@ int					assign_files(t_minishell data, t_node *nodes);
 
 char    *find_command_path(char *command, char **env);
 // execute commands 🚀:
-int 				ft_execute(t_minishell data, t_node *nodes, char **env);
-void				execute_the_builtin(t_minishell *data, t_node *nodes, char **cmd);
+int ft_execute(t_minishell data, t_node *nodes, char **env);
 
 // redirectios 🔁:
 int					ft_input(char *file_name, t_node *node);
@@ -192,6 +192,9 @@ void				ft_error(char *msg);
 // leaks 💦:
 void				free_env_array(char **arr);
 // ctrl (sig)
-void handle_sigint(int sig);
+void	handle_quit(int sig);
+void	handle_sigint(int sig);
+void	handle_sigquit(int sig);
+// void	handle_here_sigquit(int sig);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 21:56:34 by saait-si          #+#    #+#             */
-/*   Updated: 2024/12/09 23:50:23 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/12/10 21:34:31 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_cd_home(char *str)
 {
 	char	*home_path;
 
-	home_path = getenv("HOME");
+	home_path = getenv("HOME");/// you should use our env
 	if (!home_path)
 	{
 		printf("bash: cd:%s HOME not set\n", str);
@@ -48,13 +48,20 @@ int	ft_cd(t_minishell *data)
 	tmp_node = data->nodes;
 	while (tmp_node)
 	{
+		// you should not loop through the args
+		// if one arg ==> go to the home if home is found on our env
+		// if two args==> check if dir is found go to it if not printf error on stderror
+		// else more than two do fprintf(stderr, "too many arguments\n");
 		i = 0;
 		while (tmp_node->cmd && tmp_node->cmd[i])
 		{
 			if (ft_strcmp(tmp_node->cmd[i], "cd") == 0)
 			{
 				if (!tmp_node->cmd[i + 1])
+				{
+					printf("hwllo\n");
 					return (ft_cd_home(tmp_node->cmd[i]));
+				}
 				return (ft_cd_path(tmp_node->cmd[i + 1]));
 			}
 			i++;

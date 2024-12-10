@@ -24,8 +24,7 @@ OBJ = $(SRC:.c=.o)
 
 # Flags:
 CC = cc
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
-#VALGRIND = valgrind --leak-check=full --show-leak-kinds=all
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address -g3
 
 # Library:
 NAME = minishell
@@ -33,9 +32,6 @@ LIBFT = libft.a
 
 # Targets:
 all: $(NAME)
-
-#valgrind: $(NAME)
-#	$(VALGRIND) ./$(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "$(CYAN)Making minishell..👾$(BLACK)"

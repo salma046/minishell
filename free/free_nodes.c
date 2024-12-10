@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:05:58 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/06 10:48:10 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/12/10 21:32:45 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,20 @@ void free_env_list(t_env *head)
 		tmp = head->next;
 		free_env_node(head);
 		head = tmp;
+	}
+}
+
+void fre_the_tokens(t_token *tokens)
+{
+	t_token	*current;
+	t_token	*next;
+
+	current = tokens;
+	while (current)
+	{
+		next = current->next_token;
+		free(current->data);
+		free(current);
+		current = next;
 	}
 }
