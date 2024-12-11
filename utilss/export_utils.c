@@ -1,91 +1,82 @@
 #include "../minishell.h"
 
-int	check_key(char *str, t_env *envir)
+t_env	*make_new_node(char *envir)
 {
-	t_env	*temp_env;
+	t_env	*cmd_env;
+	char	*equal_env;
 
-	temp_env = envir;
-	while (temp_env)
+	cmd_env = (t_env *)malloc(sizeof(t_env));
+	if (!cmd_env)
+		exit(1);
+	equal_env = ft_strchr(envir, '=');
+	if (equal_env != NULL)
 	{
-		if (!ft_strcmp(temp_env->key, str))
-			return (1);
-		temp_env = temp_env->next;
+		cmd_env->key = ft_strndup(envir, equal_env - envir);
+		cmd_env->value = ft_strndup(equal_env + 1, ft_strlen(envir + 1));
+		cmd_env->next = NULL;
 	}
-	return (0);
+	return (cmd_env);
 }
 
-void	key_without_equal(char *data, t_env *envir)
+t_env	*mk_env(char **envir)
 {
+	int		i;
 	t_env	*head;
-	t_env	*new_export;
+	t_env	*last_node;
+	t_env	*cmd_env;
 
+	i = 0;
 	head = NULL;
-	head = envir;
-	while (head && head->next != NULL)
-		head = head->next;
-	if (check_key(data, envir) == 0)
+	last_node = NULL;
+	while (envir[i] != NULL)
 	{
-		new_export = (t_env *)malloc(sizeof(t_env));
-		if (!new_export)
-			exit(1);
-		new_export->key = ft_strdup(data);
-		new_export->value = NULL;
-		new_export->next = NULL;
-		if (head == NULL)
-			envir = new_export;
+		cmd_env = make_new_node(envir[i]);
+		if (last_node == NULL)
+			head = cmd_env;
 		else
-			head->next = new_export;
-		head = new_export;
+			last_node->next = cmd_env;
+		last_node = cmd_env;
+		i++;
 	}
+	return (head);
 }
 
-// export alone
-void	sort_env(t_env *envir)
+char **mk_tenv_char(t_env *envir)
 {
-	t_env	*new_env;
-	char	*tmp_key;
-	char	*tmp_value;
+    t_env *tmp;
+    char **arr;
+    int i;
+    int size = 0;
 
-	if (envir == NULL || envir->next == NULL)
-		return ;
-	new_env = envir->next;
-	while (new_env)
-	{
-		if (ft_strcmp(envir->key, new_env->key) > 0)
-		{
-			tmp_key = envir->key;
-			envir->key = new_env->key;
-			new_env->key = tmp_key;
-			tmp_value = envir->value;
-			envir->value = new_env->value;
-			new_env->value = tmp_value;
-		}
-		new_env = new_env->next;
-	}
-	sort_env(envir->next);
-}
-
-int	ft_env_export_once(t_node *nodes, t_env *envir, int active)
-{
-	t_env	*head;
-	t_env	*current;
-	t_node	*tmp_node;
-
-	tmp_node = nodes;
-	head = envir;
-	if (active == 1)
-		sort_env(head);
-	current = head;
-	while (current)
-	{
-		if (current->value == NULL || !ft_strcmp(current->value, ""))
-		{
-			current->value = ft_strdup("");
-			printf("declare -x %s%s\n", current->key, current->value);
-		}
-		else if (active == 1)
-			printf("declare -x %s=%s\n", current->key, current->value);
-		current = current->next;
-	}
-	return (0);
+    tmp = envir;
+    while (tmp)
+    {
+        size++;
+        tmp = tmp->next;
+    }
+    arr = malloc((size + 1) * sizeof(char *));
+    if (!arr)
+        return NULL;
+    tmp = envir;
+    i = 0;
+    while (tmp)
+    {
+        char *first_part = ft_strjoin(tmp->key, "=");
+        if (!first_part)
+        {
+            free(arr);
+            return NULL;
+        }
+        char *second_part = ft_strjoin(first_part, tmp->value);
+        free(first_part);
+        if (!second_part)
+        {
+            free(arr);
+            return NULL;
+        }
+        arr[i++] = second_part;
+        tmp = tmp->next;
+    }
+    arr[i] = NULL;
+    return arr;
 }

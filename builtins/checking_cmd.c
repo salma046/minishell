@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   checking_cmd.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 23:51:30 by saait-si          #+#    #+#             */
-/*   Updated: 2024/12/10 21:34:49 by salaoui          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../minishell.h"
 
 int	ft_check_builtins(char *command)
@@ -79,7 +67,9 @@ int	check_command(t_minishell *data, t_node *node)
 	// printf("hi from builtins!!\n");
 
 	if (data->count_pips == 1)
+	{
 		return (execute_the_builtin(data, node, node->cmd));
+	}
 	else if (data->count_pips > 1)
 	{
 		pid = fork();
