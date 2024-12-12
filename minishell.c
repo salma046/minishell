@@ -70,7 +70,7 @@ int execution_main(t_minishell data)
 			g_minishell.exit_status = 127;
 		int	i;
 		int	st;
-		int	stt;
+		// int	stt;
 		pid_t	id;
 		i = 0;
 		while(i < data.count_pips)
@@ -81,7 +81,7 @@ int execution_main(t_minishell data)
 			if(id == pid)
 			{
 				if(WIFEXITED(st))
-					stt = WEXITSTATUS(st);
+					st = WEXITSTATUS(st);
 			}
 			i++;
 		}
@@ -146,7 +146,7 @@ int execution_main(t_minishell data)
 		close(in_fd);
 		int	i;
 		int	st;
-		int	stt;
+		// int	stt;
 		pid_t	id;
 		i = 0;
 		while(i < data.count_pips)
@@ -157,7 +157,7 @@ int execution_main(t_minishell data)
 			if(id == pid)
 			{
 				if(WIFEXITED(st))
-					stt = WEXITSTATUS(st);
+					st = WEXITSTATUS(st);
 			}
 			i++;
 		}
