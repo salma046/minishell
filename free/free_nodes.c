@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_nodes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:05:58 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/12 01:39:11 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/12/12 18:33:00 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	free_node_list(t_node *node_list)
 	t_node	*current;
 	t_node	*next;
 
+	fre_the_tokens(g_minishell.tokens);
 	current = node_list;
 	while (current != NULL)
 	{
@@ -92,8 +93,6 @@ void fre_the_tokens(t_token *tokens)
 	while (current)
 	{
 		next = current->next_token;
-		if (!current->data)
-			return;
 		free(current->data);
 		free(current);
 		current = next;

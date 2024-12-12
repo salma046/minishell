@@ -155,7 +155,5 @@ int	ft_put_word_token(char **line, enum e_token_type token_t,
 	while (is_space(*line) == 1)
 		(*line)++;
 	token_new_word(new_word, WORD, tokens_list, heredoc);
-	// free(new_word);
-	// fre_the_tokens(tokens_list);
 	return (i);
 }
