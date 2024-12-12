@@ -94,6 +94,7 @@ int	ft_heredoc(t_token *tokens)
 		fd = open("/tmp/heredoc", O_RDONLY);
 		file = "/tmp/heredoc.txt";
 		change_value(tokens, file);
+		fre_the_tokens(tokens);
 		// unlink(file); //// some problems are here!!!
 	}
 	return (0);
@@ -109,9 +110,12 @@ int	main_heredoc(t_token *tokens)
 		if (temp_tokens->data_type == HER_DOC && temp_tokens->next_token
 			&& ft_heredoc(temp_tokens) == -1)
 		{
+			// free(temp_tokens->data);
+			fre_the_tokens(g_minishell.tokens);
 			return (-1);
 		}
 		temp_tokens = temp_tokens->next_token;
 	}
+	
 	return (0);
 }

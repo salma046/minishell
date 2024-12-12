@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 09:53:45 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/11 16:06:45 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/12/12 01:24:10 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_token	*ft_tokenize(t_minishell g_minishell)
 		else if (ft_strncmp(line, "<<", 2) == 0)
 		{
 			ft_put_token(&line, HER_DOC, &tokens_list);
+			// free(line);
 			herdoc = 1;
 		}
 		else if (ft_strncmp(line, ">", 1) == 0)
@@ -54,7 +55,12 @@ t_token	*ft_tokenize(t_minishell g_minishell)
 		else
 		{
 			if (ft_put_word_token(&line, WORD, &tokens_list, herdoc) == 0)
+			{
+				fre_the_tokens(tokens_list);
+				free(line);
 				return (NULL);
+			}
+			// free(line);
 			herdoc = -1;
 		}
 	}

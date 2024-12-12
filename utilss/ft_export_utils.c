@@ -69,9 +69,7 @@ int	ft_env_export_once(t_node *nodes, t_env *envir, int active)
 {
 	t_env	*head;
 	t_env	*current;
-	t_node	*tmp_node;
-
-	tmp_node = nodes;
+	(void)nodes;
 	head = envir;
 	if (active == 1)
 		sort_env(head);

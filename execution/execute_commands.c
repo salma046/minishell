@@ -58,6 +58,7 @@ char *find_command_path(char *command, t_env *env)
     }
     errno = ENOENT;
     fprintf(stderr, "No executable found for: %s\n", command);
+    // free(command);
     return NULL;
 }
 

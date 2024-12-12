@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_nodes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:05:58 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/11 11:54:32 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/12/12 01:39:11 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void fre_the_tokens(t_token *tokens)
 	while (current)
 	{
 		next = current->next_token;
+		if (!current->data)
+			return;
 		free(current->data);
 		free(current);
 		current = next;

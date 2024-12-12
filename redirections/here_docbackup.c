@@ -101,7 +101,7 @@ int	ft_heredoc(t_token *tokens)
 	return (0);
 }
 
-int	main_heredoc(t_token *tokens)
+int	main_heredoccc(t_token *tokens)
 {
 	t_token	*temp_tokens;
 

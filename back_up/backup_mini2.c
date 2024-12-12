@@ -6,59 +6,54 @@ int execution_main(t_minishell data)
 {
     t_node *temp_nodes = data.nodes;
     int pipe_fd[2] = {-1, -1};
-    int in_fd = dup(STDOUT_FILENO);
-    int in_fd2 = dup(STDOUT_FILENO);
+    int in_fd = dup(STDIN_FILENO);
     pid_t pid;
 
-	if (temp_nodes->redir)
-	{
-		ft_check_redirections(temp_nodes);
-	}
 	if (data.count_pips == 1)
 	{
+		if (temp_nodes->redir && ft_check_redirections(temp_nodes) == -1)
+			exit(EXIT_FAILURE);
 		if (data.nodes->cmd[0] == NULL)
-		{
-			if (temp_nodes->redir->red_type == OUT_REDIR || temp_nodes->redir->red_type == APPEND)
-				close(temp_nodes->out_file);
-			if (temp_nodes->redir->red_type == INP_REDIR)
-				close(temp_nodes->in_file);
-			return (g_minishell.exit_status); 
-		}
-		else if (temp_nodes->redir)
-		{
-			if (temp_nodes->redir->red_type == OUT_REDIR || temp_nodes->redir->red_type == APPEND)
-			{
-				dup2(temp_nodes->out_file, STDOUT_FILENO);
-				close(temp_nodes->out_file);
-			}
-			if (temp_nodes->redir->red_type == INP_REDIR)
-			{
-				dup2(temp_nodes->in_file, STDIN_FILENO);
-				close(temp_nodes->in_file);
-			}
-		}
-		if (data.nodes->cmd[0] && !strcmp(data.nodes->cmd[0], "exit"))
+			return (0);
+		if (!strcmp(data.nodes->cmd[0], "exit"))
 		{
 			ft_exit(&data);
 			return 0;
 		}
-		if (data.nodes->cmd[0] && !strcmp(data.nodes->cmd[0], "cd"))
+		if (!strcmp(data.nodes->cmd[0], "cd"))
 		{
 			ft_cd(&data);
 			return 0;
 		}
+		if (!strcmp(data.nodes->cmd[0], "export"))
+		{
+			ft_export(&data, data.export_env, data.envir);
+			return 0;
+		}
+
+		
 		pid = fork();
 		if (pid == 0)
 		{
-			signal(SIGINT, handle_sigint);
-			signal(SIGQUIT, handle_sigquit);
+			if (temp_nodes->redir && ft_check_redirections(temp_nodes) == -1)
+				exit(EXIT_FAILURE);
+			if (temp_nodes->redir && ft_check_redirections(temp_nodes) == 0)
+			{
+				if (temp_nodes->redir->red_type == OUT_REDIR || temp_nodes->redir->red_type == APPEND)
+				{
+					dup2(temp_nodes->out_file, STDOUT_FILENO);
+					close(temp_nodes->out_file);
+				}
+				if (temp_nodes->redir->red_type == INP_REDIR)
+				{
+					dup2(temp_nodes->in_file, STDIN_FILENO);
+					close(temp_nodes->in_file);
+				}
+			}
 			if (ft_check_builtins(temp_nodes->cmd[0]) == 1)
 			{
 				check_command(&data, temp_nodes);
-				dup2(in_fd, 0);
-				dup2(in_fd2, 1);
-				close(in_fd);
-				close(in_fd2);
+				exit(EXIT_SUCCESS);
 			}
 			else
 			{
@@ -66,26 +61,23 @@ int execution_main(t_minishell data)
 				if (!command_path)
 				{
 					fprintf(stderr, "%s: command not found\n", temp_nodes->cmd[0]);
-					g_minishell.exit_status = 127;
-					dup2(in_fd, 0);
-					dup2(in_fd2, 1);
-					close(in_fd);
-					close(in_fd2);
-					// exit(g_minishell.exit_status);
+					exit(127);
 				}
+
+				if (access(command_path, X_OK) != 0)
+				{
+					fprintf(stderr, "%s: permission denied or file not executable\n", command_path);
+					free(command_path);
+					exit(126);
+				}
+
 				execve(command_path, temp_nodes->cmd, data.envirement);
-				dup2(in_fd, 0);
-				dup2(in_fd2, 1);
-				close(in_fd);
-				close(in_fd2);
-				free(command_path);////////
+				free(command_path);
 				perror("execve");
 				g_minishell.exit_status = 127;
-				// exit(g_minishell.exit_status);
+				exit(g_minishell.exit_status);
 			}
 		}
-		if (pid != 0)
-			g_minishell.exit_status = 127;
 		int	i;
 		int	st;
 		int	stt;
@@ -136,6 +128,7 @@ int execution_main(t_minishell data)
 				}
 				if (ft_check_builtins(temp_nodes->cmd[0]) == 1)
 				{
+					printf("down");
 					check_command(&data, temp_nodes);
 					exit(EXIT_SUCCESS);
 				}
@@ -181,7 +174,7 @@ int execution_main(t_minishell data)
     return 0;
 }
 
-void fre_the_tokens(t_token *tokens)
+void fre_the_tokenss(t_token *tokens)
 {
 	t_token	*current;
 	t_token	*next;
@@ -203,8 +196,6 @@ void	handle_quit(int sig)
 
 int	main(int ac, char *av[], char **env)
 {
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
 	if (ac >= 2)
 		return (1);
 	(void)av;
@@ -213,9 +204,13 @@ int	main(int ac, char *av[], char **env)
 	g_minishell.envir = mk_env(g_minishell.envirement);
 	g_minishell.export_env = mk_env_4expo(g_minishell.envirement);
 	g_minishell.exit_status = 0;
+	// init the exit status to 0
+	// export_the_status();
 
 	while (1)
 	{
+		signal(SIGINT, handle_sigint);
+		signal(SIGQUIT, handle_quit);
 		g_minishell.command = readline("Minishell~$ ");
 		if (!g_minishell.command)
 		{
