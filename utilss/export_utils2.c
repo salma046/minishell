@@ -3,9 +3,12 @@
 char	*rm_quot2_value(char *str)
 {
 	char	*result;
+	int		i;
+	int		j;
 	int		str_len;
 
-
+	i = 1;
+	j = 0;
 	str_len = ft_strlen(str);
 	if (str_len < 2)
 	{
