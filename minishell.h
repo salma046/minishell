@@ -190,6 +190,7 @@ void				ft_error(char *msg);
 
 // leaks 💦:
 void				free_env_array(char **arr);
+void free_nodes(t_node *node);
 // ctrl (sig)
 void	handle_quit(int sig);
 void	handle_sigint(int sig);

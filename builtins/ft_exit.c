@@ -37,6 +37,7 @@ void ft_exit(t_minishell *data)
     }
 
     if (i == 1) {
+         free_nodes(data->nodes);
         exit(data->exit_status);
     }
 
@@ -47,9 +48,11 @@ void ft_exit(t_minishell *data)
     if (!is_numeric(&tmp_node->cmd[1][j])) {
         printf("bash: exit: %s: numeric argument required\n", tmp_node->cmd[1]);
         data->exit_status = 2;
+             free_nodes(data->nodes);
         exit(data->exit_status);
     }
 
     data->exit_status = ft_atoi(&tmp_node->cmd[1][j]) % 256;
+     free_nodes(data->nodes);
     exit(data->exit_status);
 }

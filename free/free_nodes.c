@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:05:58 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/14 02:49:09 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/12/14 05:03:28 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,39 @@ void	free_node_list(t_node *node_list)
 		current = next;
 	}
 }
+//Sojod
+void free_nodes(t_node *node)
+{
+    t_node *tmp;
 
+    while (node)
+    {
+        tmp = node->next_node;
+
+        // Free cmd array
+        if (node->cmd)
+        {
+            for (int i = 0; node->cmd[i]; i++)
+                free(node->cmd[i]);
+            free(node->cmd);
+        }
+
+        // Free redir structure if needed
+        if (node->redir)
+            free(node->redir);
+
+        // Close file descriptors if open
+        if (node->out_file > 0)
+            close(node->out_file);
+        if (node->in_file > 0)
+            close(node->in_file);
+
+        // Free the node itself
+        free(node);
+        node = tmp;
+    }
+}
+///
 void free_env_node(t_env *node)
 {
 	if (node)
