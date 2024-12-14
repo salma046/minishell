@@ -26,10 +26,15 @@ void ft_exit(t_minishell *data)
     }
     int i = 0;
     while (tmp_node->cmd[i]) {
+        printf ("\033[36m%s\033[0m: %d\n", tmp_node->cmd[i], i);
         i++;
     }
-
-    if (i > 2) {
+    if (i > 1)
+    {
+        printf("bash: exit: too many arguments");
+        return ;  
+    }
+    if (i < 2) {
         if (!is_numeric(tmp_node->cmd[1]))
         {
             printf("bash: exit: %s: numeric argument required\n", tmp_node->cmd[1]);

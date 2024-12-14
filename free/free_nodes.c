@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:05:58 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/14 01:26:03 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/12/14 02:49:09 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ void fre_the_tokens(t_token *tokens)
 		// printf("token : %s\n", current->data);
 		tmp = tokens;
 		tokens = tokens->next_token;
-		printf("tmp %p\n", tmp);
-		printf("tmp data %p--->%s\n", tmp->data, tmp->data);
+		// printf("tmp %p\n", tmp);
+		// printf("tmp data %p--->%s\n", tmp->data, tmp->data);
 		free(tmp->data);
 		free(tmp);
 	}
