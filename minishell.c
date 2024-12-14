@@ -13,9 +13,15 @@ int execution_main(t_minishell data)
 	if (data.count_pips == 1)
 	{
 		if (data.nodes->cmd[0] && !strcmp(data.nodes->cmd[0], "exit"))
+		{
 			ft_exit(&data);
+			return 0;
+		}
 		if (data.nodes->cmd[0] && !strcmp(data.nodes->cmd[0], "cd"))
+		{
 			ft_cd(&data);
+			return 0;
+		}
 		if (temp_nodes->redir && ft_check_redirections(temp_nodes) == -1)
 		{
 			return (1);

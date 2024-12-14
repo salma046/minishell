@@ -1,0 +1,84 @@
+cd 								--> working
+cd .. 							--> working
+cd . 							--> working
+cd /Users 						--> working
+cd // 							--> working
+cd '//' 						--> working
+cd ////// 						--> working
+cd ./././ 						--> working
+cd / 							--> working
+cd '/etc' 						--> working
+cd '/var' 						--> working
+cd "$PWD/prompt"				--> working
+cd "doesntexist"				--> working
+cd "doesntexist" 2>/dev/null	--> working
+cd ../../..						--> working
+cd ..							--> working
+cd ..							--> working
+cd ?							--> working
+cd +							--> working
+cd _							--> working
+cd bark bark					--> working
+cd '/'							--> working
+cd $PWD/file_tests				--> working
+cd $OLDPWD/builtins				--> working
+
+ECHO:
+
+echo																--> working
+echo echo															--> working
+eCho																--> working
+eChO																--> working
+eCHO																--> working
+echo $																--> working
+echo $ $															--> working
+ECHO																--> working
+echo rhobebou														--> working
+echo stop barking													--> working
+echo "bonjour"														--> working
+echo bonjour														--> working
+echo 'bonjour'														--> working
+echo -n bonjour														--> working
+echo -nn bonjour													--> working
+echo -n -n -n bonjour												--> working
+echo "-n" bonjour													--> working
+echo -n"-n" bonjour													--> working
+echo "-nnnn" bonjour												--> working
+echo "-nnnn" -n bonjour												--> working
+echo "-n -n -n"-n bonjour											--> working
+echo "-n '-n'" bonjour												--> working
+echo $USER															--> working
+echo "$USER"														--> working
+echo "'$USER'"														--> working
+echo " '$USER' "													--> working
+echo text"$USER"													--> working
+echo text"'$USER'" ' $USER '										--> working
+echo "text"   "$USER"    "$USER"									--> working
+echo '              $USER          '								--> working
+echo               text "$USER"            "$USER"text				--> working
+echo ''''''''''$USER''''''''''										--> working
+echo """"""""$USER""""""""											--> working
+echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER ''	--> working
+echo $USER '' $USER $USER '' $USER '' $USER -n $USER				--> working
+echo ' \' ' \'														--> NOT WORKING! (remove quotes)
+echo '\" ' " \"\""													--> NOT WORKING! (remove quotes)
+echo \\\" \\\" \\\" \\\"\\\"\\\" \\\'\\\'\\\'						--> NOT WORKING! (remove quotes)
+echo "$USER""$USER""$USER"											--> working
+echo text"$USER"test												--> working
+echo '$USER' "$USER" "text \' text"									--> working
+echo '$USER'														--> working
+echo $USER " "														--> working
+echo "$USER""Users/$USER/file""'$USER'"'$USER'						--> working
+echo "$USER$USER$USER"												--> working
+echo '$USER'"$USER"'$USER'											--> working
+echo '"$USER"''$USER'"""$USER"										--> working
+echo " $USER  "'$PWD'												--> working
+echo " $USER  \$ "'$PWD'											--> working
+echo $USER=4														--> working
+echo $USER=thallard 												--> working
+echo $USER															--> working
+echo $?																--> working
+echo $PWD/file														--> working
+echo "$PWD/file"													--> working
+echo "text" "text$USER" ... "$USER"									--> working
+echo $PWD					

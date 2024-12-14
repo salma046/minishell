@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 21:56:34 by saait-si          #+#    #+#             */
-/*   Updated: 2024/12/12 13:25:48 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/12/12 19:32:15 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_cd_home(char *str)
 {
 	char	*home_path;
 
-	home_path = getenv("HOME");/// you should use our env
+	home_path = getenv("HOME");
 	if (!home_path)
 	{
 		printf("bash: cd:%s HOME not set\n", str);
@@ -46,6 +46,9 @@ int	ft_cd(t_minishell *data)
 	int		i;
 
 	tmp_node = data->nodes;
+	printf("this is the word:[%s]\n", tmp_node->cmd[0]);
+			printf("this is the word:[%s]\n", tmp_node->cmd[1]);
+			printf("this is the word:[%s]\n", tmp_node->cmd[2]);
 	while (tmp_node)
 	{
 		// you should not loop through the args
@@ -53,6 +56,7 @@ int	ft_cd(t_minishell *data)
 		// if two args==> check if dir is found go to it if not printf error on stderror
 		// else more than two do fprintf(stderr, "too many arguments\n");
 		i = 0;
+			
 		while (tmp_node->cmd && tmp_node->cmd[i])
 		{
 			if (ft_strcmp(tmp_node->cmd[i], "cd") == 0)

@@ -42,7 +42,6 @@ typedef struct s_token
 	token_type		data_type;
 	struct s_token	*next_token;
 	struct s_token	*prev_token;
-	char			**envirement;    
 }					t_token;
 
 typedef struct s_redir

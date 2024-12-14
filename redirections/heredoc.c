@@ -21,6 +21,7 @@ int	ft_start_heredoc_child(int fd, char *limiter)
 		if (!ft_strncmp(line, limiter, ft_strlen(limiter))
 			&& (ft_strlen(line) == ft_strlen(limiter)))
 		{
+			// free(limiter);
 			exit (g_minishell.exit_status = 0);
 		}
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)))
@@ -33,6 +34,7 @@ int	ft_start_heredoc_child(int fd, char *limiter)
 			free(line);
 		line = readline("heredoc>");
 	}
+	// free(limiter);
 	printf("missing limiter\n");
 	close(fd);
 	exit(g_minishell.exit_status);
@@ -48,6 +50,7 @@ int	ft_start_heredoc(int fd, char *limiter)
 	signal(SIGQUIT, SIG_IGN);
 	if (pid == 0)
 		ft_start_heredoc_child(fd, limiter);
+	free(limiter);
 	waitpid(pid, &status, 0);
 	close(fd);
 	if (WIFEXITED(status))
@@ -66,7 +69,7 @@ void	change_value(t_token *token, char *filename)
 {
 	token->data = NULL;
 	token->data_type = INP_REDIR;
-	token->next_token->data = filename;
+	token->next_token->data = ft_strdup(filename); // check if the malloc failed ??
 	token->next_token->data_type = WORD;
 }
 

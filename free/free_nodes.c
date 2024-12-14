@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_nodes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:05:58 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/12 18:33:00 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/12/14 01:26:03 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,12 @@ void	free_node_list(t_node *node_list)
 	t_node	*next;
 
 	fre_the_tokens(g_minishell.tokens);
+	
 	current = node_list;
 	while (current != NULL)
 	{
+		printf("[%s]\n", current->cmd[0]);
+		
 		next = current->next_node;
 		free_node(current);
 		current = next;
@@ -86,15 +89,18 @@ void free_env_list(t_env *head)
 
 void fre_the_tokens(t_token *tokens)
 {
-	t_token	*current;
-	t_token	*next;
+	t_token	*tmp;
+	// t_token	*next;
 
-	current = tokens;
-	while (current)
+	// current = tokens;
+	while (tokens)
 	{
-		next = current->next_token;
-		free(current->data);
-		free(current);
-		current = next;
+		// printf("token : %s\n", current->data);
+		tmp = tokens;
+		tokens = tokens->next_token;
+		printf("tmp %p\n", tmp);
+		printf("tmp data %p--->%s\n", tmp->data, tmp->data);
+		free(tmp->data);
+		free(tmp);
 	}
 }

@@ -139,7 +139,7 @@ int	ft_put_word_token(char **line, enum e_token_type token_t,
 			printf("syntkax error\n");
 			return (0);
 		}
-		if (**line == '"' || **line == '\'')
+		if (**line == '"' || **line == '\'') ///// maybe need anti / before "
 		{
 			quote = **line;
 			if (find_quote(**line, line, &i) == 0)

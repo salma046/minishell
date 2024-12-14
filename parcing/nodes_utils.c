@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 14:59:24 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/03 23:00:07 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/12/14 00:53:22 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,14 @@ t_node	*allocate_for_node(t_token *temp_tokens)
 	node = malloc(sizeof(t_node));
 	if (!node)
 		return (NULL);
+	ft_bzero(node, sizeof(node));
 	node->cmd = malloc(sizeof(char *) * (cmd_count(temp_tokens) + 1));
+	if (!node->cmd)
+	{
+		free(node);
+		return (NULL);
+	}
+	ft_bzero(node->cmd , sizeof(node->cmd));
 	return (node);
 }
 

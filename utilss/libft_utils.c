@@ -47,9 +47,7 @@ char	*get_word(char *str, int i)
 	j = 0;
 	word = (char *)malloc(i + 1);
 	if (!word)
-	{
 		return (NULL);
-	}
 	while (j < i)
 	{
 		word[j] = str[j];
