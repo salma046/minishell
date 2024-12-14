@@ -6,7 +6,11 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 21:56:34 by saait-si          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/12/12 19:32:15 by saait-si         ###   ########.fr       */
+=======
+/*   Updated: 2024/12/13 12:03:05 by salaoui          ###   ########.fr       */
+>>>>>>> 46ef220e7d1e981eb8369e81574ec685b2f0297e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +67,6 @@ int	ft_cd(t_minishell *data)
 			{
 				if (!tmp_node->cmd[i + 1])
 				{
-					printf("hwllo\n");
 					return (ft_cd_home(tmp_node->cmd[i]));
 				}
 				return (ft_cd_path(tmp_node->cmd[i + 1]));

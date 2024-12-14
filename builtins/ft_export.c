@@ -109,9 +109,10 @@ void	process_key(char *data, t_env *expo_envir, t_env *env_envir)
 int	search_special_char(char *token_data, t_node *node)
 {
 	int	i;
-	(void)node;
+	t_node *tmp_node;
+
 	i = 0;
-	
+	tmp_node = node;
 	while (token_data[i] != '\0' && token_data[i] != '=')
 	{
 		if (is_special_char(token_data[i]))
