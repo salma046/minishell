@@ -153,7 +153,11 @@ int					ft_export(t_minishell *data, t_env *expo_envir, t_env *env_envir);
 
 // commands 🗣️:
 t_env				*mk_env(char **envirement);
+int					not_valid(char *str);
+void				process_key(char *data, t_env *expo_envir, t_env *env_envir);
 t_env				*ft_env_unset(t_minishell *data);
+void				sort_env(t_env *envir);
+void 				add_env_node(t_env **env, t_env *new_node);
 int					check_key(char *str, t_env *envir);
 int					ft_check_builtins(char *command);
 char				*put_quot2_value(char *str);
@@ -167,6 +171,7 @@ void				*mk_env_4expo(char **envir);
 char				*ft_strncpy(char *dst, const char *src, size_t len);
 int					**mksome_files(int count_pipe);
 int					assign_files(t_minishell data, t_node *nodes);
+void				add_struc_2_env(t_env *expo_env, t_env *envir);
 // void				ft_env_export_once(t_token *token, int active);
 // void			ft_add_to_export_arg(t_token *token);
 

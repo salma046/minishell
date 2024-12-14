@@ -44,22 +44,3 @@ void	add_struc_2_env(t_env *expo_env, t_env *envir)
 	head = new_env;
 }
 
-void	search_check_add_env(t_env *expo_envir, t_env *env_envir)
-{
-	t_env	*to_check;
-
-	to_check = expo_envir;
-	while (to_check)
-	{
-		if (to_check->value == NULL)
-		{
-			to_check = to_check->next;
-			continue ;
-		}
-		else if (check_key(to_check->key, env_envir) != 1)
-		{
-			add_struc_2_env(to_check, env_envir);
-		}
-		to_check = to_check->next;
-	}
-}

@@ -6,7 +6,7 @@
 /*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:05:58 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/14 05:03:28 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/12/14 06:40:33 by saait-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	free_node_list(t_node *node_list)
 	current = node_list;
 	while (current != NULL)
 	{
-		printf("[%s]\n", current->cmd[0]);
-		
 		next = current->next_node;
 		free_node(current);
 		current = next;

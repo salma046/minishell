@@ -17,6 +17,47 @@ t_env	*make_new_node(char *envir)
 	}
 	return (cmd_env);
 }
+void add_env_node(t_env **env, t_env *new_node)
+{
+    t_env *tmp;
+
+    if (!new_node)
+        return;
+    if (!*env)
+    {
+        *env = new_node;
+        return;
+    }
+    tmp = *env;
+    while (tmp->next)
+        tmp = tmp->next;
+    tmp->next = new_node;
+}
+
+void check_missing_env_var(t_env **env)
+{
+    char *current_directory;
+    char *tmp_path;
+
+    if (ft_getenv("PATH", *env) == NULL)
+        add_env_node(env, make_new_node("PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"));
+    if (ft_getenv("SHLVL", *env) == NULL)
+        add_env_node(env, make_new_node("SHLVL=1"));
+    if (ft_getenv("PWD", *env) == NULL)
+    {
+        current_directory = getcwd(NULL, 0);
+        if (current_directory)
+        {
+        tmp_path = ft_strjoin("PWD=", current_directory);
+        if (tmp_path)
+            add_env_node(env, make_new_node(tmp_path));
+        free(current_directory);
+        free(tmp_path);
+        }
+    }
+    if (ft_getenv("_", *env) == NULL)
+        add_env_node(env, make_new_node("_=minishell"));
+}
 
 t_env	*mk_env(char **envir)
 {
@@ -38,6 +79,7 @@ t_env	*mk_env(char **envir)
 		last_node = cmd_env;
 		i++;
 	}
+    check_missing_env_var(&head);
 	return (head);
 }
 

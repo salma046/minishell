@@ -20,6 +20,7 @@ int	ft_check_builtins(char *command)
 		return (1);
 	return (0);
 }
+
 int	execute_the_builtin(t_minishell *data, t_node *nodes, char **cmd)
 {
 	if (!ft_strcmp(cmd[0], "env"))
@@ -27,7 +28,7 @@ int	execute_the_builtin(t_minishell *data, t_node *nodes, char **cmd)
 		printf("This is builtin: env\n");
 		ft_env(nodes->cmd, data);
 	}
-	if (!ft_strcmp(cmd[0] , "unset"))
+	if (!ft_strcmp(cmd[0], "unset"))
 	{
 		printf("This is builtin: unset\n");
 		ft_unset(data);
@@ -60,11 +61,10 @@ int	execute_the_builtin(t_minishell *data, t_node *nodes, char **cmd)
 	return (0);
 }
 
+// Na9xi hadi m3a saaluma
 int	check_command(t_minishell *data, t_node *node)
 {
 	int	pid;
-
-	// printf("hi from builtins!!\n");
 
 	if (data->count_pips == 1)
 	{
@@ -74,17 +74,14 @@ int	check_command(t_minishell *data, t_node *node)
 	{
 		pid = fork();
 		if (pid == -1)
-		{
-			perror("Fork");
-			return (-1);
-		}
+			return (perror("Fork"), -1);
 		else if (pid == 0)
 		{
 			execute_the_builtin(data, node, node->cmd);
-			exit(0); //Child proccess;;; // save the return exit status to be put on the $?
+			exit(0); // Child proccess;;;
 		}
 	}
 	return (0);
-	// and then in the end save the exit staus here 
-	// execute_the_builtin; // Already done
+	// and then in the end save the exit staus here// execute_the_builtin;
+	// Already done
 }

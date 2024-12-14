@@ -4,10 +4,7 @@ void	ft_env(char **cmds, t_minishell *data)
 {
 	t_env	*tmp;
 
-	// node = data->nodes;
 	tmp = data->envir;
-	// printf ("[%s]\n", node->cmd[0]);
-	// printf ("[%s]\n", node->cmd[1]);
 	if (tmp && cmds[1] == NULL)
 	{
 		while (tmp)
@@ -22,5 +19,5 @@ void	ft_env(char **cmds, t_minishell *data)
 		}
 	}
 	else
-		fprintf (stderr, "env: %s: No such file or directory\n", cmds[1]);
+		printf(2, "env: %s: No such file or directory\n", cmds[1]);
 }

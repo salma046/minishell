@@ -2,25 +2,36 @@
 
 t_minishell	g_minishell;
 
-int execution_main(t_minishell data)
+int	execution_main(t_minishell data)
 {
-    t_node *temp_nodes = data.nodes;
-    int pipe_fd[2] = {-1, -1};
-    int in_fd = dup(STDIN_FILENO);
-    int in_fd2 = dup(STDOUT_FILENO);
-    pid_t pid;
+	t_node	*temp_nodes;
+	int		pipe_fd[2] = {-1, -1};
+	int		in_fd;
+	int		in_fd2;
+	pid_t	pid;
+	char	*command_path;
+	int		i;
+	int		st;
+	pid_t	id;
+	char	*command_path;
+	int		i;
+	int		st;
+	pid_t	id;
 
+	temp_nodes = data.nodes;
+	in_fd = dup(STDIN_FILENO);
+	in_fd2 = dup(STDOUT_FILENO);
 	if (data.count_pips == 1)
 	{
-		if (data.nodes->cmd[0] && !strcmp(data.nodes->cmd[0], "exit"))
+		if (data.nodes->cmd[0] && !ft_strcmp(data.nodes->cmd[0], "exit"))
 		{
 			ft_exit(&data);
-			return 0;
+			return (0);
 		}
-		if (data.nodes->cmd[0] && !strcmp(data.nodes->cmd[0], "cd"))
+		if (data.nodes->cmd[0] && !ft_strcmp(data.nodes->cmd[0], "cd"))
 		{
 			ft_cd(&data);
-			return 0;
+			return (0);
 		}
 		if (temp_nodes->redir && ft_check_redirections(temp_nodes) == -1)
 		{
@@ -28,7 +39,8 @@ int execution_main(t_minishell data)
 		}
 		if (temp_nodes->redir)
 		{
-			if (temp_nodes->redir->red_type == OUT_REDIR || temp_nodes->redir->red_type == APPEND)
+			if (temp_nodes->redir->red_type == OUT_REDIR
+				|| temp_nodes->redir->red_type == APPEND)
 			{
 				dup2(temp_nodes->out_file, STDOUT_FILENO);
 				close(temp_nodes->out_file);
@@ -41,8 +53,8 @@ int execution_main(t_minishell data)
 		}
 		if (temp_nodes->cmd[0] == NULL)
 		{
-			dup2(in_fd,0);
-			dup2(in_fd2,1);
+			dup2(in_fd, 0);
+			dup2(in_fd2, 1);
 			close(in_fd);
 			close(in_fd2);
 			return (data.exit_status);
@@ -50,8 +62,8 @@ int execution_main(t_minishell data)
 		if (ft_check_builtins(temp_nodes->cmd[0]) == 1)
 		{
 			check_command(&data, temp_nodes);
-			dup2(in_fd,0);
-			dup2(in_fd2,1);
+			dup2(in_fd, 0);
+			dup2(in_fd2, 1);
 			close(in_fd);
 			close(in_fd2);
 			return (data.exit_status);
@@ -61,8 +73,9 @@ int execution_main(t_minishell data)
 		{
 			signal(SIGINT, handle_sigint);
 			signal(SIGQUIT, handle_sigquit);
-			char *command_path = find_command_path(temp_nodes->cmd[0], data.envir);
-			if (!command_path || execve(command_path, temp_nodes->cmd, data.envirement) == -1)
+			command_path = find_command_path(temp_nodes->cmd[0], data.envir);
+			if (!command_path || execve(command_path, temp_nodes->cmd,
+					data.envirement) == -1)
 			{
 				fprintf(stderr, "Command '%s' not found\n", temp_nodes->cmd[0]);
 				g_minishell.exit_status = 127;
@@ -74,19 +87,16 @@ int execution_main(t_minishell data)
 		}
 		if (pid != 0)
 			g_minishell.exit_status = 127;
-		int	i;
-		int	st;
 		// int	stt;
-		pid_t	id;
 		i = 0;
-		while(i < data.count_pips)
+		while (i < data.count_pips)
 		{
-			id = waitpid(-1,&st,0);
-			if(id == -1)
+			id = waitpid(-1, &st, 0);
+			if (id == -1)
 				break ;
-			if(id == pid)
+			if (id == pid)
 			{
-				if(WIFEXITED(st))
+				if (WIFEXITED(st))
 					st = WEXITSTATUS(st);
 			}
 			i++;
@@ -100,9 +110,10 @@ int execution_main(t_minishell data)
 			pid = fork();
 			signal(SIGINT, handle_sigint);
 			signal(SIGQUIT, handle_sigquit);
-			if (pid == 0) 
+			if (pid == 0)
 			{
-				if (temp_nodes->redir && ft_check_redirections(temp_nodes) == -1)
+				if (temp_nodes->redir && ft_check_redirections(temp_nodes) ==
+					-1)
 					exit(EXIT_FAILURE);
 				if (temp_nodes->next_node)
 				{
@@ -113,7 +124,8 @@ int execution_main(t_minishell data)
 				}
 				if (temp_nodes->redir && ft_check_redirections(temp_nodes) == 0)
 				{
-					if (temp_nodes->redir->red_type == OUT_REDIR || temp_nodes->redir->red_type == APPEND)
+					if (temp_nodes->redir->red_type == OUT_REDIR
+						|| temp_nodes->redir->red_type == APPEND)
 					{
 						dup2(temp_nodes->out_file, STDOUT_FILENO);
 						close(temp_nodes->out_file);
@@ -131,10 +143,12 @@ int execution_main(t_minishell data)
 				}
 				else
 				{
-					char *command_path = find_command_path(temp_nodes->cmd[0], data.envir);
+					command_path = find_command_path(temp_nodes->cmd[0],
+							data.envir);
 					if (!command_path)
 					{
-						fprintf(stderr, "%s: command not found\n", temp_nodes->cmd[0]);
+						fprintf(stderr, "%s: command not found\n",
+							temp_nodes->cmd[0]);
 						free(command_path);
 						exit(127);
 					}
@@ -144,31 +158,27 @@ int execution_main(t_minishell data)
 				}
 			}
 			temp_nodes = temp_nodes->next_node;
-			dup2(pipe_fd[0],STDIN_FILENO);
+			dup2(pipe_fd[0], STDIN_FILENO);
 			close(pipe_fd[0]); // Close unused read end in the child.
 			close(pipe_fd[1]);
 		}
-		dup2(in_fd,0);
+		dup2(in_fd, 0);
 		close(in_fd);
-		int	i;
-		int	st;
-		// int	stt;
-		pid_t	id;
 		i = 0;
-		while(i < data.count_pips)
+		while (i < data.count_pips)
 		{
-			id = waitpid(-1,&st,0);
-			if(id == -1)
+			id = waitpid(-1, &st, 0);
+			if (id == -1)
 				break ;
-			if(id == pid)
+			if (id == pid)
 			{
-				if(WIFEXITED(st))
+				if (WIFEXITED(st))
 					st = WEXITSTATUS(st);
 			}
 			i++;
 		}
 	}
-    return 0;
+	return (0);
 }
 
 int	main(int ac, char *av[], char **env)
@@ -197,8 +207,8 @@ int	main(int ac, char *av[], char **env)
 			exit(1);
 		}
 		if (g_minishell.command[0] == '\0')
-			continue;
-		add_history(g_minishell.command);	
+			continue ;
+		add_history(g_minishell.command);
 		g_minishell.tokens = ft_tokenize(g_minishell);
 		free(g_minishell.command);
 		if (!g_minishell.tokens)
