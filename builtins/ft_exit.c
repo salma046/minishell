@@ -15,46 +15,41 @@ int is_numeric(const char *str) {
     return 1;
 }
 
-
 void ft_exit(t_minishell *data)
 {
-	t_node	*tmp_node;
-	tmp_node = data->nodes;
+    t_node *tmp_node = data->nodes;
+
     if (!tmp_node || !tmp_node->cmd) {
         printf("exit\n");
         exit(0);
     }
+
+    printf("exit\n");
+
     int i = 0;
-    while (tmp_node->cmd[i]) {
-        printf ("\033[36m%s\033[0m: %d\n", tmp_node->cmd[i], i);
+    while (tmp_node->cmd[i])
         i++;
+
+    if (i > 2) {
+        printf("bash: exit: too many arguments\n");
+        data->exit_status = 1; 
+        return;
     }
-    if (i > 1)
-    {
-        printf("bash: exit: too many arguments");
-        return ;  
+
+    if (i == 1) {
+        exit(data->exit_status);
     }
-    if (i < 2) {
-        if (!is_numeric(tmp_node->cmd[1]))
-        {
-            printf("bash: exit: %s: numeric argument required\n", tmp_node->cmd[1]);
-            exit(data->exit_status);
-        }
+
+    int j = 0;
+    while (tmp_node->cmd[1][j] == ' ')
+        j++;
+
+    if (!is_numeric(&tmp_node->cmd[1][j])) {
+        printf("bash: exit: %s: numeric argument required\n", tmp_node->cmd[1]);
         data->exit_status = 2;
-        return ;  
+        exit(data->exit_status);
     }
-    if (tmp_node->cmd[1])
-	{
-        if (is_numeric(tmp_node->cmd[1])) {
-        
-            data->exit_status = ft_atoi(tmp_node->cmd[1]) % 256; 
-        } 
-        else
-        {
-            printf("bash: exit: %s: numeric argument required\n", tmp_node->cmd[1]);
-            data->exit_status  = 2;
-            exit(data->exit_status);
-        }
-    }
+
+    data->exit_status = ft_atoi(&tmp_node->cmd[1][j]) % 256;
     exit(data->exit_status);
 }
