@@ -33,7 +33,6 @@ void ft_exit(t_minishell *data)
         if (!is_numeric(tmp_node->cmd[1]))
         {
             printf("bash: exit: %s: numeric argument required\n", tmp_node->cmd[1]);
-			free_mystructs();
             exit(data->exit_status);
         }
         data->exit_status = 2;
@@ -49,10 +48,8 @@ void ft_exit(t_minishell *data)
         {
             printf("bash: exit: %s: numeric argument required\n", tmp_node->cmd[1]);
             data->exit_status  = 2;
-			free_mystructs();
             exit(data->exit_status);
         }
     }
-	free_mystructs();
     exit(data->exit_status);
 }

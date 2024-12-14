@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 09:53:36 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/13 22:40:03 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/11/25 10:41:17 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	*remplac_str(char *data, int i, int count_quotes)
 	char	quote;
 
 	word = (char *)malloc(i - (count_quotes * 2) + 1);
-	printf("lenth is: %d\n", i - (count_quotes * 2) + 1);
 	if (!word)
 		return (NULL);
 	j = 0;
@@ -79,14 +78,8 @@ t_token	*rm_qotes(t_token *tokens)
 		{
 			n_quotes = count_quotes(temp_tokens->data, &len);
 			if (n_quotes)
-			{
-				if (temp_tokens->prev_token && temp_tokens->prev_token->data_type == 2)
-					temp_tokens->quotes_heredoc = 1;
 				temp_tokens->data = remplac_str(temp_tokens->data,
 						len, n_quotes);
-			}
-			// else if(!n_quotes && temp_tokens->prev_token && temp_tokens->prev_token->data_type == 2)
-			// 	temp_tokens->quotes_heredoc = 0;
 		}
 		temp_tokens = temp_tokens->next_token;
 	}

@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 14:24:05 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/13 22:18:46 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:09:41 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,53 +67,6 @@ char	*fill_first_part(char *env_var, int *i)
 	return (result);
 }
 
-
-char	*remp_exit(char *word)
-{
-	char	*new_word;
-	char	*exit_w;
-	int		i;
-	int		j;
-	int		k;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	exit_w = ft_itoa(g_minishell.exit_status);
-	new_word = malloc(sizeof(char) * ft_strlen(word) + ft_strlen(exit_w) - 1);
-	if (!new_word)
-		return (NULL);
-	while (word[i])
-	{
-		if (word[i] == '$' && word[i + 1] == '?')
-		{
-			while(exit_w[k])
-				new_word[j++] = exit_w[k++];
-			i += 2;
-		}
-		else
-			new_word[j++] = word[i++];
-	}
-	new_word[j] = '\0';
-	free(word);
-	free(exit_w);
-	return (new_word);
-}
-
-char	*remplace_exit_value(char *word)
-{
-	int i;
-
-	i = 0;
-	while (word[i])
-	{
-		if (word[i] == '$' && word[i + 1] == '?')
-			return(remp_exit(word));
-		i++;
-	}
-	return (word);
-}
-
 char	*rmp_dollar(char *t_word, t_token **to_list, int *is_ambiguous)
 {
 	int	i;
@@ -139,7 +92,7 @@ char	*rmp_dollar(char *t_word, t_token **to_list, int *is_ambiguous)
 		else if (t_word[i])
 			i++;
 	}
-	return (remplace_exit_value(t_word));
+	return (t_word);
 }
 
 char	*rmp_dollar2(char *t_word, int *i, int to_split, t_token **tokens_list, int **is_ambiguous)
@@ -149,15 +102,11 @@ char	*rmp_dollar2(char *t_word, int *i, int to_split, t_token **tokens_list, int
 
 	env_var = NULL;
 	env_var = get_env_var(t_word, *i);
-	if (env_var != NULL && check_4_space(env_var) == 1 && to_split < 0 && tokens_list)
+	if (env_var != NULL && check_4_space(env_var) == 1 && to_split < 0)
 		word = token_edi_env(t_word, env_var, tokens_list);
 	else
 		word = remplace_doll_str(t_word, env_var);
-	if (!tokens_list)
-	{
-		return (word);
-	}
-	if (!word || word[0] == '\0')
+	if (!word[0])
 		**is_ambiguous = 1;
 	else
 		**is_ambiguous = 0;

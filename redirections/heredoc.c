@@ -1,24 +1,16 @@
 #include "../minishell.h"
 
-void	free_mystructs2()
-{
-	fre_the_tokens(g_minishell.tokens);
-	free_env_list(g_minishell.envir);
-	free_env_list(g_minishell.export_env);
-	// free_node_list(g_minishell.nodes);
-}
-
 void	sig_here_doc(int signal)
 {
 	(void)signal;
 	close(g_minishell.exit_status);
+	// printf("it's a sigint \n");
 	write(1, "\n", 1);
 	g_minishell.exit_status = 130;
-	free_mystructs2();
 	exit(g_minishell.exit_status);
 }
 
-int	ft_start_heredoc_child(int fd, char *limiter, t_token *token)
+int	ft_start_heredoc_child(int fd, char *limiter)
 {
 	char	*line;
 
@@ -29,21 +21,13 @@ int	ft_start_heredoc_child(int fd, char *limiter, t_token *token)
 		if (!ft_strncmp(line, limiter, ft_strlen(limiter))
 			&& (ft_strlen(line) == ft_strlen(limiter)))
 		{
-<<<<<<< HEAD
 			// free(limiter);
-=======
-			free_mystructs2();
->>>>>>> 46ef220e7d1e981eb8369e81574ec685b2f0297e
 			exit (g_minishell.exit_status = 0);
 		}
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)))
 		{
 			if (!line)
 				line = ft_strdup("");
-		}
-		if (token->quotes_heredoc == 0)
-		{
-			line = rmp_dollar(line, NULL, 0);
 		}
 		ft_putendl_fd(line, fd);
 		if (strcmp(line, limiter))
@@ -53,11 +37,10 @@ int	ft_start_heredoc_child(int fd, char *limiter, t_token *token)
 	// free(limiter);
 	printf("missing limiter\n");
 	close(fd);
-	free_mystructs2();
 	exit(g_minishell.exit_status);
 }
 
-int	ft_start_heredoc(int fd, char *limiter, t_token *token)
+int	ft_start_heredoc(int fd, char *limiter)
 {
 	pid_t pid;
 	int status;
@@ -66,12 +49,8 @@ int	ft_start_heredoc(int fd, char *limiter, t_token *token)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	if (pid == 0)
-<<<<<<< HEAD
 		ft_start_heredoc_child(fd, limiter);
 	free(limiter);
-=======
-		ft_start_heredoc_child(fd, limiter, token);
->>>>>>> 46ef220e7d1e981eb8369e81574ec685b2f0297e
 	waitpid(pid, &status, 0);
 	close(fd);
 	if (WIFEXITED(status))
@@ -79,23 +58,18 @@ int	ft_start_heredoc(int fd, char *limiter, t_token *token)
 	return (g_minishell.exit_status);
 }
 
-int	start_heredoc(int fd, char *limiter, t_token *token)
+int	start_heredoc(int fd, char *limiter)
 {
 	if (!limiter)
 		return (-1);
-	return (ft_start_heredoc(fd, limiter, token));
+	return (ft_start_heredoc(fd, limiter));
 }
 
 void	change_value(t_token *token, char *filename)
 {
 	token->data = NULL;
 	token->data_type = INP_REDIR;
-<<<<<<< HEAD
 	token->next_token->data = ft_strdup(filename); // check if the malloc failed ??
-=======
-	free(token->next_token->data);
-	token->next_token->data = ft_strdup(filename);
->>>>>>> 46ef220e7d1e981eb8369e81574ec685b2f0297e
 	token->next_token->data_type = WORD;
 }
 
@@ -113,16 +87,17 @@ int	ft_heredoc(t_token *tokens)
 	if (tokens->next_token->data_type == WORD)
 	{
 		limiter = tokens->next_token->data;
-		start_heredoc(fd, limiter, tokens->next_token);
+		start_heredoc(fd, limiter);
 		if (g_minishell.exit_status == 130)
 		{
 			fprintf(stderr, "Hello World\n");
 			unlink(file);
 			return (-1);
 		}
-		fd = open("/tmp/heredoc.txt", O_RDONLY);
+		fd = open("/tmp/heredoc", O_RDONLY);
 		file = "/tmp/heredoc.txt";
 		change_value(tokens, file);
+		// unlink(file); //// some problems are here!!!
 	}
 	return (0);
 }

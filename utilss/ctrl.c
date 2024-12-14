@@ -9,19 +9,6 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 	g_minishell.exit_status = 130;
 }
-void	handle_child(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		g_minishell.exit_status = 130;
-	}
-	if (sig == SIGQUIT)
-	{
-		printf("Quit (core dumped)\n");
-		g_minishell.exit_status = 131;
-	}
-}
 // void	handle_here_sigquit(int sig)
 // {
 // 	(void)sig;
@@ -30,6 +17,12 @@ void	handle_child(int sig)
 // 	exit(g_minishell.exit_status);
 // }
 
+void	handle_sigquit(int sig)
+{
+	(void)sig;
+	printf("Quit (core dumped)\n");
+	g_minishell.exit_status = 131;
+}
 
 void	handle_quit(int sig)
 {
