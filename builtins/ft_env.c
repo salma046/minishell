@@ -19,5 +19,5 @@ void	ft_env(char **cmds, t_minishell *data)
 		}
 	}
 	else
-		printf(2, "env: %s: No such file or directory\n", cmds[1]);
+		fprintf(stderr, "env: %s: No such file or directory\n", cmds[1]);
 }

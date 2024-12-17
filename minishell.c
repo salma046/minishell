@@ -13,10 +13,6 @@ int	execution_main(t_minishell data)
 	int		i;
 	int		st;
 	pid_t	id;
-	char	*command_path;
-	int		i;
-	int		st;
-	pid_t	id;
 
 	temp_nodes = data.nodes;
 	in_fd = dup(STDIN_FILENO);
