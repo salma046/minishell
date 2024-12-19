@@ -1,75 +1,83 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 22:01:57 by saait-si          #+#    #+#             */
+/*   Updated: 2024/12/17 22:01:58 by saait-si         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-/// Warnign : add_struct_2_env for what ?? raha makaynax
-void	search_check_add_env(t_env *expo_envir, t_env *env_envir)
+int	is_special_char(char c)
 {
-	t_env	*to_check;
-
-	to_check = expo_envir;
-	while (to_check)
-	{
-		if (to_check->value == NULL)
-		{
-			to_check = to_check->next;
-			continue ;
-		}
-		else if (check_key(to_check->key, env_envir) != 1)
-		{
-			add_struc_2_env(to_check, env_envir);
-		}
-		to_check = to_check->next;
-	}
+	if ((c >= 33 && c <= 47) || (c >= 58 && c <= 64))
+		return (1);
+	if ((c >= 91 && c <= 96) || (c >= 123 && c <= 126))
+		return (1);
+	return (0);
 }
 
-int	ft_add_to_export_arg(t_node *nodes, t_env *expo_envir, t_env *env_envir)
+int	has_doubled_special_chars(char *token)
 {
-	char	**commands;
+	int	i;
 
-	commands = nodes->cmd;
-	if (!commands || !commands[1] || !expo_envir)
-		return (-1);
-	commands++;
-	while (*commands)
+	if (!token)
+		return (0);
+	i = 0;
+	while (token[i] != '\0' && token[i] != '=')
 	{
-		if (*commands == NULL)
+		if (token[i + 1] != '\0' && is_special_char(token[i])
+			&& is_special_char(token[i + 1]))
 		{
-			commands++;
-			continue ;
+			return (1);
 		}
-		if (not_valid(*commands) == 1)
-		{
-			write(2, "bash: export: ", ft_strlen("bash: export: "));
-			write(2, *commands, ft_strlen(*commands));
-			write(2, "': not a valid identifier", 25);
-			write(2, "\n", 1);
-			return (0);
-		}
-		process_key(*commands, expo_envir, env_envir);
-		commands++;
+		i++;
 	}
 	return (0);
 }
 
-int	ft_env_export_once(t_node *nodes, t_env *envir, int active)
+void	key_with_equal(char *data, t_env *envir)
 {
 	t_env	*head;
-	t_env	*current;
+	t_env	*new_export;
+	char	*split_var;
 
-	(void)nodes;
+	head = NULL;
 	head = envir;
-	if (active == 1)
-		sort_env(head);
-	current = head;
-	while (current)
+	while (head && head->next != NULL)
 	{
-		if (current->value == NULL || !ft_strcmp(current->value, ""))
-		{
-			current->value = ft_strdup("");
-			printf("declare -x %s%s\n", current->key, current->value);
-		}
-		else if (active == 1)
-			printf("declare -x %s=%s\n", current->key, current->value);
-		current = current->next;
+		head = head->next;
+	}
+	split_var = ft_strchr(data, '=');
+	new_export = malloc(sizeof(t_env));
+	if (!new_export)
+		return ;
+	new_export->key = ft_strndup(data, split_var - data);
+	new_export->value = put_quot2_value(ft_strdup(split_var + 1));
+	new_export->next = NULL;
+	if (head == NULL)
+		envir = new_export;
+	else
+		head->next = new_export;
+	head = new_export;
+}
+
+int	check_all_tokens(char **args, t_node *nodes)
+{
+	char	**tmp_args;
+	int		i;
+
+	i = 0;
+	tmp_args = args;
+	while (tmp_args[i])
+	{
+		if (search_special_char(tmp_args[i], nodes) == 1)
+			return (g_minishell.exit_status = 127);
+		i++;
 	}
 	return (0);
 }
@@ -83,6 +91,8 @@ int	ft_export(t_minishell *data, t_env *expo_envir, t_env *env_envir)
 	if (!tmp_nodes->cmd[0] || !expo_envir)
 		return (0);
 	active = 1;
+	if (check_all_tokens(tmp_nodes->cmd, tmp_nodes) != 0)
+		return (g_minishell.exit_status = 127);
 	if ((tmp_nodes->cmd[1] == NULL && tmp_nodes->cmd[0]))
 	{
 		if (!ft_strcmp(tmp_nodes->cmd[0], "export"))

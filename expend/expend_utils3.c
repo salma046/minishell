@@ -6,7 +6,7 @@
 /*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:58:15 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/11 13:09:21 by salaoui          ###   ########.fr       */
+/*   Updated: 2024/12/18 10:38:43 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,28 @@ int	check_is_num(char *str, int i)
 		return (0);
 }
 
-int	put_env_in_word(char *str, char *word, char *env_var, int *i, int *j)
+int	put_env_in_word(char *str, char *env_var, t_my_struc *norm)
 {
 	size_t	l;
 
 	l = 0;
-	(*i)++;
-	while (check_is_num(str, *i) == 1)
-		(*i)++;
+	norm->i++;
+	while (check_is_num(str, norm->i) == 1)
+		norm->i++;
 	if (env_var != NULL)
 	{
 		while (l < ft_strlen(env_var))
-			word[(*j)++] = env_var[l++];
-		l = (*i);
-		while (str[*i])
-			(*i)++;
-		word[*j] = '\0';
+			norm->word[norm->j++] = env_var[l++];
+		l = norm->i;
+		while (str[norm->i])
+			norm->i++;
+		norm->word[norm->j] = '\0';
 	}
 	else
 	{
-		while (str[*i])
-			word[(*j)++] = str[(*i)++];
-		word[*j] = '\0';
+		while (str[norm->i])
+			norm->word[norm->j++] = str[norm->i++];
+		norm->word[norm->j] = '\0';
 	}
 	return (l);
 }
@@ -78,7 +78,5 @@ char	*ft_join_words(char *word, char *str, int l)
 	hi = ft_strjoin(word, command_rest);
 	free(command_rest);
 	free(word);
-	free(str); // I added this free it's logic to free str but need testing
 	return (hi);
 }
-

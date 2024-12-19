@@ -16,15 +16,17 @@ SRC = parcing/parsing.c parcing/handle_quotes.c parcing/nodes.c parcing/nodes_ut
       redirections/ft_redirections.c expend/expend_utils3.c utilss/libft_utils.c \
       utilss/sjd_fun_utils.c execution/execute_commands.c expend/expend_utils2.c \
       minishell.c expend/expend_utils4.c expend/expend_utils5.c free/free_nodes.c \
-	  utilss/ft_export_utils1.c utilss/ft_export_utils2.c free_leaks/free_leaks_1.c \
-	  utilss/ft_export_utils3.c utilss/ctrl.c
+	  utilss/ft_export_utils.c utilss/export_utils2.c expend/expend_utils1.c \
+	  utilss/export_utils.c utilss/signals.c redirections/heredoc_utils.c \
+	  free/free_structs.c execution/execution_utils.c \
+	  execution/ft_execution_utils.c \
 	  
 
 OBJ = $(SRC:.c=.o)
 
 # Flags:
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address 
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
 
 # Library:
 NAME = minishell
@@ -45,11 +47,11 @@ clean:
 	@echo "$(GREEN0)Cleaning 🧹$(BLACK)"
 	@rm -rf $(OBJ)
 	@make -C libft clean
-	@rm -rf $(LIBFT)
 
 fclean: clean
 	@rm -rf $(NAME)
 	@echo "$(YELLOW)Done cleaning ✨$(BLACK)"
+	@rm -rf $(LIBFT)
 
 re: fclean all
 

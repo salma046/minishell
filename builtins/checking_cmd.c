@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checking_cmd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 22:01:44 by saait-si          #+#    #+#             */
+/*   Updated: 2024/12/17 22:01:45 by saait-si         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	ft_check_builtins(char *command)
@@ -24,44 +36,22 @@ int	ft_check_builtins(char *command)
 int	execute_the_builtin(t_minishell *data, t_node *nodes, char **cmd)
 {
 	if (!ft_strcmp(cmd[0], "env"))
-	{
-		printf("This is builtin: env\n");
-		ft_env(nodes->cmd, data);
-	}
+		return (ft_env(nodes->cmd, data));
 	if (!ft_strcmp(cmd[0], "unset"))
-	{
-		printf("This is builtin: unset\n");
 		ft_unset(data);
-	}
 	if (!ft_strcmp(cmd[0], "echo"))
-	{
-		printf("This is builtin: echo\n");
 		ft_echo(nodes);
-	}
 	if (!ft_strcmp(cmd[0], "cd"))
-	{
-		printf("This is builtin: cd\n");
 		ft_cd(data);
-	}
 	if (!ft_strcmp(cmd[0], "pwd"))
-	{
-		printf("This is builtin: pwd\n");
 		ft_pwd(nodes);
-	}
 	if (!ft_strcmp(cmd[0], "exit"))
-	{
-		printf("This is builtin: exit\n");
-		ft_exit(data);
-	}
+		ft_exit(nodes);
 	if (!ft_strcmp(cmd[0], "export"))
-	{
-		printf("This is builtin: export\n");
 		return (ft_export(data, data->export_env, data->envir));
-	}
-	return (0);
+	return (g_minishell.exit_status);
 }
 
-// Na9xi hadi m3a saaluma
 int	check_command(t_minishell *data, t_node *node)
 {
 	int	pid;
@@ -74,14 +64,16 @@ int	check_command(t_minishell *data, t_node *node)
 	{
 		pid = fork();
 		if (pid == -1)
-			return (perror("Fork"), -1);
+		{
+			perror("Fork");
+			return (-1);
+		}
 		else if (pid == 0)
 		{
 			execute_the_builtin(data, node, node->cmd);
-			exit(0); // Child proccess;;;
+			free_mystructs();
+			exit(g_minishell.exit_status);
 		}
 	}
-	return (0);
-	// and then in the end save the exit staus here// execute_the_builtin;
-	// Already done
+	return (g_minishell.exit_status);
 }

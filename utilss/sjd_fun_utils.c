@@ -1,6 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sjd_fun_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 22:04:48 by saait-si          #+#    #+#             */
+/*   Updated: 2024/12/17 22:04:49 by saait-si         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
+char	*put_quot2_value(char *str)
+{
+	char	*result;
+	int		i;
+	int		j;
 
+	i = 0;
+	j = 0;
+	result = malloc(sizeof(char) * ft_strlen(str) + 3);
+	if (!result)
+		return (NULL);
+	result[j++] = '"';
+	while (str[i])
+		result[j++] = str[i++];
+	result[j] = '"';
+	result[++j] = '\0';
+	free(str);
+	return (result);
+}
 
 t_env	*make_new_expor(char *envir)
 {
@@ -19,44 +49,6 @@ t_env	*make_new_expor(char *envir)
 		cmd_env->next = NULL;
 	}
 	return (cmd_env);
-}
-void check_missing_env_var_expo(t_env **env)
-{
-    char *current_directory;
-    char *tmp_path;
-    // t_env *tmp;
-
-    if (ft_getenv("PATH", *env) == NULL)
-        add_env_node(env, make_new_expor("PATH=/home/saait-si/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"));
-    if (ft_getenv("SHLVL", *env) == NULL)
-        add_env_node(env, make_new_expor("SHLVL=1"));
-    if (ft_getenv("PWD", *env) == NULL)
-    {
-        current_directory = getcwd(NULL, 0);
-        if (current_directory)
-        {
-        tmp_path = ft_strjoin("PWD=", current_directory);
-        if (tmp_path)
-            add_env_node(env, make_new_expor(tmp_path));
-        free(current_directory);
-        free(tmp_path);
-        }
-    }
-    // if (ft_getenv("OLDPWD", *env) == NULL)
-    // {
-    //     tmp = malloc(sizeof(t_env));
-    //     if (!tmp)
-    //         return ;
-    //     tmp->key = ft_strdup("OLDPWD");
-    //     if (!tmp->key)
-    //     {
-    //         free(tmp);
-    //         return ;
-    //     }
-    //     tmp->value = NULL;
-    //     tmp->next = NULL;
-    //     add_env_node(env, tmp);
-    // }
 }
 
 void	*mk_env_4expo(char **envir)
@@ -82,3 +74,46 @@ void	*mk_env_4expo(char **envir)
 	return (head);
 }
 
+char	*rm_quot2_value(char *str)
+{
+	char	*result;
+	int		i;
+	int		j;
+	int		str_len;
+
+	i = 1;
+	j = 0;
+	str_len = ft_strlen(str);
+	if (str_len < 2)
+	{
+		free(str);
+		return (ft_strdup(""));
+	}
+	result = malloc(sizeof(char) * str_len - 1);
+	if (!result)
+		return (NULL);
+	ft_strncpy(result, str + 1, str_len - 2);
+	result[str_len - 2] = '\0';
+	free(str);
+	return (result);
+}
+
+void	search_check_add_env(t_env *expo_envir, t_env *env_envir)
+{
+	t_env	*to_check;
+
+	to_check = expo_envir;
+	while (to_check)
+	{
+		if (to_check->value == NULL)
+		{
+			to_check = to_check->next;
+			continue ;
+		}
+		else if (check_key(to_check->key, env_envir) != 1)
+		{
+			add_struc_2_env(to_check, env_envir);
+		}
+		to_check = to_check->next;
+	}
+}

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 22:01:51 by saait-si          #+#    #+#             */
+/*   Updated: 2024/12/17 22:01:52 by saait-si         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	is_numeric(const char *str)
@@ -17,44 +29,39 @@ int	is_numeric(const char *str)
 	return (1);
 }
 
-void	ft_exit(t_minishell *data)
+void	error_msg(char *cmd)
 {
-	t_node	*tmp_node;
-	int		i;
-	int		j;
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
+	free_mystructs();
+	exit(g_minishell.exit_status = 2);
+}
 
-	tmp_node = data->nodes;
-	if (!tmp_node || !tmp_node->cmd)
-	{
-		printf("exit\n");
-		exit(0);
-	}
-	printf("exit\n");
+void	ft_exit(t_node *tmp_node)
+{
+	int	i;
+
 	i = 0;
-	while (tmp_node->cmd[i])
-		i++;
-	if (i > 2)
+	if (g_minishell.count_pips == 1)
+		ft_putstr_fd("exit\n", 2);
+	if (!tmp_node->cmd[1])
 	{
-		printf("bash: exit: too many arguments\n");
-		data->exit_status = 1;
+		free_mystructs();
+		exit(g_minishell.exit_status);
+	}
+	else if (is_numeric(tmp_node->cmd[1]) && !tmp_node->cmd[2])
+	{
+		g_minishell.exit_status = ft_atoi(tmp_node->cmd[1]) % 256;
+		free_mystructs();
+		exit(g_minishell.exit_status);
+	}
+	else if (is_numeric(tmp_node->cmd[1]) && tmp_node->cmd[2])
+	{
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		g_minishell.exit_status = 1;
 		return ;
 	}
-	if (i == 1)
-	{
-		free_nodes(data->nodes);
-		exit(data->exit_status);
-	}
-	j = 0;
-	while (tmp_node->cmd[1][j] == ' ')
-		j++;
-	if (!is_numeric(&tmp_node->cmd[1][j]))
-	{
-		printf("bash: exit: %s: numeric argument required\n", tmp_node->cmd[1]);
-		data->exit_status = 2;
-		free_nodes(data->nodes);
-		exit(data->exit_status);
-	}
-	data->exit_status = ft_atoi(&tmp_node->cmd[1][j]) % 256;
-	free_nodes(data->nodes);
-	exit(data->exit_status);
+	else
+		error_msg(tmp_node->cmd[1]);
 }

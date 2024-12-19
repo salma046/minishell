@@ -3,100 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   free_nodes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 10:05:58 by salaoui           #+#    #+#             */
-/*   Updated: 2024/12/14 06:40:33 by saait-si         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:29:16 by salaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	free_redir_list(t_redir *redir)
-{
-	t_redir	*current;
-	t_redir	*next;
-
-	current = redir;
-	while (current != NULL)
-	{
-		next = current->next;
-		free(current->file);
-		free(current);
-		current = next;
-	}
-}
-
-void	free_node(t_node *node)
-{
-	int	i;
-
-	i = 0;
-	if (node->cmd)
-	{
-		while (node->cmd[i])
-		{
-			free(node->cmd[i]);
-			i++;
-		}
-		free(node->cmd);
-	}
-	if (node->redir)
-	{
-		free_redir_list(node->redir);
-	}
-	free(node);
-}
 
 void	free_node_list(t_node *node_list)
 {
 	t_node	*current;
 	t_node	*next;
 
-	fre_the_tokens(g_minishell.tokens);
-	
 	current = node_list;
+	if (!node_list)
+		return ;
 	while (current != NULL)
 	{
 		next = current->next_node;
 		free_node(current);
 		current = next;
 	}
+	g_minishell.nodes = NULL;
 }
-//Sojod
-void free_nodes(t_node *node)
-{
-    t_node *tmp;
 
-    while (node)
-    {
-        tmp = node->next_node;
-
-        // Free cmd array
-        if (node->cmd)
-        {
-            for (int i = 0; node->cmd[i]; i++)
-                free(node->cmd[i]);
-            free(node->cmd);
-        }
-
-        // Free redir structure if needed
-        if (node->redir)
-            free(node->redir);
-
-        // Close file descriptors if open
-        if (node->out_file > 0)
-            close(node->out_file);
-        if (node->in_file > 0)
-            close(node->in_file);
-
-        // Free the node itself
-        free(node);
-        node = tmp;
-    }
-}
-///
-void free_env_node(t_env *node)
+void	free_env_node(t_env *node)
 {
 	if (node)
 	{
@@ -106,31 +39,44 @@ void free_env_node(t_env *node)
 	}
 }
 
-void free_env_list(t_env *head)
+void	free_env_list(t_env *head)
 {
-	t_env *tmp;
+	t_env	*tmp;
+
+	if (!head)
+		return ;
 	while (head)
 	{
 		tmp = head->next;
 		free_env_node(head);
 		head = tmp;
 	}
+	head = NULL;
 }
 
-void fre_the_tokens(t_token *tokens)
+void	free_mystructs(void)
 {
-	t_token	*tmp;
-	// t_token	*next;
+	fre_the_tokens(g_minishell.tokens);
+	free_env_list(g_minishell.envir);
+	free_env_list(g_minishell.export_env);
+	free_node_list(g_minishell.nodes);
+}
 
-	// current = tokens;
-	while (tokens)
+void	fre_the_tokens(t_token *tokens)
+{
+	t_token	*current;
+	t_token	*next;
+
+	current = tokens;
+	if (!tokens)
+		return ;
+	while (current)
 	{
-		// printf("token : %s\n", current->data);
-		tmp = tokens;
-		tokens = tokens->next_token;
-		// printf("tmp %p\n", tmp);
-		// printf("tmp data %p--->%s\n", tmp->data, tmp->data);
-		free(tmp->data);
-		free(tmp);
+		next = current->next_token;
+		if (current->data)
+			free(current->data);
+		free(current);
+		current = next;
 	}
+	g_minishell.tokens = NULL;
 }

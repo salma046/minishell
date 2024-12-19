@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saait-si <saait-si@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 22:05:21 by saait-si          #+#    #+#             */
+/*   Updated: 2024/12/17 22:07:43 by saait-si         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	is_space(char *line)
@@ -47,7 +59,9 @@ char	*get_word(char *str, int i)
 	j = 0;
 	word = (char *)malloc(i + 1);
 	if (!word)
+	{
 		return (NULL);
+	}
 	while (j < i)
 	{
 		word[j] = str[j];
@@ -76,4 +90,3 @@ void	ft_lstadd_back_token(t_token **lst, t_token *new)
 	arrs->next_token = new;
 	new->prev_token = arrs;
 }
-

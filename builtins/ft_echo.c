@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: salaoui <salaoui@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 22:01:30 by saait-si          #+#    #+#             */
+/*   Updated: 2024/12/18 13:08:53 by salaoui          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	ft_print(t_node *node)
@@ -14,13 +26,11 @@ void	ft_print(t_node *node)
 	}
 }
 
-int	is_valid_n_flag(char *str)
+static int	is_all_n(const char *str)
 {
 	int	i;
 
 	i = 2;
-	if (strncmp(str, "-n", 2) != 0)
-		return (0);
 	while (str[i] != '\0')
 	{
 		if (str[i] != 'n')
@@ -34,10 +44,15 @@ void	ft_check_n_flag(char **cmd, int *flag, int *start)
 {
 	*flag = 0;
 	*start = 1;
-	while (cmd[*start] && is_valid_n_flag(cmd[*start]))
+	while (cmd[*start] && strncmp(cmd[*start], "-n", 2) == 0)
 	{
-		*flag = 1;
-		(*start)++;
+		if (is_all_n(cmd[*start]))
+		{
+			*flag = 1;
+			(*start)++;
+		}
+		else
+			break ;
 	}
 }
 
@@ -67,4 +82,5 @@ void	ft_echo(t_node *node)
 	}
 	if (!flag)
 		write(1, "\n", 1);
+	g_minishell.exit_status = 0;
 }
